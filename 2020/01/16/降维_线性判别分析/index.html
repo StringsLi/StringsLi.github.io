@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        降维_线性判别分析 - undefined
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 人总要有些乐趣，比如编程和阅读 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/lixin.jpg" />
+        </div>
+        <div class="name">
+            <i>Lixin</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-算法概述"><span class="toc-text">1. 算法概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-算法推导"><span class="toc-text">2. 算法推导</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-实现步骤"><span class="toc-text">3. 实现步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-LDA与PCA"><span class="toc-text">4. LDA与PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-相同点"><span class="toc-text">4.1 相同点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-不同点"><span class="toc-text">4.2 不同点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-LDA的实现代码"><span class="toc-text">5.  LDA的实现代码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-1-Scala-lda实现"><span class="toc-text">5.1 Scala lda实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-2-scala-测试代码"><span class="toc-text">5.2 scala 测试代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-3-scala-结果"><span class="toc-text">5.3 scala 结果</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-4-Python-lda-代码"><span class="toc-text">5.4 Python lda 代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-5-Python-结果"><span class="toc-text">5.5 Python 结果</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 人总要有些乐趣，比如编程和阅读 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        降维_线性判别分析
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-01-16 17:58:12</span></span>
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h4 id="1-算法概述"><a href="#1-算法概述" class="headerlink" title="1. 算法概述"></a>1. 算法概述</h4><p>LDA的思想可以用一句话概括，就是“投影后类内方差最小，类间方差最大”，如下图所示。我们要将数据在低维度上进行投影，投影后希望每一种类别数据的投影点尽可能的接近，而不同类别的数据的类别中心之间的距离尽可能的大。</p>
+<p><img src="/2020/01/16/%E9%99%8D%E7%BB%B4_%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/lda_1.png" alt></p>
+<h4 id="2-算法推导"><a href="#2-算法推导" class="headerlink" title="2. 算法推导"></a>2. 算法推导</h4><p>LDA多分类：假定存在$N$个类，且第$i$类示例树为$m_i$,我们定义全局散度矩阵：</p>
+<script type="math/tex; mode=display">
+S_t = S_b + S_w= \sum_{i= 1}^{m}(x_i - \mu)(x_i - \mu)^T</script><p>其中$\mu$是所有示例的均值向量。将类内散度矩阵$S_w$定义为每个类别的散度矩阵之和，即</p>
+<script type="math/tex; mode=display">
+S_w = \sum_{i=1}^{N}S_{w_i}</script><p>其中</p>
+<script type="math/tex; mode=display">
+S_{w_i} = \sum_{x \in X_i}(x - \mu_i)(x - \mu_i)^T</script><p>由式$(1)-(3)$可得：</p>
+<script type="math/tex; mode=display">
+S_b = S_t - S_w = \sum_{i=1}^{N}(\mu_i - \mu)(\mu_i - \mu)^T</script><p>多分类LDA有多种实现方式：使用$S_b,S_w,S_t$中的任意两即可。常见的一种实现是采用优化目标</p>
+<script type="math/tex; mode=display">
+\max_W \dfrac{tr(W^TS_bW)}{tr(W^{T}S_wW)}</script><p>其中$W \in R^{d\times(N-1)}$,$tr(.)$表示矩阵的迹。式$(5)$可以通过求解如下式的广义特征问题</p>
+<script type="math/tex; mode=display">
+S_bW = \lambda S_wW</script><p>$W$的闭式解则是$S_w^{-1}S_b$的N-1个广义特征值所对应的特征向量组成的矩阵。</p>
+<p>​        若将$W$视为一个投影矩阵，则多分类LDA将样本矩阵投影到$N-1$维空间。$N-1$通常原小于数据原来的维数，且投影过程中使用了类别信息，因此LDA也被视为一种数据降维的技术。</p>
+<h4 id="3-实现步骤"><a href="#3-实现步骤" class="headerlink" title="3. 实现步骤"></a>3. 实现步骤</h4><ol>
+<li>对于每一类别，计算$d$维数据的均值向量；</li>
+<li>构造类间散度矩阵$S_b$和类内散度矩阵$S_w$;</li>
+<li>计算矩阵$S_w^{-1}S_b$的特征值及对应的特征向量；</li>
+<li>选取前$k$特征值所对应的特征向量，构造$d \times k$维的转换矩阵$W$,其中特征值以列的形式排列；</li>
+<li>使用转换矩阵$W$将样本映射到新的特征子空间上。</li>
+</ol>
+<h4 id="4-LDA与PCA"><a href="#4-LDA与PCA" class="headerlink" title="4. LDA与PCA"></a>4. LDA与PCA</h4><p>LDA和PCA都可以用作降维技术，下面比较一下相同点和不同点：</p>
+<h5 id="4-1-相同点"><a href="#4-1-相同点" class="headerlink" title="4.1 相同点"></a>4.1 相同点</h5><p>​    1）两者均可以对数据进行降维;</p>
+<p>​    2）两者在降维时均使用了矩阵特征分解的思想;</p>
+<p>​    3）两者都假设数据符合高斯分布.</p>
+<h5 id="4-2-不同点"><a href="#4-2-不同点" class="headerlink" title="4.2 不同点"></a>4.2 不同点</h5><p>​    1） LDA是有监督的降维技术，PCA是无监督的降维技术；</p>
+<p>​    2） LDA还可以用于分类，后续在分类时，贴上分类的处理方法；</p>
+<p>​    3） LDA最多可降低到$k$维（$k$是分类的个数),而PCA最多可降低到$n-1$维（$n$是数据的维数)；</p>
+<p>​    4） LDA选择分类性能最好的投影方向，而PCA选择样本点投影具有最大方差的方向。</p>
+<h4 id="5-LDA的实现代码"><a href="#5-LDA的实现代码" class="headerlink" title="5.  LDA的实现代码"></a>5.  LDA的实现代码</h4><h5 id="5-1-Scala-lda实现"><a href="#5-1-Scala-lda实现" class="headerlink" title="5.1 Scala lda实现"></a>5.1 Scala lda实现</h5><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ml.scrath.lda</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> breeze.linalg._</span><br><span class="line"><span class="keyword">import</span> breeze.stats._</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinearDiscriminantAnalysis</span> <span class="keyword">extends</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">fit</span></span>(data: <span class="type">RDD</span>[<span class="type">DenseVector</span>[<span class="type">Double</span>]], labels: <span class="type">RDD</span>[<span class="type">Int</span>],k:<span class="type">Int</span>) = &#123;</span><br><span class="line">    <span class="keyword">val</span> sample = labels.zip(data)</span><br><span class="line">    computeLDA(sample,k)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">computeLDA</span></span>(dataAndLabels: <span class="type">RDD</span>[(<span class="type">Int</span>, <span class="type">DenseVector</span>[<span class="type">Double</span>])],k:<span class="type">Int</span>)= &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> featuresByClass = dataAndLabels.groupBy(_._1).values.map(x =&gt; rowsToMatrix(x.map(_._2)))</span><br><span class="line">    <span class="keyword">val</span> meanByClass = featuresByClass.map(f =&gt; mean(f(::, *))) <span class="comment">// 对行向量求平均值 each mean is a row vector, not col</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//类内散度矩阵</span></span><br><span class="line">    <span class="keyword">val</span> <span class="type">Sw</span> = featuresByClass.zip(meanByClass).map(f =&gt; &#123;</span><br><span class="line">      <span class="keyword">val</span> featuresMinusMean: <span class="type">DenseMatrix</span>[<span class="type">Double</span>] = f._1(*, ::) - f._2.t <span class="comment">// row vector, not column</span></span><br><span class="line">      featuresMinusMean.t * featuresMinusMean: <span class="type">DenseMatrix</span>[<span class="type">Double</span>]</span><br><span class="line">    &#125;).reduce(_+_)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> numByClass = featuresByClass.map(_.rows : <span class="type">Double</span>)</span><br><span class="line">    <span class="keyword">val</span> features = rddToMatrix(dataAndLabels.map(_._2))</span><br><span class="line">    <span class="keyword">val</span> totalMean = mean(features(::, *)) <span class="comment">// A row-vector, not a column-vector</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> <span class="type">Sb</span> = meanByClass.zip(numByClass).map &#123;</span><br><span class="line">      <span class="keyword">case</span> (classMean, classNum) =&gt; &#123;</span><br><span class="line">        <span class="keyword">val</span> m = classMean - totalMean</span><br><span class="line">        (m.t * m : <span class="type">DenseMatrix</span>[<span class="type">Double</span>]) :* classNum : <span class="type">DenseMatrix</span>[<span class="type">Double</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;.reduce(_+_)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> eigen = eig((inv(<span class="type">Sw</span>): <span class="type">DenseMatrix</span>[<span class="type">Double</span>]) * <span class="type">Sb</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> eigenvectors = (<span class="number">0</span> until eigen.eigenvectors.cols).map(eigen.eigenvectors(::, _).toDenseMatrix.t)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> topEigenvectors = eigenvectors.zip(eigen.eigenvalues.toArray).sortBy(x =&gt; -scala.math.abs(x._2)).map(_._1).take(k)</span><br><span class="line">    <span class="keyword">val</span> <span class="type">W</span> = <span class="type">DenseMatrix</span>.horzcat(topEigenvectors:_*)</span><br><span class="line">    (<span class="type">W</span>,<span class="type">Sb</span>,<span class="type">Sw</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">rowsToMatrix</span></span>(in: <span class="type">TraversableOnce</span>[<span class="type">DenseVector</span>[<span class="type">Double</span>]]): <span class="type">DenseMatrix</span>[<span class="type">Double</span>] = &#123;</span><br><span class="line">    rowsToMatrix(in.toArray)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">rowsToMatrix</span></span>(inArr: <span class="type">Array</span>[<span class="type">DenseVector</span>[<span class="type">Double</span>]]): <span class="type">DenseMatrix</span>[<span class="type">Double</span>] = &#123;</span><br><span class="line">    <span class="keyword">val</span> nRows = inArr.length</span><br><span class="line">    <span class="keyword">val</span> nCols = inArr(<span class="number">0</span>).length</span><br><span class="line">    <span class="keyword">val</span> outArr = <span class="keyword">new</span> <span class="type">Array</span>[<span class="type">Double</span>](nRows * nCols)</span><br><span class="line">    <span class="keyword">var</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; nRows) &#123;</span><br><span class="line">      <span class="keyword">var</span> j = <span class="number">0</span></span><br><span class="line">      <span class="keyword">val</span> row = inArr(i)</span><br><span class="line">      <span class="keyword">while</span> (j &lt; nCols) &#123;</span><br><span class="line">        outArr(i + nRows * j) = row(j)</span><br><span class="line">        j = j + <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">      i = i + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> outMat = <span class="keyword">new</span> <span class="type">DenseMatrix</span>[<span class="type">Double</span>](nRows, nCols, outArr)</span><br><span class="line">    outMat</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">rddToMatrix</span></span>(inArr1: <span class="type">RDD</span>[<span class="type">DenseVector</span>[<span class="type">Double</span>]]): <span class="type">DenseMatrix</span>[<span class="type">Double</span>] = &#123;</span><br><span class="line">    <span class="keyword">val</span> inArr = inArr1.collect()</span><br><span class="line">    <span class="keyword">val</span> nRows = inArr.length</span><br><span class="line">    <span class="keyword">val</span> nCols = inArr(<span class="number">0</span>).length</span><br><span class="line">    <span class="keyword">val</span> outArr = <span class="keyword">new</span> <span class="type">Array</span>[<span class="type">Double</span>](nRows * nCols)</span><br><span class="line">    <span class="keyword">var</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; nRows) &#123;</span><br><span class="line">      <span class="keyword">var</span> j = <span class="number">0</span></span><br><span class="line">      <span class="keyword">val</span> row = inArr(i)</span><br><span class="line">      <span class="keyword">while</span> (j &lt; nCols) &#123;</span><br><span class="line">        outArr(i + nRows * j) = row(j)</span><br><span class="line">        j = j + <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">      i = i + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> outMat = <span class="keyword">new</span> <span class="type">DenseMatrix</span>[<span class="type">Double</span>](nRows, nCols, outArr)</span><br><span class="line">    outMat</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-2-scala-测试代码"><a href="#5-2-scala-测试代码" class="headerlink" title="5.2 scala 测试代码"></a>5.2 scala 测试代码</h5><p>测试代码（其中数据iris.csv是由下面python代码生成）</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ml.scrath.lda</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.<span class="type">SparkSession</span></span><br><span class="line"><span class="keyword">import</span> breeze.linalg.<span class="type">DenseVector</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">TestLDA</span> <span class="keyword">extends</span> <span class="title">App</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">val</span> spark =</span><br><span class="line">    <span class="type">SparkSession</span>.builder()</span><br><span class="line">      .appName(<span class="string">"DataFrame-Basic"</span>)</span><br><span class="line">      .master(<span class="string">"local[4]"</span>)</span><br><span class="line">      .config(<span class="string">"spark.sql.warehouse.dir"</span>, <span class="string">"file:///E:/spark-warehouse"</span>)</span><br><span class="line">      .getOrCreate()</span><br><span class="line">  <span class="keyword">val</span> sc = spark.sparkContext</span><br><span class="line">  <span class="keyword">val</span> irisData = sc.textFile(<span class="string">"D:\\data\\iris.csv"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">val</span> trainData = irisData.map &#123;</span><br><span class="line">    _.split(<span class="string">","</span>).dropRight(<span class="number">1</span>).map(_.toDouble)</span><br><span class="line">  &#125;.map(<span class="keyword">new</span> <span class="type">DenseVector</span>(_))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">val</span> labels = irisData.map &#123;</span><br><span class="line">    _.split(<span class="string">","</span>).apply(<span class="number">4</span>).map(_.toInt).apply(<span class="number">0</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">val</span> start = <span class="type">System</span>.currentTimeMillis()</span><br><span class="line">  <span class="keyword">val</span> model = <span class="keyword">new</span> <span class="type">LinearDiscriminantAnalysis</span></span><br><span class="line">  <span class="keyword">val</span> k = <span class="number">2</span></span><br><span class="line">  <span class="keyword">val</span> res = model.fit(trainData, labels, k)</span><br><span class="line"></span><br><span class="line">  println(<span class="string">"=====W======"</span>)</span><br><span class="line">  println(res._1)</span><br><span class="line">  println(<span class="string">"=======Sb===="</span>)</span><br><span class="line">  println(res._2)</span><br><span class="line">  println(<span class="string">"=======Sw===="</span>)</span><br><span class="line">  println(res._3)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-3-scala-结果"><a href="#5-3-scala-结果" class="headerlink" title="5.3 scala 结果"></a>5.3 scala 结果</h5><p>展示转换矩阵$W$, 类间散度矩阵$S_b$和类内散度矩阵$S_w$</p>
+<p><img src="/2020/01/16/%E9%99%8D%E7%BB%B4_%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/scala_lda_res.png" alt></p>
+<h5 id="5-4-Python-lda-代码"><a href="#5-4-Python-lda-代码" class="headerlink" title="5.4 Python lda 代码"></a>5.4 Python lda 代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.discriminant_analysis <span class="keyword">import</span> LinearDiscriminantAnalysis</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LDA</span><span class="params">(X, y, k)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    X为数据集，y为label，k为目标维数</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    label_ = np.unique(y)</span><br><span class="line">    mu = np.mean(X, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    Sw = np.zeros((len(mu), len(mu)))  <span class="comment"># 计算类内散度矩阵</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> label_:</span><br><span class="line">        _X = X[y == i]</span><br><span class="line">        _mean = np.mean(_X, axis=<span class="number">0</span>)</span><br><span class="line">        Sw += np.dot((_X - _mean).T,</span><br><span class="line">                     _X - _mean)</span><br><span class="line"></span><br><span class="line">    print(Sw)</span><br><span class="line">    </span><br><span class="line">    Sb = np.zeros((len(mu), len(mu)))  <span class="comment"># 计算类内散度矩阵</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> label_:</span><br><span class="line">        _X = X[y == i]</span><br><span class="line">        _mean = np.mean(_X, axis=<span class="number">0</span>)</span><br><span class="line">        Sb += len(_X) * np.dot(( _mean - mu).reshape(</span><br><span class="line">            (len(mu), <span class="number">1</span>)), (_mean - mu).reshape((<span class="number">1</span>, len(mu))))</span><br><span class="line">        </span><br><span class="line">    print(Sb)</span><br><span class="line"></span><br><span class="line">    eig_vals, eig_vecs = np.linalg.eig(np.linalg.inv(Sw).dot(Sb))  <span class="comment"># 计算Sw-1*Sb的特征值和特征矩阵</span></span><br><span class="line"></span><br><span class="line">    sorted_indices = np.argsort(eig_vals)</span><br><span class="line">    topk_eig_vecs = eig_vecs[:, sorted_indices[:-k - <span class="number">1</span>:<span class="number">-1</span>]]  <span class="comment"># 提取前k个特征向量</span></span><br><span class="line">    <span class="keyword">return</span> topk_eig_vecs,Sb,Sw</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">'__main__'</span> == __name__:</span><br><span class="line"></span><br><span class="line">    iris = load_iris()</span><br><span class="line">    X = iris.data</span><br><span class="line">    y = iris.target</span><br><span class="line"></span><br><span class="line"><span class="comment">## 将数据写出到iris.csv文件，供scala使用，保证数据的一致性。</span></span><br><span class="line">    data_cat =  np.c_[X,y]</span><br><span class="line">    <span class="keyword">import</span> pandas</span><br><span class="line">    iris_df = pandas.DataFrame(data_cat)</span><br><span class="line">    iris_df.to_csv(<span class="string">"iris.csv"</span>,index = <span class="number">0</span>,header = <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    W,Sb,Sw = LDA(X, y, <span class="number">2</span>)</span><br><span class="line">    X_new = np.dot((X), W)</span><br><span class="line">    plt.figure(<span class="number">1</span>)</span><br><span class="line">    plt.scatter(X_new[:, <span class="number">0</span>], X_new[:, <span class="number">1</span>], marker=<span class="string">'o'</span>, c=y)</span><br><span class="line">    </span><br><span class="line">    print(<span class="string">"========W========="</span>)</span><br><span class="line">    print(W)</span><br><span class="line">    print(<span class="string">"========Sb========"</span>)</span><br><span class="line">    print(Sb)</span><br><span class="line">    print(<span class="string">"========Sw========"</span>)</span><br><span class="line">    print(Sw)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 与sklearn中的LDA函数对比</span></span><br><span class="line">    lda = LinearDiscriminantAnalysis(n_components=<span class="number">2</span>)</span><br><span class="line">    lda.fit(X, y)</span><br><span class="line">    X_new = lda.transform(X)</span><br><span class="line"><span class="comment">#    print(X_new)</span></span><br><span class="line">    plt.figure(<span class="number">2</span>)</span><br><span class="line">    plt.scatter(X_new[:, <span class="number">0</span>], X_new[:, <span class="number">1</span>], marker=<span class="string">'o'</span>, c=y)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<h5 id="5-5-Python-结果"><a href="#5-5-Python-结果" class="headerlink" title="5.5 Python 结果"></a>5.5 Python 结果</h5><p>展示转换矩阵$W$, 类间散度矩阵$S_b$和类内散度矩阵$S_w$,可见scala和python得到结果是一致的。</p>
+<p><img src="/2020/01/16/%E9%99%8D%E7%BB%B4_%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/python_lda_res.png" alt></p>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud" target="_blank" rel="noopener">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
