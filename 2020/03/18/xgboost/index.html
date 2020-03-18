@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        xgboost - undefined
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 人总要有些乐趣，比如编程和阅读 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/lixin.jpg" />
+        </div>
+        <div class="name">
+            <i>Lixin</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-XGBoost-简介"><span class="toc-text">1. XGBoost 简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-XGBoost-算法"><span class="toc-text">2.  $XGBoost  $算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-优化目标函数"><span class="toc-text">2.1  优化目标函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-总结"><span class="toc-text">2.2  总结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-XGBoost-的优缺点"><span class="toc-text">3 $XGBoost $的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-关于XGBosst的若干问题"><span class="toc-text">4. 关于XGBosst的若干问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-XGBoost与GBDT的联系和区别有哪些？"><span class="toc-text">4.1 XGBoost与GBDT的联系和区别有哪些？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-为什么XGBoost泰勒二阶展开后效果就比较好呢？"><span class="toc-text">4.2 为什么XGBoost泰勒二阶展开后效果就比较好呢？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-XGBoost对缺失值是怎么处理的？"><span class="toc-text">4.3 XGBoost对缺失值是怎么处理的？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-参考文献"><span class="toc-text">5 参考文献</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 人总要有些乐趣，比如编程和阅读 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        xgboost
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-03-18 20:25:34</span></span>
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h4 id="1-XGBoost-简介"><a href="#1-XGBoost-简介" class="headerlink" title="1. XGBoost 简介"></a>1. XGBoost 简介</h4><p>$XGBoost$的全称是$e\textcolor{red}Xtreme \textcolor{red}Gradient \textcolor{red}{Boosting}$，它是经过优化的分布式梯度提升库，旨在高效、灵活且可移植。$XGBoost$是大规模并行boosting tree的工具，它是目前最快最好的开源 boosting tree工具包，比常见的工具包快10倍以上。在数据科学方面，有大量的Kaggle选手选用$XGBoost$进行数据挖掘比赛，是各大数据科学比赛的必杀武器；在工业界大规模数据方面，$XGBoost$的分布式版本有广泛的可移植性，支持在Kubernetes、Hadoop、SGE、MPI、 Dask等各个分布式环境上运行，使得它可以很好地解决工业界大规模数据的问题。本文将从$XGBoost$的数学原理和工程实现上进行介绍，然后介绍$XGBoost$的优缺点，并在最后给出面试中经常遇到的关于$XGBoost$的问题。</p>
+<h4 id="2-XGBoost-算法"><a href="#2-XGBoost-算法" class="headerlink" title="2.  $XGBoost  $算法"></a>2.  $XGBoost  $算法</h4><p>​    $XGBoost$是由 $k$个基模型组成的一个加法模型，假设我们第 $t$ 次迭代要训练的树模型是 $f_t(x)$ ，则有：</p>
+<p>​    </p>
+<script type="math/tex; mode=display">
+\hat{y_i}^{(t)} = \sum_{k=1}^{t}f_k(x_i) = \hat{y_i}^{(t-1)} + f_t(x_i)</script><p>其中，$\hat{y_i}^{(t)}$是第$t$次迭代后样本的$i$的预测结果，$\hat{y_i}^{(t-1)}$是前$t-1$棵树的预测结果，$f_t(x_i)$是第$t$棵树的模型。</p>
+<p>​    $XGBoost   $算法是$ GBDT $算法的改进版本，其目标函数为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Obj^{(k)}&=\sum\limits_{i=1}^ml(y^{(i)},\hat{y}^{(i)}_k)+\sum\limits_{i=1}^T\Omega(f_i)\\
+&=\sum\limits_{i=1}^ml(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)}))+\Omega(f_k)+C
+\end{aligned}</script><p>同理为了求损失函数$ l\left(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})\right) $在$ \hat{y}^{(i)}_{k-1}  $处的二阶展开，不妨先对$ l(y^{(i)},x) $在$ \hat{y}^{(i)}_{k-1}  $处进行二阶展开可得：</p>
+<script type="math/tex; mode=display">
+l(y^{(i)},x)\simeq l(y^{(i)},\hat{y}^{(i)}_{k-1})+\nabla_{\hat{y}^{(i)}_{k-1}}l(y^{(i)},\hat{y}^{(i)}_{k-1})\cdot(x-\hat{y}^{(i)}_{k-1})+\dfrac{1}{2}\nabla^2_{\hat{y}^{(i)}_{k-1}}l(y^{(i)},\hat{y}^{(i)}_{k-1})\cdot(x-\hat{y}^{(i)}_{k-1})^2</script><p>令$ x=\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})  $，且记$ \nabla_{\hat{y}^{(i)}_{k-1}}l\left(y^{(i)},\hat{y}^{(i)}_{k-1}\right)  $为$ g_i $、$ \nabla^2_{\hat{y}^{(i)}_{k-1}}l\left(y^{(i)},\hat{y}^{(i)}_{k-1}\right)  $为$ h_i $则有：</p>
+<script type="math/tex; mode=display">
+l\left(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})\right)\simeq l(y^{(i)},\hat{y}^{(i)}_{k-1})+g_if_k(x^{(i)})+\dfrac{1}{2}h_if^2_k(x^{(i)})</script><p>其中，$g_i$为损失函数的一阶导数，$h_i$为损失函数的二阶导数，注意这里是对$\hat{y}^{(t-1)}_{i}$求导。</p>
+<p><strong>以平方损失为例：</strong></p>
+<script type="math/tex; mode=display">
+l(y^{(i)},\hat{y}^{(t-1)}_i) = (y^{(i)},\hat{y}^{(t-1)}_i)^2</script><p>则：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+g_i &= \frac{\part{l(y^{(i)},\hat{y}^{(t-1)}_i)}}{\part{\hat{y}^{(t-1)}_i}} = -2(y_i - \hat{y}_i^{(t-1)}) \\
+h_i &= \frac{\part ^2{l(y^{(i)},\hat{y}^{(t-1)}_i)}}{\part{(\hat{y}^{(t-1)}_i})^2} = 2
+\end{aligned}</script><p>又因为在第$ k $步$ \hat{y}^{(i)}_{k-1}  $其实是已知的，所以$ l(y^{(i)},\hat{y}^{(i)}_{k-1}) $是一个常数函数，故对优化目标函数不会产生影响，将上述结论带入目标函数$ Obj^{(k)} $可得：</p>
+<script type="math/tex; mode=display">
+Obj^{(k)}\simeq\sum\limits_{i=1}^m\bigg[ g_if_k(x^{(i)})+\dfrac{1}{2}h_if^2_k(x^{(i)})\bigg]+\Omega(f_k)</script><h5 id="2-1-优化目标函数"><a href="#2-1-优化目标函数" class="headerlink" title="2.1  优化目标函数"></a>2.1  优化目标函数</h5><p>​    以$ XGBoost $算法的目标函数为例，对于任意决策树$ f_k  $，<strong>假设其叶子结点个数$ T $，该决策树是由所有结点对应的值组成的向量$ w\in\mathbb{R}^T $，以及能够把特征向量映射到叶子结点的函数$ q(*):\mathbb{R}^d\rightarrow \{1,2,\cdots,T \}  $构造而成的，且每个样本数据都存在唯一的叶子结点上。因此决策树$ f_k $可以定义为$ f_k(x)=w_{q(x)}  $。</strong>决策树的复杂度可以由正则项$ \Omega(f_k)=\gamma T+\dfrac{1}{2}\lambda\sum\limits_{j=1}^Tw_j^2  $来定义，该正则项表明决策树模型的复杂度可以由叶子结点的数量和叶子结点对应值向量$ w  $的$ L2 $范数决定。定义集合$ I_j=\{i|q(x^{(i)})=j \} $为划分到叶子结点$ j  $的所有训练样本的集合，即之前训练样本的集合，现在都改写成叶子结点的集合，因此$ XGBoost $算法的目标函数可以改写为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Obj^{(k)}&\simeq\sum\limits_{i=1}^m\bigg[ g_if_k(x^{(i)})+\dfrac{1}{2}h_if^2_k(x^{(i)})\bigg]+\Omega(f_k)\\
+&=\sum\limits_{i=1}^m\bigg[g_iw_{q(x^{(i)})}+\dfrac{1}{2}h_jw^2_{q(x^{(i)})} \bigg]+\gamma T+\dfrac{1}{2}\lambda\sum\limits_{j=1}^Tw_j^2\\
+&=\sum\limits_{j=1}^T\bigg[(\sum\limits_{i\in I_j}g_i)w_j+\dfrac{1}{2}(\sum\limits_{i\in I_j}h_i+\lambda)w_j^2 \bigg]+\gamma T
+\end{aligned}</script><p>令$ G_j=\sum\limits_{i\in I_j}g_i , H_j=\sum\limits_{i\in I_j}h_i  $则有：</p>
+<script type="math/tex; mode=display">
+Obj^{(k)}\simeq\sum\limits_{j=1}^T\bigg[G_jw_j+\dfrac{1}{2}(H_j+\lambda)w_j^2 \bigg]</script><p>分析可知当更新到第$ k $步时，此时<strong>决策树结构固定的情况下</strong>，每个叶子结点有哪些样本是已知的，那么$ q(*) $和$ I_j $也是已知的；又因为$ g_i $和$ h_i $是第$ k-1 $步的导数，那么也是已知的，因此$ G_j $和$ H_j $都是已知的。令目标函数$ Obj^{(k)} $的一阶导数为$ 0 $，即可求得叶子结点$ j $对应的值为：</p>
+<script type="math/tex; mode=display">
+w^*_j=-\dfrac{G_j}{H_j+\lambda}</script><p>因此针对于结构固定的决策树，最优的目标函数$ Obj $为：</p>
+<script type="math/tex; mode=display">
+Obj=-\dfrac{1}{2}\sum\limits_{j=1}^T\dfrac{G_j^2}{H_j+\lambda}+\gamma T</script><p>上面的推导是建立在决策树结构固定的情况下，然而决策树结构数量是无穷的，所以实际上并不能穷举所有可能的决策树结构，什么样的决策树结构是最优的呢？通常使用贪心策略来生成决策树的每个结点，$ XGBoost  $算法的在决策树的生成阶段就对过拟合的问题进行了处理，因此无需独立的剪枝阶段，具体步骤可以归纳为：</p>
+<ol>
+<li>从深度为$ 0 $的树开始对每个叶子结点穷举所有的可用特征；</li>
+<li>针对每一个特征，把属于该结点的训练样本的该特征升序排列，通过线性扫描的方式来决定该特征的<strong>最佳分裂点</strong>，并采用最佳分裂点时的<strong>收益</strong>；</li>
+<li>选择收益最大的特征作为分裂特征，用该特征的最佳分裂点作为分裂位置，把该结点生成出左右两个新的叶子结点，并为每个新结点关联新的样本集；</li>
+<li>退回到第一步，继续递归操作直到满足特定条件。</li>
+</ol>
+<p>因为对某个结点采取的是二分策略，分别对应左子结点和右子结点，除了当前待处理的结点，其他结点对应的$ Obj  $值都不变，所以对于收益的计算只需要考虑当前结点的$ Obj  $值即可，分裂前针对该结点的最优目标函数为：</p>
+<script type="math/tex; mode=display">
+Obj^{(before)}=-\dfrac{1}{2}\dfrac{(G_L+G_R)^2}{(H_L+H_R)+\lambda}+\gamma</script><p>分裂后的最优目标函数为：</p>
+<script type="math/tex; mode=display">
+Obj^{(later)}=-\dfrac{1}{2}\bigg[\dfrac{G_L^2}{H_L+\lambda}+\dfrac{G_R^2}{H_R+\lambda} \bigg]+2\gamma</script><p>那么对于该目标函数来说，分裂后的收益为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Gain&=Obj^{(before)}-Obj^{(later)}\\
+&=\dfrac{1}{2}\bigg[\dfrac{G_L^2}{H_L+\lambda}+\dfrac{G_R^2}{H_R+\lambda}-\dfrac{(G_L+G_R)^2}{(H_L+H_R)+\lambda} \bigg]-\gamma
+\end{aligned}</script><p>故可以用上述公式来决定最有分裂特征和最优特征分裂点。</p>
+<h5 id="2-2-总结"><a href="#2-2-总结" class="headerlink" title="2.2  总结"></a>2.2  总结</h5><p>​    $XGBoost   $算法的过程可以归纳为：</p>
+<ol>
+<li>前向分布算法的每一步都生成一棵决策树；</li>
+<li>拟合该决策树之前，先计算损失函数在每个样本数据上的一阶导$ g_i  $和二阶导$ h_i  $；</li>
+<li>通过贪心策略生成一棵决策树，计算每个叶子结点的$ G_j $和$ H_j $并计算预测值$ w $；</li>
+<li>把新生成的决策树$ f_k(x) $加入$ \hat{y}^{(i)}_k=\hat{y}^{(i)}_{k-1}+\epsilon f_k(x^{(i)})  $，其中$ \epsilon $是学习率主要控制模型的过拟合。</li>
+</ol>
+<h4 id="3-XGBoost-的优缺点"><a href="#3-XGBoost-的优缺点" class="headerlink" title="3 $XGBoost $的优缺点"></a>3 $XGBoost $的优缺点</h4><p>​    相比于普通的$ GBDT  $算法$ XGBoost $算法的主要优点在于：</p>
+<ul>
+<li>不仅支持决策树作为基分类器，还支持其它线性分类器；</li>
+<li>使用了损失函数的二阶泰勒展开，因此与损失函数更接近，收敛速度更快；</li>
+<li>在目标函数中加入了正则项，用于控制模型的复杂度。正则项里包含了树的叶子节点个数、叶子节点权重的  范式。正则项降低了模型的方差，使学习出来的模型更加简单，有助于防止过拟合，这也是$XGBoost$优于传统GBDT的一个特性。；</li>
+<li>$Shrinkage $也就是之前说的$ \epsilon $，主要用于削弱每棵决策树的影响，让后面有更大的学习空间，实际应用中一般把$ \epsilon $设置的小点，迭代次数设置的大点；</li>
+<li>列抽样，$ XGBoost $从随机森林算法中借鉴而来，支持列抽样可以降低过拟合，并且减少计算；</li>
+<li>支持对缺失值的处理，对于特征值缺失的样本，$ XGBoost $可以学习这些缺失值的分裂方向；</li>
+<li>支持并行，boosting不是一种串行的结构吗?怎么并行的？注意$XGBoost$的并行不是tree粒度的并行，$XGBoost$也是一次迭代完才能进行下一次迭代的（第$t$次迭代的代价函数里包含了前面$t-1$次迭代的预测值）。$XGBoost$的并行是在特征粒度上的。我们知道，决策树的学习最耗时的一个步骤就是对特征的值进行排序（因为要确定最佳分割点），$XGBoost$在训练之前，预先对数据进行了排序，然后保存为block结构，后面的迭代中重复地使用这个结构，大大减小计算量。这个block结构也使得并行成为了可能，在进行节点的分裂时，需要计算每个特征的增益，最终选增益最大的那个特征去做分裂，那么各个特征的增益计算就可以开多线程进行。；</li>
+<li>近似算法，决策树结点在分裂时需要穷举每个可能的分裂点，当数据没法全部加载到内存中时，这种方法会比较慢，$ XGBoost $提出了一种近似的方法去高效的生成候选分割点。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>虽然利用预排序和近似算法可以降低寻找最佳分裂点的计算量，但在节点分裂过程中仍需要遍历数据集；</li>
+<li>预排序过程的空间复杂度过高，不仅需要存储特征值，还需要存储特征对应样本的梯度统计值的索引，相当于消耗了两倍的内存。</li>
+</ul>
+<h4 id="4-关于XGBosst的若干问题"><a href="#4-关于XGBosst的若干问题" class="headerlink" title="4. 关于XGBosst的若干问题"></a>4. 关于XGBosst的若干问题</h4><h5 id="4-1-XGBoost与GBDT的联系和区别有哪些？"><a href="#4-1-XGBoost与GBDT的联系和区别有哪些？" class="headerlink" title="4.1 XGBoost与GBDT的联系和区别有哪些？"></a>4.1 XGBoost与GBDT的联系和区别有哪些？</h5><ol>
+<li>GBDT是机器学习算法，XGBoost是该算法的工程实现。</li>
+<li><strong>正则项：</strong> 在使用CART作为基分类器时，XGBoost显式地加入了正则项来控制模型的复杂度，有利于防止过拟合，从而提高模型的泛化能力。</li>
+<li><strong>导数信息：</strong> GBDT在模型训练时只使用了代价函数的一阶导数信息，XGBoost对代价函数进行二阶泰勒展开，可以同时使用一阶和二阶导数。</li>
+<li><strong>基分类器：</strong> 传统的GBDT采用CART作为基分类器，XGBoost支持多种类型的基分类器，比如线性分类器。</li>
+<li><strong>子采样：</strong> 传统的GBDT在每轮迭代时使用全部的数据，XGBoost则采用了与随机森林相似的策略，支持对数据进行采样。</li>
+<li><strong>缺失值处理：</strong> 传统GBDT没有设计对缺失值进行处理，XGBoost能够自动学习出缺失值的处理策略。</li>
+<li><strong>并行化：</strong> 传统GBDT没有进行并行化设计，注意不是tree维度的并行，而是特征维度的并行。XGBoost预先将每个特征按特征值排好序，存储为块结构，分裂结点时可以采用多线程并行查找每个特征的最佳分割点，极大提升训练速度。</li>
+</ol>
+<h5 id="4-2-为什么XGBoost泰勒二阶展开后效果就比较好呢？"><a href="#4-2-为什么XGBoost泰勒二阶展开后效果就比较好呢？" class="headerlink" title="4.2 为什么XGBoost泰勒二阶展开后效果就比较好呢？"></a>4.2 为什么XGBoost泰勒二阶展开后效果就比较好呢？</h5><p>（1）<strong>从为什么会想到引入泰勒二阶的角度来说（可扩展性）：</strong> XGBoost官网上有说，当目标函数是<code>MSE</code>时，展开是一阶项（残差）+二阶项的形式，而其它目标函数，如<code>logistic loss</code>的展开式就没有这样的形式。为了能有个统一的形式，所以采用泰勒展开来得到二阶项，这样就能把<code>MSE</code>推导的那套直接复用到其它自定义损失函数上。简短来说，就是为了统一损失函数求导的形式以支持自定义损失函数。至于为什么要在形式上与<code>MSE</code>统一？是因为<code>MSE</code>是最普遍且常用的损失函数，而且求导最容易，求导后的形式也十分简单。所以理论上只要损失函数形式与<code>MSE</code>统一了，那就只用推导<code>MSE</code>就好了。</p>
+<p>（2）<strong>从二阶导本身的性质，也就是从为什么要用泰勒二阶展开的角度来说（精准性）：</strong> 二阶信息本身就能让梯度收敛更快更准确。这一点在优化算法里的牛顿法中已经证实。可以简单认为一阶导指引梯度方向，二阶导指引梯度方向如何变化。简单来说，相对于GBDT的一阶泰勒展开，XGBoost采用二阶泰勒展开，可以更为精准的逼近真实的损失函数。</p>
+<h5 id="4-3-XGBoost对缺失值是怎么处理的？"><a href="#4-3-XGBoost对缺失值是怎么处理的？" class="headerlink" title="4.3 XGBoost对缺失值是怎么处理的？"></a>4.3 XGBoost对缺失值是怎么处理的？</h5><p>在普通的GBDT策略中，对于缺失值的方法是先手动对缺失值进行填充，然后当做有值的特征进行处理，但是这样人工填充不一定准确，而且没有什么理论依据。而XGBoost采取的策略是先不处理那些值缺失的样本，采用那些有值的样本搞出分裂点，在遍历每个有值特征的时候，尝试将缺失样本划入左子树和右子树，选择使损失最优的值作为分裂点。</p>
+<h4 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5 参考文献"></a>5 参考文献</h4><ul>
+<li>陈天奇论文原文 XGBoost: A Scalable Tree Boosting System</li>
+<li><a href="mp.weixin.qq.com/s/0dehrF5Zvn5ILkadfsqfUw">深入理解 XGBoost：Kaggle 最主流的集成算法！</a></li>
+</ul>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud" target="_blank" rel="noopener">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
