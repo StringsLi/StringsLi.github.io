@@ -152,8 +152,8 @@ l\left(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})\right)\simeq l(y^{(i)},\hat{y}^{
 l(y^{(i)},\hat{y}^{(t-1)}_i) = (y^{(i)},\hat{y}^{(t-1)}_i)^2</script><p>则：</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
-g_i &= \frac{\part{l(y^{(i)},\hat{y}^{(t-1)}_i)}}{\part{\hat{y}^{(t-1)}_i}} = -2(y_i - \hat{y}_i^{(t-1)}) \\
-h_i &= \frac{\part ^2{l(y^{(i)},\hat{y}^{(t-1)}_i)}}{\part{(\hat{y}^{(t-1)}_i})^2} = 2
+g_i &= \frac{\partial{l(y^{(i)},\hat{y}^{(t-1)}_i)}}{\partial{\hat{y}^{(t-1)}_i}} = -2(y_i - \hat{y}_i^{(t-1)}) \\
+h_i &= \frac{\partial ^2{l(y^{(i)},\hat{y}^{(t-1)}_i)}}{\partial{(\hat{y}^{(t-1)}_i})^2} = 2
 \end{aligned}</script><p>又因为在第$ k $步$ \hat{y}^{(i)}_{k-1}  $其实是已知的，所以$ l(y^{(i)},\hat{y}^{(i)}_{k-1}) $是一个常数函数，故对优化目标函数不会产生影响，将上述结论带入目标函数$ Obj^{(k)} $可得：</p>
 <script type="math/tex; mode=display">
 Obj^{(k)}\simeq\sum\limits_{i=1}^m\bigg[ g_if_k(x^{(i)})+\dfrac{1}{2}h_if^2_k(x^{(i)})\bigg]+\Omega(f_k)</script><h5 id="2-1-优化目标函数"><a href="#2-1-优化目标函数" class="headerlink" title="2.1  优化目标函数"></a>2.1  优化目标函数</h5><p>​    以$ XGBoost $算法的目标函数为例，对于任意决策树$ f_k  $，<strong>假设其叶子结点个数$ T $，该决策树是由所有结点对应的值组成的向量$ w\in\mathbb{R}^T $，以及能够把特征向量映射到叶子结点的函数$ q(*):\mathbb{R}^d\rightarrow \{1,2,\cdots,T \}  $构造而成的，且每个样本数据都存在唯一的叶子结点上。因此决策树$ f_k $可以定义为$ f_k(x)=w_{q(x)}  $。</strong>决策树的复杂度可以由正则项$ \Omega(f_k)=\gamma T+\dfrac{1}{2}\lambda\sum\limits_{j=1}^Tw_j^2  $来定义，该正则项表明决策树模型的复杂度可以由叶子结点的数量和叶子结点对应值向量$ w  $的$ L2 $范数决定。定义集合$ I_j=\{i|q(x^{(i)})=j \} $为划分到叶子结点$ j  $的所有训练样本的集合，即之前训练样本的集合，现在都改写成叶子结点的集合，因此$ XGBoost $算法的目标函数可以改写为：</p>
