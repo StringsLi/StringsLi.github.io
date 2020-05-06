@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        降维方法-总结 - undefined
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 人总要有些乐趣，比如编程和阅读 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/lixin.jpg" />
+        </div>
+        <div class="name">
+            <i>Lixin</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-降维概述"><span class="toc-text">1. 降维概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-降维方法分类"><span class="toc-text">2.降维方法分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-线性方法"><span class="toc-text">3 线性方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-PCA主成分分析"><span class="toc-text">3.1 PCA主成分分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-LDA-线性判别分析"><span class="toc-text">3.2 LDA 线性判别分析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-非线性方法"><span class="toc-text">4 非线性方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-MDS"><span class="toc-text">4.1 MDS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-Isomap"><span class="toc-text">4.2 Isomap</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-LLE"><span class="toc-text">4.3 LLE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-4-核PCA-kernel-PCA"><span class="toc-text">4.4 核PCA kernel PCA</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-5-DiffusionMap"><span class="toc-text">4.5 DiffusionMap</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 人总要有些乐趣，比如编程和阅读 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        降维方法-总结
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-05-06 19:45:37</span></span>
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h4 id="1-降维概述"><a href="#1-降维概述" class="headerlink" title="1. 降维概述"></a>1. 降维概述</h4><p>样本的特征数称为维数（dimensionality），当维数非常大时，也就是现在所说的“维数灾难”，具体表现在：在高维情形下，数据样本将变得十分稀疏，因为此时要满足训练样本为“密采样”的总体样本数目是一个触不可及的天文数字，谓可远观而不可亵玩焉…训练样本的稀疏使得其代表总体分布的能力大大减弱，从而消减了学习器的泛化能力；同时当维数很高时，计算距离也变得十分复杂，甚至连计算内积都不再容易，这也是为什么支持向量机（SVM）使用核函数“低维计算，高维表现”的原因。</p>
+<p>缓解维数灾难的一个重要途径就是降维，即通过某种数学变换将原始高维空间转变到一个低维的子空间。在这个子空间中，样本的密度将大幅提高，同时距离计算也变得容易。这时也许会有疑问，这样降维之后不是会丢失原始数据的一部分信息吗？这是因为在很多实际的问题中，虽然训练数据是高维的，但是与学习任务相关也许仅仅是其中的一个低维子空间，也称为一个低维嵌入，例如：数据属性中存在噪声属性、相似属性或冗余属性等，对高维数据进行降维能在一定程度上达到提炼低维优质属性或降噪的效果。</p>
+<h4 id="2-降维方法分类"><a href="#2-降维方法分类" class="headerlink" title="2.降维方法分类"></a>2.降维方法分类</h4><p><img src="http://img.blog.csdn.net/20150522194801297" alt="这里写图片描述"></p>
+<h4 id="3-线性方法"><a href="#3-线性方法" class="headerlink" title="3 线性方法"></a>3 线性方法</h4><h5 id="3-1-PCA主成分分析"><a href="#3-1-PCA主成分分析" class="headerlink" title="3.1 PCA主成分分析"></a>3.1 PCA主成分分析</h5><p>主成分分析（PCA）直接通过一个线性变换，将原始空间中的样本投影到新的低维空间中。简单来理解这一过程便是：PCA采用一组新的基来表示样本点，其中每一个基向量都是原来基向量的线性组合，通过使用尽可能少的新基向量来表出样本，从而达到降维的目的。</p>
+<p>假设使用$d^{’}$个新基向量来表示原来样本，实质上是将样本投影到一个由$d^{’}$个基向量确定的一个超平面上（即舍弃了一些维度），要用一个超平面对空间中所有高维样本进行恰当的表达，最理想的情形是：若这些样本点都能在超平面上表出且这些表出在超平面上都能够很好地分散开来。但是一般使用较原空间低一些维度的超平面来做到这两点十分不容易，因此我们退一步海阔天空，要求这个超平面应具有如下两个性质：</p>
+<blockquote>
+<p><strong>最近重构性</strong>：样本点到超平面的距离足够近，即尽可能在超平面附近；<br><strong>最大可分性</strong>：样本点在超平面上的投影尽可能地分散开来，即投影后的坐标具有区分性。</p>
+</blockquote>
+<p>PCA的算法描述如下：</p>
+<p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/降维方法-总结\pca_算法步骤.png" alt></p>
+<h5 id="3-2-LDA-线性判别分析"><a href="#3-2-LDA-线性判别分析" class="headerlink" title="3.2 LDA 线性判别分析"></a>3.2 LDA 线性判别分析</h5><p>参考之前的博文</p>
+<h4 id="4-非线性方法"><a href="#4-非线性方法" class="headerlink" title="4 非线性方法"></a>4 非线性方法</h4><h5 id="4-1-MDS"><a href="#4-1-MDS" class="headerlink" title="4.1 MDS"></a>4.1 MDS</h5><p>不管是使用核函数升维还是对数据降维，我们都希望<strong>原始空间样本点之间的距离在新空间中基本保持不变</strong>，这样才不会使得原始空间样本之间的关系及总体分布发生较大的改变。<strong>“多维缩放”（MDS）</strong>正是基于这样的思想，<strong>MDS要求原始空间样本之间的距离在降维后的低维空间中得以保持</strong>。</p>
+<p>假定$m$个样本在原始空间中任意两两样本之间的距离矩阵为$D \in R ^{m \times m}$，其中第$i$行$j$列的元素$dist_{ij}$为样本$x_i$到$x_j$的距离。我们的目标便是获得样本在低维空间中的表示$Z \in R^{d^{’} \times m} $, $d’&lt; d$，且任意两个样本在低维空间中的欧式距离等于原始空间中的距离，即$||zi-zj||=dist_{ij}$。因此接下来我们要做的就是根据已有的距离矩阵$D$来求解出降维后的坐标矩阵$Z$。</p>
+<p>令降维后的样本坐标矩阵Z被中心化，<strong>中心化是指将每个样本向量减去整个样本集的均值向量，故所有样本向量求和得到一个零向量</strong>。这样易知：矩阵B的每一列以及每一列求和均为0，因为提取公因子后都有一项为所有样本向量的和向量。</p>
+<p><img src="https://i.loli.net/2018/10/18/5bc851a4a4ee2.png" alt="4.png"></p>
+<p>令$B = Z^TZ \in R^{m \times m}$,其中$B$为降维后的样本的內积矩阵，$b_{ij} = z_i^Tz_j$,有：</p>
+<script type="math/tex; mode=display">
+dist_{ij}^{2} = ||z_i||^2 + ||z_j||^2 -2z_i^Tz_j
+= b_{ii} + b_{jj} - 2b_{ij}</script><p>为了方便讨论，令降维后的样本$Z$被中心化，即$\sum_{i=1}^{m}z_i = 0$,显然$B$的行与列之和均为0，即$\sum_{i=1}^{m}b_{ij} =\sum_{j=1}^{m}b_{ij} =  0$,容易知道：</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{m}dist_{ij}^2 = tr(B) +mb_{jj}</script><script type="math/tex; mode=display">
+\sum_{j=1}^{m}dist_{ij}^2 = tr(B) +mb_{ii}</script><script type="math/tex; mode=display">
+\sum_{i=1}^m\sum_{i=1}^{m}dist_{ij}^2 = 2m * tr(B)</script><p>其中$tr(.)$表示矩阵的迹(trace),$tr(B) = \sum_{i=1}^{m}||z_i||^2$,令</p>
+<script type="math/tex; mode=display">
+dist_{i.}^2=\sum_{i=1}^{m}dist_{ij}^2</script><script type="math/tex; mode=display">
+dist_{.j}^2=\sum_{i=1}^{m}dist_{ij}^2</script><script type="math/tex; mode=display">
+dist_{..}^2=\frac{1}{m^2}\sum_{i=1}^{m}\sum_{i=1}^{m}dist_{ij}^2</script><p>由上面三个等式可知：</p>
+<script type="math/tex; mode=display">
+b_{ij} = -0.5(dist_{ij}^2 - dist_{i.}^2 -dist_{.j}^2 + dist_{..}^2)</script><p>通过降维前后保持不变的距离矩阵$D$求取內积矩阵$B$.</p>
+<p>对$B$做特征值分解(<strong>eigenvalue decompostion</strong>), $B = VUV^T$,其中$U=diag(\lambda _1,\lambda _2,…,\lambda _d)$为特征值构成的对角矩阵，$\lambda _1 \geq \lambda _2 \geq … \geq \lambda _d$,$V$为特征向量矩阵。假定其中有$d^<em>$个非零特征值，他们构成的对角矩阵 $U_</em> = diag(\lambda _1,\lambda _2,…,\lambda _{d^{<em>}})$ ,其中$V_</em>$表示对应的特征向量矩阵，则$Z$可以表示为：</p>
+<script type="math/tex; mode=display">
+Z = U_*^{\frac{1}{2}}V_*^T \in R^{d^*\times m}</script><p>MDS 的算法描述如下：</p>
+<p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/降维方法-总结\mds_算法步骤.png" alt></p>
+<h5 id="4-2-Isomap"><a href="#4-2-Isomap" class="headerlink" title="4.2 Isomap"></a>4.2 Isomap</h5><p>等度量映射（Isomap)属于流行学习，流形学习（manifold learning）是一种借助拓扑流形概念的降维方法<strong>，</strong>流形是指在局部与欧式空间同胚的空间，即在局部与欧式空间具有相同的性质，能用欧氏距离计算样本之间的距离。这样即使高维空间的分布十分复杂，但是在局部上依然满足欧式空间的性质，基于流形学习的降维正是这种<strong>“邻域保持”</strong>的思想 ，等度量映射（Isomap）试图在降维前后保持邻域内样本之间的距离，而局部线性嵌入（LLE）则是保持邻域内样本之间的线性关系。</p>
+<p>等度量映射的基本出发点是：高维空间中的直线距离具有误导性，因为有时高维空间中的直线距离在低维空间中是不可达的。<strong>因此利用流形在局部上与欧式空间同胚的性质，可以使用近邻距离来逼近测地线距离</strong>，即对于一个样本点，它与近邻内的样本点之间是可达的，且距离使用欧式距离计算，这样整个样本空间就形成了一张近邻图，高维空间中两个样本之间的距离就转为最短路径问题。可采用著名的<strong>Dijkstra算法</strong>或<strong>Floyd算法</strong>计算最短距离，得到高维空间中任意两点之间的距离后便可以使用MDS算法来其计算低维空间中的坐标。</p>
+<p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/测地距离.png" alt></p>
+<p>从<strong>MDS</strong>算法的描述中我们可以知道：MDS先求出了低维空间的内积矩阵$B$，接着使用特征值分解计算出了样本在低维空间中的坐标，但是并没有给出通用的投影向量$w$，因此对于需要降维的新样本无从下手，书中给出的权宜之计是利用已知高/低维坐标的样本作为训练集学习出一个“投影器”，便可以用高维坐标预测出低维坐标。</p>
+<p>ISOMAP的算法步骤如下：</p>
+<p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/isomap_算法步骤.png" alt></p>
+<p>对于近邻图的构建，常用的有两种方法：<strong>一种是指定近邻点个数</strong>，像<strong>KNN</strong>一样选取k个最近的邻居；<strong>另一种是指定邻域半径</strong>，距离小于该阈值的被认为是它的近邻点。但两种方法均会出现下面的问题：</p>
+<blockquote>
+<p>若<strong>邻域范围指定过大，则会造成“短路问题”</strong>，即本身距离很远却成了近邻，将距离近的那些样本扼杀在摇篮。<br>若<strong>邻域范围指定过小，则会造成“断路问题”</strong>，即有些样本点无法可达了，整个世界村被划分为互不可达的小部落。</p>
+</blockquote>
+<h5 id="4-3-LLE"><a href="#4-3-LLE" class="headerlink" title="4.3 LLE"></a>4.3 LLE</h5><p>不同于Isomap算法去保持邻域距离，LLE算法试图去保持邻域内的线性关系，假定样本$x_i$的坐标可以通过它的邻域样本线性表出：</p>
+<script type="math/tex; mode=display">
+x_i = w_{ij}x_j + w_{ik}x_k + w_{il}x_l</script><p>LLE希望上式的关系在低维空间中得以保持。</p>
+<p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/LLE空间保持.png" alt></p>
+<p>LLE先为每个样本$x_i$找到其近邻下标集合$Q_i$,然后计算基于$Q_i$中的样本点对$x_i$进行线性重构的系数$w_i$.</p>
+<script type="math/tex; mode=display">
+\min_{w_1,w_2,...,w_m}\sum_{i=1}^m||x_i - \sum_{j \in Q_i}w_{ij}{x_j}||_2^2</script><script type="math/tex; mode=display">
+s.t. \sum_{j\in Q_i}w_{ij} = 1</script><p>其中$x_i$和$x_j$均为已知，令$C_{jk} = (x_i- x_j)^T(x_i-x_j)$,$w_{ij}$有闭式解</p>
+<script type="math/tex; mode=display">
+w_{ij} = \frac{\sum_{k \in Q_i}C_{jk}^{-1}}{\sum_{l,s \in Q_i}C_{ls}^{-1}}</script><p><strong>LLE</strong>在低维空间中保持$w_i$不变，于是$x_i$对应的低维空间坐标$z_i$可通过下式求解：</p>
+<script type="math/tex; mode=display">
+\min_{z_1,z_2,...,z_m}\sum_{i=1}^m||z_i - \sum_{j \in Q_i}w_{ij}{z_j}||_2^2</script><p>上式需要确定的是$x_i$对应的低维空间坐标$z_i$.</p>
+<p>令$Z =(z_1,z_2,…,z_m) \in R^{d’\times m}$,$(W)_{ij} = w_{ij}$,</p>
+<script type="math/tex; mode=display">
+M = (I-W)^T(I-W)</script><p>则优化目标可以重写为下式：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\min_z tr(ZMZ^T) \\
+s.t. ZZ^T = I 
+\end{equation}</script><p>可以通过特征值分解求解，$M$最小的$d’$的特征值对应的特征向量组成的矩阵即为$Z^T$</p>
+<p>LLE算法步骤如下：</p>
+<p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/lle_算法步骤.png" alt></p>
+<h5 id="4-4-核PCA-kernel-PCA"><a href="#4-4-核PCA-kernel-PCA" class="headerlink" title="4.4 核PCA kernel PCA"></a>4.4 核PCA kernel PCA</h5><p>说起机器学习你中有我/我中有你/水乳相融…在这里能够得到很好的体现。正如SVM在处理非线性可分时，通过引入核函数将样本投影到高维特征空间，接着在高维空间再对样本点使用超平面划分。这里也是相同的问题：若我们的样本数据点本身就不是线性分布，那还如何使用一个超平面去近似表出呢？因此也就引入了核函数，<strong>即先将样本映射到高维空间，再在高维空间中使用线性降维的方法</strong>。下面主要介绍<strong>核化主成分分析（KPCA）</strong>的思想。</p>
+<p>若核函数的形式已知，即我们知道如何将低维的坐标变换为高维坐标，这时我们只需先将数据映射到高维特征空间，再在高维空间中运用PCA即可。但是一般情况下，我们并不知道核函数具体的映射规则，例如：Sigmoid、高斯核等，我们只知道如何计算高维空间中的样本内积，这时就引出了KPCA的一个重要创新之处：<strong>即空间中的任一向量，都可以由该空间中的所有样本线性表示</strong>。</p>
+<p>假定我们将在高维特征空间中的数据投影到由$W$确定的超平面上，即PCA欲求解</p>
+<script type="math/tex; mode=display">
+(\sum_{i=1}^mz_iz_i^T)W = \lambda W</script><p>其中$z_i$是样本点$x_i$在高维特征空间的像，可知：</p>
+<script type="math/tex; mode=display">
+W = \frac{1}{\lambda}(\sum_{i=1}^mz_iz^T_i)W = \sum_{i=1}^m z_i\frac{z_i^TW}{\lambda} \\
+=\sum_{i=1}^m z_i\alpha _i</script><p>其中$\alpha _i = \frac{1}{\lambda}z_i^TW$.假定$z_i$是由原始属性空间中的样本点$x_i$通过映射$\phi$产生，即$z_i = \phi (x_i),i= 1,2,…,m$,若$\phi$能被显式的表达出来，则通过它将样本映射至高维特征空间，再在特征空间中实施PCA即可。</p>
+<p>即（17）可变为</p>
+<script type="math/tex; mode=display">
+(\sum_{i=1}^m \phi (x_i) \phi (x_i)^T)W = \lambda W</script><p>（18）式可变为：</p>
+<script type="math/tex; mode=display">
+W= \sum_{i=1}^m \phi(x_i)\alpha_i</script><p>一般情形下，我们不清楚$\phi$的具体形式，于是引入核函数:</p>
+<script type="math/tex; mode=display">
+\kappa(x_i,x_j) = \phi(x_i)^T\phi(x_j)</script><p>将（21)(20)带入到(19)式中可得：</p>
+<script type="math/tex; mode=display">
+KA= \lambda A</script><p>其中$K$为$\kappa$ 对应的核矩阵，$(K)_{ij} = \kappa(x_i,x_j),A = (\alpha_1;\alpha_2;…;\alpha_m)$,显然上式是个特征值分解问题，取$K$最大的$d’$个特征值对应的特征向量即可。</p>
+<h5 id="4-5-DiffusionMap"><a href="#4-5-DiffusionMap" class="headerlink" title="4.5 DiffusionMap"></a>4.5 DiffusionMap</h5><p>扩散映射是一种降维方法</p>
+<ol>
+<li>其通过 整合数据的局部几何关系 揭示 数据集在不同尺度的几何结构。</li>
+<li>与PCA (principal component analysis)、MDS (Multidimensional Scaling) 这些降维方法相比，扩散映射 非线性，聚焦于发现数据集潜在的流形结构。</li>
+<li>优点：对噪声鲁棒，计算代价较低</li>
+</ol>
+<p>算法步骤如下:</p>
+<p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/diffmap_算法步骤.png" alt></p>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud" target="_blank" rel="noopener">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
