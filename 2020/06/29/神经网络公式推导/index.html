@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        神经网络公式推导 - undefined
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 人总要有些乐趣，比如编程和阅读 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/lixin.jpg" />
+        </div>
+        <div class="name">
+            <i>Lixin</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#神经网络的反向传播公式"><span class="toc-text">神经网络的反向传播公式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-逻辑回归反向传播公式的推导"><span class="toc-text">1. 逻辑回归反向传播公式的推导</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-单隐层神经网络的反向传播公式推导"><span class="toc-text">2. 单隐层神经网络的反向传播公式推导</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-深层神经网络的前向和反向传播"><span class="toc-text">3. 深层神经网络的前向和反向传播</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 人总要有些乐趣，比如编程和阅读 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        神经网络公式推导
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-06-29 14:35:44</span></span>
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h4 id="神经网络的反向传播公式"><a href="#神经网络的反向传播公式" class="headerlink" title="神经网络的反向传播公式"></a>神经网络的反向传播公式</h4><h5 id="1-逻辑回归反向传播公式的推导"><a href="#1-逻辑回归反向传播公式的推导" class="headerlink" title="1. 逻辑回归反向传播公式的推导"></a>1. 逻辑回归反向传播公式的推导</h5><p>逻辑回归是最简单的神经网络，先入手逻辑回归，有助于后面的理解。</p>
+<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/ml-md\神经网络2\逻辑回归反向传播.jpg" alt></p>
+<p>上图是一个逻辑回归正向传播的示意图。具体细节不再描述。</p>
+<p>损失函数为：</p>
+<script type="math/tex; mode=display">
+L(a,y) = -yloga -(1-y)log(1-a)</script><p>反向传播的目的为了求$dw和db$，从而采用梯度下降法进行迭代优化，那么反向传播就是从后向前一步步的求微分，从而得到$dw,db$,具体过程如下：</p>
+<ol>
+<li>$da = \frac{dL(a,y)}{da} = -\frac{y}{a} + \frac{1-y}{1-a}$</li>
+<li>$dz = \frac{dL(a,y)}{dz} = \frac{dL}{da} \frac{da}{dz}= da.g^{‘}(z) = a - y$，其中sigmoid函数导数计算公式$g^{‘}(z) = g(z)(1-g(z))$</li>
+<li>$dw = dz.x$</li>
+<li>$db = dz$</li>
+</ol>
+<p>这样就完成了逻辑回归的反向传播</p>
+<h5 id="2-单隐层神经网络的反向传播公式推导"><a href="#2-单隐层神经网络的反向传播公式推导" class="headerlink" title="2. 单隐层神经网络的反向传播公式推导"></a>2. 单隐层神经网络的反向传播公式推导</h5><p>神经网络计算中，与逻辑回归十分相似，但中间会有多层计算。下图是一个双层神经网络，有一个输入层，一个隐藏层和一个输出层。 </p>
+<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/ml-md\神经网络2\二层神经网络反向传播.jpg" alt></p>
+<p>前向传播如图所示。其中$L(a^{[2]},y)$为交叉熵损失函数，假设有两个输出则：</p>
+<script type="math/tex; mode=display">
+L(a^{[2]},y) = -yloga^{[2]} -(1-y)log(1-a^{[2]})</script><p>反向传播公式如下：</p>
+<p>$da^{[2]} = \frac{dL(a^{[2]},y)}{da} = -\frac{y}{a^{[2]}} + \frac{1-y}{1-a^{[2]}}$</p>
+<ol>
+<li>$dz^{[2]} = \frac{dL(a,y)}{dz^{[2]}} = \frac{dL}{da^{[2]}} \frac{da^{[2]}}{dz^{[2]}}= da^{[2]}.g^{‘}(z^{[2]}) = a^{[2]} - y$，其中sigmoid函数导数计算公式$g^{‘}(z) = g(z)(1-g(z))$</li>
+<li>$dw ^{[2]}= dz^{[2]}.(a^{[1]})^T$</li>
+<li>$db^{[2]} = dz^{[2]}$</li>
+<li>$dz^{[1]} = \frac{dL}{da^{[1]}}\frac{da^{[1]}}{dz^{[1]}}  = (w^{[2]})^Tdz^{[2]}*(g^{[1]})^{‘}(z^{[1]})$</li>
+<li>$dw^{[1]} = dz^{[1]}.x^T$</li>
+<li>$db^{[1]} = dz^{[1]}$</li>
+</ol>
+<h5 id="3-深层神经网络的前向和反向传播"><a href="#3-深层神经网络的前向和反向传播" class="headerlink" title="3. 深层神经网络的前向和反向传播"></a>3. 深层神经网络的前向和反向传播</h5><p>下面是一个四层的神经网络：</p>
+<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/ml-md\神经网络2\深层神经网络反向传播.jpg" alt></p>
+<p>前向传播过程：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+z^{[l]} &= w^{[l]}a^{[l-1]} + b^{[l]} \\
+a^{[l]} &= g^{[l]}(z^{[l]})
+\end{aligned}</script><p>与单隐层神经网络反向传播类似，我们可以直接写出深层神经网络的反向传播递推公式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathrm{d}z^{[l]} &= \mathrm{d}a^{[l]} \cdot g^{[l]'}(z^{[l]}) \\
+\mathrm{d}w^{[l]} &= \mathrm{d}z^{[l]} \cdot a^{[l-1]} \\
+\mathrm{d}b^{[l]} &= \mathrm{d}z^{[l]} \\
+\mathrm{d}a^{[l-1]} &= w^{[l]^T} \cdot \mathrm{d}z^{[l]}
+\end{aligned}</script><p><strong>NOTE:上面由于前向传播使用的$WX$,导致使用正常样本时，需要将$X$取转置设置，很是不爽，于是在下面给出$XW$的情形</strong>。</p>
+<p>这里只关注单隐层的情形：</p>
+<p>输入层，隐藏层，输出层。输入层的节点数目由数据集的维度决定（我们的数据集是2：x和y），同样的，输出层的节点数目也取决于数据集中的类别(同样是2：0和1)。值得注意的是：2个类别可以用1个节点来表示，但考虑到网络的扩展性，我们将输出节点的数目定为2。网络的输入是(x,y)坐标，输出是0或者1。用图片表示的话网络结构如下：</p>
+<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/ml-md\神经网络2\nn-from-scratch-3-layer-network.png" alt></p>
+<p>隐藏层的维度（节点数）是可以设置的，节点越多，能够匹配的函数模型越复杂。但这也会耗费更多的计算资源，也会增加过拟合的可能性。隐藏层大小的设定更像是一门艺术，它需要根据问题的具体情况进行分析。稍后我们将分析隐藏层节点的个数是如何对我们的输出进行影响的。</p>
+<p>除此之外，我们还需要为隐藏层选择一个合适的激活函数。激活函数用来将该层的输入转化为输出。非线性的激活函数能够让我们做一些非线性的假设。常用的非线性激活函数有：$tanh/sigmoid/ReLU$等。本文中使用的激活函数是tanh（我个人建议用ReLU），这个激活函数的有效性也经过了很多方案的验证。一个好的激活函数具有以下性质：保证数据输入与输出也是可微的。比如说$dtanh(x)/dx = 1-（tanh(x)*tanh(x)）$。这样可以保证我们只计算一次tanh(x)的值就可以用在之后的计算导数过程中。</p>
+<p>为了使网络的输出是一个概率，所以输出层的激活函数就只能是softmax（逻辑回归只能输出二分类而softmax可以输出多个分类），这里用softmax的原因是它可以将分数转化为概率。</p>
+<p><strong>神经网络如何预测</strong></p>
+<p>我们设计的神经网络通过前向传播来进行预测，可以简单的将前向传播理解为一系列的矩阵乘法运算和使用激活函数的结果。如果输入$x$代表一个二维向量，那么我们计算输出$\hat{y}$（同样也是二维）的方法如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+z_1 &= xW_1 + b_1 \\
+a_1 &= tanh(z_1) \\
+z_2 &= a_1W_2 + b_2 \\
+a_2 &= \hat{y} = softmax(z_2) \\
+\end{aligned}</script><p>$z_i$ 代表第$i$层的输入，$a_i$ 代表第$i$层应用激活函数后的输出 。$W_1,b_1,W_2,b_2$ 是网络的一些参数，具体的值需要通过训练数据来得到，你可以把他们看作层与层之间的矩阵变化数据。 矩阵的维度可以通过上述的矩阵乘法得到。举例说明：当我们使用的隐藏层有100个节点时，那么就有$W_1 \in \mathbb{R}^{2 \times 100},b_1 \in \mathbb{R}^{100},W_2 \in \mathbb{R}^{100*2},b_2 \in \mathbb{R}^2$,这也可以解释为什么当节点数量增加时计算量也会随之增加。</p>
+<p><strong>参数的学习过程</strong></p>
+<p>参数学习是指神经网络寻找能使训练数据误差最小的$W_1, b_1, W_2, b_2$值的过程。我们把衡量误差的函数叫做损失函数。当输出通过$softmax$得到时，常用的损失函数分类交叉熵损失（也叫负对数似然函数）。如果有$N$组训练值和$C$个分类，我们的预测结果$\hat{y}$与真实值$y$之间的损失定义为：</p>
+<script type="math/tex; mode=display">
+L(y,\hat{y}) = -\frac{1}{N}\sum_{n \in N}\sum_{i \in C}y_{n,i}log\hat{y}_{n,i}</script><p>上面的式子并没有看起来那么复杂，它代表我们训练数据和预测错误时损失的累加和。$y 与 \hat{y}$之间的差距越大，网络训练的损失也就越大。在参数学习过程中，训练损失越来越小，与训练数据的似然度也不断提高。</p>
+<p>在寻找最小值的过程中，我们可以使用梯度下降的方法。本文中实现了一种最普通的梯度下降方法，也叫固定学习率的批梯度下降方法。在实际应用中，SGD（随机梯度下降）或minibatch梯度下降法（还有Adam）可能会有更好的表现。如果你需要进一步的学习和研究</p>
+<p>梯度下降方法的输入是损失函数对于各项参数的梯度（向量的差分）：$\frac{\partial{L}}{\partial{W_1}},\frac{\partial{L}}{\partial{b_1}},\frac{\partial{L}}{\partial{W_2}},\frac{\partial{L}}{\partial{b_2}}$为了得到上述值，我们采用了著名的后向传播算法，这是一种根据输出计算梯度的有效算法。</p>
+<p>根据后向传播算法，我们可以得出以下结论：</p>
+<p>二分类的交叉熵损失函数为$L(a_2,y)$：</p>
+<script type="math/tex; mode=display">
+L(a_2,y) = -yloga_2 -(1-y)log(1-a_2)</script><p>反向传播公式如下：</p>
+<p>$da_2 = \frac{dL(a_2,y)}{da} = -\frac{y}{a_2} + \frac{1-y}{1-a_2}$</p>
+<ol>
+<li><p>$dz_2 = \frac{dL}{da_2}\frac{da_2}{dz_2} = a_2 - y$， 这里对应$z$ 对应$\delta $,由于softmax的导数$a-(1-a_2)$</p>
+</li>
+<li><p>$dW_2=  \frac{\partial L}{\partial W_2}= a_1^Tdz_2$</p>
+</li>
+<li><p>$db_2 =  \frac{\partial L}{\partial b_2}=dz_2$</p>
+</li>
+<li><p>$dz_1 = \frac{dL}{da_1}\frac{da_1}{dz_1}  =(g_1)^{‘}(z_1) <em>dz_2W_2^T = (1- tanh^2z_1) </em> dz_2 W_2^T$</p>
+</li>
+<li><p>$dW_1 = \frac{\partial L}{\partial W_1} = x^Tdz_1$</p>
+</li>
+<li><p>$db_1 = dz_1$</p>
+</li>
+</ol>
+<p>参考文献：</p>
+<ol>
+<li>吴恩达 神经网络和深度学习</li>
+<li><a href="https://blog.csdn.net/lst227405/article/details/56495625" target="_blank" rel="noopener">https://blog.csdn.net/lst227405/article/details/56495625</a></li>
+</ol>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud" target="_blank" rel="noopener">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
