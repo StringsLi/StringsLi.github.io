@@ -1,138 +1,250 @@
 <!DOCTYPE html>
-<html lang="en">
+
+
+  <html class="light page-post">
+
+
 <head>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="/img/favicon.ico">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>降维方法-总结 | Lixin</title>
 
-    <title>
-        
-        降维方法-总结 - undefined
-        
-    </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/aircloud.css">
-    <link rel="stylesheet" href="/css/gitment.css">
-    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
-    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
-    <!-- ga & ba script hoook -->
-    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+    <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
+  
+
+  <meta name="description" content="1. 降维概述样本的特征数称为维数（dimensionality），当维数非常大时，也就是现在所说的“维数灾难”，具体表现在：在高维情形下，数据样本将变得十分稀疏，因为此时要满足训练样本为“密采样”的总体样本数目是一个触不可及的天文数字，谓可远观而不可亵玩焉…训练样本的稀疏使得其代表总体分布的能力大大减弱，从而消减了学习器的泛化能力；同时当维数很高时，计算距离也变得十分复杂，甚至连计算内积都不再容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="降维方法-总结">
+<meta property="og:url" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;index.html">
+<meta property="og:site_name" content="Lixin">
+<meta property="og:description" content="1. 降维概述样本的特征数称为维数（dimensionality），当维数非常大时，也就是现在所说的“维数灾难”，具体表现在：在高维情形下，数据样本将变得十分稀疏，因为此时要满足训练样本为“密采样”的总体样本数目是一个触不可及的天文数字，谓可远观而不可亵玩焉…训练样本的稀疏使得其代表总体分布的能力大大减弱，从而消减了学习器的泛化能力；同时当维数很高时，计算距离也变得十分复杂，甚至连计算内积都不再容">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20150522194801297">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;降维方法-总结&#x2F;pca_算法步骤.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2018&#x2F;10&#x2F;18&#x2F;5bc851a4a4ee2.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;降维方法-总结&#x2F;mds_算法步骤.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;测地距离.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;isomap_算法步骤.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;LLE空间保持.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;lle_算法步骤.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;diffmap_算法步骤.png">
+<meta property="og:updated_time" content="2020-05-06T11:45:04.914Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20150522194801297">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
 </head>
 
 <body>
 
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
-    <button>
-        <span class="btn-bar"></span>
-        <span class="btn-bar"></span>
-        <span class="btn-bar"></span>
-    </button>
+
+  
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
 </div>
 
-<div class="index-about">
-    <i> 人总要有些乐趣，比如编程和阅读 </i>
-</div>
 
-<div class="index-container">
-    
-    <div class="index-left">
-        
-<div class="nav" id="nav">
-    <div class="avatar-name">
-        <div class="avatar ">
-            <img src="/img/lixin.jpg" />
-        </div>
-        <div class="name">
-            <i>Lixin</i>
-        </div>
-    </div>
-    <div class="contents" id="nav-content">
-        <ul>
-            <li >
-                <a href="/">
-                    <i class="iconfont icon-shouye1"></i>
-                    <span>主页</span>
-                </a>
-            </li>
-            <li >
-                <a href="/tags">
-                    <i class="iconfont icon-biaoqian1"></i>
-                    <span>标签</span>
-                </a>
-            </li>
-            <li >
-                <a href="/archives">
-                    <i class="iconfont icon-guidang2"></i>
-                    <span>存档</span>
-                </a>
-            </li>
-            <li >
-                <a href="/about/">
-                    <i class="iconfont icon-guanyu2"></i>
-                    <span>关于</span>
-                </a>
-            </li>
-            
-            <li>
-                <a id="search">
-                    <i class="iconfont icon-sousuo1"></i>
-                    <span>搜索</span>
-                </a>
-            </li>
-            
-        </ul>
-    </div>
-    
-        <div id="toc" class="toc-article">
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-降维概述"><span class="toc-text">1. 降维概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-降维方法分类"><span class="toc-text">2.降维方法分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-线性方法"><span class="toc-text">3 线性方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-PCA主成分分析"><span class="toc-text">3.1 PCA主成分分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-LDA-线性判别分析"><span class="toc-text">3.2 LDA 线性判别分析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-非线性方法"><span class="toc-text">4 非线性方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-MDS"><span class="toc-text">4.1 MDS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-Isomap"><span class="toc-text">4.2 Isomap</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-LLE"><span class="toc-text">4.3 LLE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-4-核PCA-kernel-PCA"><span class="toc-text">4.4 核PCA kernel PCA</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-5-DiffusionMap"><span class="toc-text">4.5 DiffusionMap</span></a></li></ol></li></ol>
-</div>
-    
-</div>
+  </div>
 
 
-<div class="search-field" id="search-field">
-    <div class="search-container">
-        <div class="search-input">
-            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
-            <input id="search-input"/>
-            <span id="begin-search">搜索</span>
-        </div>
-        <div class="search-result-container" id="search-result-container">
 
-        </div>
-    </div>
-</div>
+<div class="content content-post CENTER">
+   <article id="post-降维方法-总结" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">降维方法-总结</h1>
 
-        <div class="index-about-mobile">
-            <i> 人总要有些乐趣，比如编程和阅读 </i>
-        </div>
-    </div>
-    
-    <div class="index-middle">
-        <!-- Main Content -->
-        
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2020.05.06</span>
+      </span>
 
-
-<div class="post-container">
-    <div class="post-title">
-        降维方法-总结
-    </div>
-
-    <div class="post-meta">
-        <span class="attr">发布于：<span>2020-05-06 19:45:37</span></span>
-        
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Lixin</span>
         </span>
-        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
-</span>
-</span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
     </div>
-    <div class="post-content ">
-        <h4 id="1-降维概述"><a href="#1-降维概述" class="headerlink" title="1. 降维概述"></a>1. 降维概述</h4><p>样本的特征数称为维数（dimensionality），当维数非常大时，也就是现在所说的“维数灾难”，具体表现在：在高维情形下，数据样本将变得十分稀疏，因为此时要满足训练样本为“密采样”的总体样本数目是一个触不可及的天文数字，谓可远观而不可亵玩焉…训练样本的稀疏使得其代表总体分布的能力大大减弱，从而消减了学习器的泛化能力；同时当维数很高时，计算距离也变得十分复杂，甚至连计算内积都不再容易，这也是为什么支持向量机（SVM）使用核函数“低维计算，高维表现”的原因。</p>
+  </header>
+
+  <div class="article-content">
+    
+      <h4 id="1-降维概述"><a href="#1-降维概述" class="headerlink" title="1. 降维概述"></a>1. 降维概述</h4><p>样本的特征数称为维数（dimensionality），当维数非常大时，也就是现在所说的“维数灾难”，具体表现在：在高维情形下，数据样本将变得十分稀疏，因为此时要满足训练样本为“密采样”的总体样本数目是一个触不可及的天文数字，谓可远观而不可亵玩焉…训练样本的稀疏使得其代表总体分布的能力大大减弱，从而消减了学习器的泛化能力；同时当维数很高时，计算距离也变得十分复杂，甚至连计算内积都不再容易，这也是为什么支持向量机（SVM）使用核函数“低维计算，高维表现”的原因。</p>
 <p>缓解维数灾难的一个重要途径就是降维，即通过某种数学变换将原始高维空间转变到一个低维的子空间。在这个子空间中，样本的密度将大幅提高，同时距离计算也变得容易。这时也许会有疑问，这样降维之后不是会丢失原始数据的一部分信息吗？这是因为在很多实际的问题中，虽然训练数据是高维的，但是与学习任务相关也许仅仅是其中的一个低维子空间，也称为一个低维嵌入，例如：数据属性中存在噪声属性、相似属性或冗余属性等，对高维数据进行降维能在一定程度上达到提炼低维优质属性或降噪的效果。</p>
 <h4 id="2-降维方法分类"><a href="#2-降维方法分类" class="headerlink" title="2.降维方法分类"></a>2.降维方法分类</h4><p><img src="http://img.blog.csdn.net/20150522194801297" alt="这里写图片描述"></p>
 <h4 id="3-线性方法"><a href="#3-线性方法" class="headerlink" title="3 线性方法"></a>3 线性方法</h4><h5 id="3-1-PCA主成分分析"><a href="#3-1-PCA主成分分析" class="headerlink" title="3.1 PCA主成分分析"></a>3.1 PCA主成分分析</h5><p>主成分分析（PCA）直接通过一个线性变换，将原始空间中的样本投影到新的低维空间中。简单来理解这一过程便是：PCA采用一组新的基来表示样本点，其中每一个基向量都是原来基向量的线性组合，通过使用尽可能少的新基向量来表出样本，从而达到降维的目的。</p>
@@ -223,49 +335,233 @@ KA= \lambda A</script><p>其中$K$为$\kappa$ 对应的核矩阵，$(K)_{ij} = \
 <p>算法步骤如下:</p>
 <p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/diffmap_算法步骤.png" alt></p>
 
-        
-        <br />
-        <div id="comment-container">
-        </div>
-        <div id="disqus_thread"></div>
-
-        <div id="lv-container">
-        </div>
-
-    </div>
-</div>
-
-    </div>
-</div>
-
-
-<footer class="footer">
-    <ul class="list-inline text-center">
-        
-        
-
-        
-
-        
-
-        
-
-        
-
-    </ul>
     
-    <p>
-        <span id="busuanzi_container_site_pv">
-            <span id="busuanzi_value_site_pv"></span>PV
-        </span>
-        <span id="busuanzi_container_site_uv">
-            <span id="busuanzi_value_site_uv"></span>UV
-        </span>
-        Created By <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud" target="_blank" rel="noopener">AirCloud</a></p>
-</footer>
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/03/18/xgboost/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2020/05/08/adaboost%E7%AE%97%E6%B3%95/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
 
 
 
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '277317290454635afa73',
+  clientSecret: '78223c859304da5e8d71bfce136d436c6ff95c37',
+  repo: 'blog-comment',
+  owner: 'forsigner',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: md5(location.pathname),
+  admin: ['forsigner'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
 
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -283,18 +579,4 @@ KA= \lambda A</script><p>其中$K$为$\kappa$ 对应的核矩阵，$(K)_{ij} = \
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
-
-<script>
-    // We expose some of the variables needed by the front end
-    window.hexo_search_path = "search.json"
-    window.hexo_root = "/"
-    window.isPost = true
-</script>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
 </html>
