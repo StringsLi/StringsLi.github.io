@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>MySQL和Oracle 表注释和字段注释相关总结 | Lixin</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="机器学习、数据挖掘" />
+  
+
+  <meta name="description" content="1. Oracle 添加&#x2F;查看表注释和字段注释1.1 Oracle添加表注释和字段注释TODO 1.2 Oracle查看全部表注释和字段注释1234--获取表注释。获得 table_name,table_type,comments。select * from user_tab_comments; --获取字段注释。获得 table_name,column_name,comments。select">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL和Oracle 表注释和字段注释相关总结">
+<meta property="og:url" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;11&#x2F;25&#x2F;MySQL%E5%92%8COracle%20%E8%A1%A8%E6%B3%A8%E9%87%8A%E5%92%8C%E5%AD%97%E6%AE%B5%E6%B3%A8%E9%87%8A%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93&#x2F;index.html">
+<meta property="og:site_name" content="Lixin">
+<meta property="og:description" content="1. Oracle 添加&#x2F;查看表注释和字段注释1.1 Oracle添加表注释和字段注释TODO 1.2 Oracle查看全部表注释和字段注释1234--获取表注释。获得 table_name,table_type,comments。select * from user_tab_comments; --获取字段注释。获得 table_name,column_name,comments。select">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2020-11-25T03:04:35.190Z">
+<meta name="twitter:card" content="summary">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+
+
+  
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Oracle-添加-查看表注释和字段注释"><span class="toc-text">1. Oracle 添加/查看表注释和字段注释</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-Oracle添加表注释和字段注释"><span class="toc-text">1.1 Oracle添加表注释和字段注释</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-Oracle查看全部表注释和字段注释"><span class="toc-text">1.2 Oracle查看全部表注释和字段注释</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Mysql-添加-查看表注释和字段注释"><span class="toc-text">2. Mysql 添加/查看表注释和字段注释</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-Mysql添加表注释和字段注释"><span class="toc-text">2.1 Mysql添加表注释和字段注释</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-Mysql-查看全部表注释和字段注释"><span class="toc-text">2.2 Mysql 查看全部表注释和字段注释</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-修改表的注释"><span class="toc-text">2.3  修改表的注释</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-修改字段的注释"><span class="toc-text">2.4  修改字段的注释</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-分享一段由Oracle迁移到Mysql表注释和字段注释python代码"><span class="toc-text">3. 分享一段由Oracle迁移到Mysql表注释和字段注释python代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考："><span class="toc-text">参考：</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-MySQL和Oracle 表注释和字段注释相关总结" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">MySQL和Oracle 表注释和字段注释相关总结</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2020.11.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Lixin</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h4 id="1-Oracle-添加-查看表注释和字段注释"><a href="#1-Oracle-添加-查看表注释和字段注释" class="headerlink" title="1. Oracle 添加/查看表注释和字段注释"></a>1. Oracle 添加/查看表注释和字段注释</h4><h5 id="1-1-Oracle添加表注释和字段注释"><a href="#1-1-Oracle添加表注释和字段注释" class="headerlink" title="1.1 Oracle添加表注释和字段注释"></a>1.1 Oracle添加表注释和字段注释</h5><p>TODO</p>
+<h5 id="1-2-Oracle查看全部表注释和字段注释"><a href="#1-2-Oracle查看全部表注释和字段注释" class="headerlink" title="1.2 Oracle查看全部表注释和字段注释"></a>1.2 Oracle查看全部表注释和字段注释</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--获取表注释。获得 table_name,table_type,comments。</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user_tab_comments; </span><br><span class="line"><span class="comment">--获取字段注释。获得 table_name,column_name,comments。</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user_col_comments;</span><br></pre></td></tr></table></figure>
+<h4 id="2-Mysql-添加-查看表注释和字段注释"><a href="#2-Mysql-添加-查看表注释和字段注释" class="headerlink" title="2. Mysql 添加/查看表注释和字段注释"></a>2. Mysql 添加/查看表注释和字段注释</h4><h5 id="2-1-Mysql添加表注释和字段注释"><a href="#2-1-Mysql添加表注释和字段注释" class="headerlink" title="2.1 Mysql添加表注释和字段注释"></a>2.1 Mysql添加表注释和字段注释</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`t_cluster`</span>(</span><br><span class="line">    <span class="string">`id`</span>             <span class="built_in">int</span>(<span class="number">11</span>)    <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'样本的ID'</span>,</span><br><span class="line">    <span class="string">`cluster_id`</span>     <span class="built_in">int</span>(<span class="number">11</span>)    <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'聚类的编号'</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>))</span><br><span class="line"> <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>  <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8 <span class="keyword">COMMENT</span> =<span class="string">'聚类结果表'</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="2-2-Mysql-查看全部表注释和字段注释"><a href="#2-2-Mysql-查看全部表注释和字段注释" class="headerlink" title="2.2 Mysql 查看全部表注释和字段注释"></a>2.2 Mysql 查看全部表注释和字段注释</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 表注释</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.TABLES <span class="keyword">where</span> TABLE_SCHEMA=<span class="string">'数据库名'</span> <span class="keyword">and</span> TABLE_NAME=<span class="string">'表名'</span> </span><br><span class="line"><span class="comment">-- 字段注释</span></span><br><span class="line"><span class="keyword">show</span>  <span class="keyword">full</span>  <span class="keyword">columns</span>  <span class="keyword">from</span>  test1; </span><br><span class="line"><span class="comment">--在元数据的表里面看 </span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.COLUMNS <span class="keyword">where</span> TABLE_SCHEMA=<span class="string">'数据库名'</span> <span class="keyword">and</span> TABLE_NAME=<span class="string">'表名'</span> ;</span><br></pre></td></tr></table></figure>
+<h5 id="2-3-修改表的注释"><a href="#2-3-修改表的注释" class="headerlink" title="2.3  修改表的注释"></a>2.3  修改表的注释</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_name <span class="keyword">comment</span> <span class="string">'注释'</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="2-4-修改字段的注释"><a href="#2-4-修改字段的注释" class="headerlink" title="2.4  修改字段的注释"></a>2.4  修改字段的注释</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_name <span class="keyword">modify</span> <span class="keyword">column</span> column_name <span class="built_in">int</span> <span class="keyword">comment</span> <span class="string">'注释'</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="3-分享一段由Oracle迁移到Mysql表注释和字段注释python代码"><a href="#3-分享一段由Oracle迁移到Mysql表注释和字段注释python代码" class="headerlink" title="3. 分享一段由Oracle迁移到Mysql表注释和字段注释python代码"></a>3. 分享一段由Oracle迁移到Mysql表注释和字段注释python代码</h4><p>最后将更改表注释的语句批量执行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Created on Wed Nov 25 09:02:55 2020</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: lixin</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> mysql.connector <span class="keyword">as</span> mysql</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"> </span><br><span class="line">db = mysql.connect(</span><br><span class="line">    host = <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    user = <span class="string">"root"</span>,</span><br><span class="line">    passwd = <span class="string">"121457"</span>,</span><br><span class="line">    database = <span class="string">"tpc2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">data = pd.read_sql(<span class="string">"SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.TABLES"</span>,db)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从oracle下载来的表的注释，用于迁移到mysql</span></span><br><span class="line">dict_comments_tab = pd.read_excel(<span class="string">"comments/user_tab_comments.xlsx"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prc</span><span class="params">(row, df)</span>:</span></span><br><span class="line">    dff = df[(df[<span class="string">'TABLE_NAME'</span>] == row.upper())]</span><br><span class="line">    res = [i <span class="keyword">for</span> i <span class="keyword">in</span> dff[<span class="string">'COMMENTS'</span>]]</span><br><span class="line">    <span class="keyword">return</span> res[<span class="number">0</span>] <span class="keyword">if</span> len(res) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data[<span class="string">'注释'</span>] = data.apply(<span class="keyword">lambda</span> x: prc(x[<span class="string">'TABLE_NAME'</span>],dictjj),axis = <span class="number">1</span>)</span><br><span class="line">data = data[pd.notnull(data[<span class="string">'注释'</span>])]</span><br><span class="line">data2 = data[data[<span class="string">'TABLE_COMMENT'</span>] == <span class="string">''</span>]</span><br><span class="line">data2.to_csv(<span class="string">'tab_commentsII.csv'</span>,index=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">cursor = db.cursor()</span><br><span class="line">res = []</span><br><span class="line"><span class="keyword">for</span> index, row <span class="keyword">in</span> data2.iterrows():</span><br><span class="line">    val = row[<span class="string">'注释'</span>]</span><br><span class="line">    table = row[<span class="string">'TABLE_NAME'</span>]</span><br><span class="line">    sql = <span class="string">''' alter table &#123;&#125; comment '&#123;&#125;';'''</span>.format(table,val)</span><br><span class="line">    res.append(sql)</span><br><span class="line"></span><br><span class="line">file_name = <span class="string">'write_tab_comment.txt'</span></span><br><span class="line"><span class="keyword">with</span> open(file_name,<span class="string">'w'</span>) <span class="keyword">as</span> file_obj:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> res:</span><br><span class="line">        file_obj.write(i+<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h4><ol>
+<li><a href="https://www.cnblogs.com/chaos-li/p/11118696.html" target="_blank" rel="noopener">https://www.cnblogs.com/chaos-li/p/11118696.html</a></li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/11/23/%E9%A3%8E%E6%8E%A7%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
