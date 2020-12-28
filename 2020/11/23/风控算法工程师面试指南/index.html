@@ -26,7 +26,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;www.zhihu.com&#x2F;equation?tex=%5Cfrac%7BFP%7D%7BFP%2BTN%7D">
 <meta property="og:image" content="https:&#x2F;&#x2F;pic3.zhimg.com&#x2F;v2-51c5764548effcfc1348c1390fb47a52_b.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;pic3.zhimg.com&#x2F;80&#x2F;v2-51c5764548effcfc1348c1390fb47a52_hd.jpg">
-<meta property="og:updated_time" content="2020-11-23T09:30:58.703Z">
+<meta property="og:updated_time" content="2020-12-28T09:21:53.755Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;www.zhihu.com&#x2F;equation?tex=%5Cfrac%7BTP%7D%7BTP%2BFN%7D">
 
@@ -198,7 +198,7 @@ ga('send', 'pageview');
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#风控模型师面试指南"><span class="toc-text">风控模型师面试指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-算法"><span class="toc-text">一. 算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-逻辑回归"><span class="toc-text">1.逻辑回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-决策树"><span class="toc-text">2.决策树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-集成学习"><span class="toc-text">3.集成学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-特征工程"><span class="toc-text">二. 特征工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-模型评估和优化"><span class="toc-text">三.模型评估和优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#风控模型师面试指南"><span class="toc-text">风控模型师面试指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-算法"><span class="toc-text">一. 算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-逻辑回归"><span class="toc-text">1.逻辑回归</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-11：L1和L2正则化有什么区别？"><span class="toc-text">1.11：L1和L2正则化有什么区别？</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-决策树"><span class="toc-text">2.决策树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-集成学习"><span class="toc-text">3.集成学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-特征工程"><span class="toc-text">二. 特征工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-模型评估和优化"><span class="toc-text">三.模型评估和优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol></li></ol>
   </div>
 
 
@@ -293,6 +293,22 @@ ga('send', 'pageview');
 <li>如果用最小二乘法，目标函数就是 $E_{w,b}=\sum_{i=1}^{m}\left ( y_{i}-\frac{1}{1+e^{-\left ( w^{T}x_{i}+b \right )}}\right )^2$ ,是非凸的，不容易求解，会得到局部最优。</li>
 <li>如果用最大似然估计，目标函数就是对数似然函数： $l_{w,b}=\sum_{i=1}^{m}\left ( -y_{i}\left ( w^{T}x_{i}+b \right )+ln\left ( 1+e^{w^{T}x_{i}+b} \right ) \right )$,是关于 $(w,b)$ 的高阶连续可导凸函数，可以方便通过一些凸优化算法求解，比如梯度下降法、牛顿法等。  </li>
 </ul>
+<h5 id="1-11：L1和L2正则化有什么区别？"><a href="#1-11：L1和L2正则化有什么区别？" class="headerlink" title="1.11：L1和L2正则化有什么区别？"></a>1.11：L1和L2正则化有什么区别？</h5><p>​    L0正则化的值是模型参数中非零参数的个数。</p>
+<p>​    L1正则化表示各个参数绝对值之和。</p>
+<p>​    L2正则化标识各个参数的平方的和的开方值。</p>
+<p>​    先讨论几个问题：</p>
+<p>1）实现参数的稀疏有什么好处吗？</p>
+<p>​    一个好处是可以简化模型，避免过拟合。因为一个模型中真正重要的参数可能并不多，如果考虑所有的参数起作用，那么可以对 训练数据可以预测的很好，但是对<strong>测试</strong>数据就只能呵呵了。另一个好处是参数变少可以使整个模型获得更好的可解释性。</p>
+<p>2）参数值越小代表模型越简单吗？</p>
+<p>​    是的。为什么参数越小，说明模型越简单呢，这是因为越复杂的模型，越是会尝试对所有的样本进行拟合，甚至包括一些异常样本点，这就容易造成在较小的区间里预测值产生较大的波动，这种较大的波动也反映了在这个区间里的导数很大，而只有较大的参数值才能产生较大的导数。因此复杂的模型，其参数值会比较大。</p>
+<p>根据上面的讨论，稀疏的参数可以防止过拟合，因此用L0范数（非零参数的个数）来做正则化项是可以防止过拟合的。</p>
+<p>​    从直观上看，利用非零参数的个数，可以很好的来选择特征，实现特征稀疏的效果，具体操作时选择参数非零的特征即可。但因为L0正则化很难求解，是个NP难问题，因此一般采用L1正则化。L1正则化是L0正则化的最优凸近似，比L0容易求解，并且也可以实现稀疏的效果。</p>
+<p>​    L1正则化在实际中往往替代L0正则化，来防止过拟合。在江湖中也人称Lasso。</p>
+<p>​    L1正则化之所以可以防止过拟合，是因为L1范数就是各个参数的绝对值相加得到的，我们前面讨论了，参数值大小和模型复杂度是成正比的。因此复杂的模型，其L1范数就大，最终导致损失函数就大，说明这个模型就不够好。</p>
+<p>​    L2正则化可以防止过拟合的原因和L1正则化一样，只是形式不太一样。</p>
+<p>​    L2范数是各参数的平方和再求平方根，我们让L2范数的正则项  $||w||^{2}$最小，可以使W的每个元素都很小，都接近于0。但与L1范数不一样的是，它不会是每个元素为0，而只是接近于0。越小的参数说明模型越简单，越简单的模型越不容易产生过拟合现象。</p>
+<p>L1正则化可以产生稀疏权值矩阵，即产生一个稀疏模型，因此可以用于特征选择</p>
+<p>L2正则化可以防止模型过拟合（overfitting）；一定程度上，L1也可以防止过拟合</p>
 <h2 id="2-决策树"><a href="#2-决策树" class="headerlink" title="2.决策树"></a><strong>2.决策树</strong></h2><p><strong>2.1：决策树模型的优缺点及适用性？</strong></p>
 <p>优点：</p>
 <ul>
