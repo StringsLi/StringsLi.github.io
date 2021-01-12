@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Kmeans算法及其衍生算法综述 | Lixin</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="机器学习、数据挖掘" />
+  
+
+  <meta name="description" content="本文主要介绍Kmeans相关算法。 1 Kmeans聚类K-Means的思想十分简单，首先随机指定类中心，根据样本与类中心的远近划分类簇，接着重新计算类中心，迭代直至收敛： 假设输入空间 $\cal X \in \R^n  $ 为$ n $维向量的集合，$ \cal{X}=\{x^{(1)} ,x^{(2)},\cdots,x^{(m)} \}  $，$  \mathcal  C $为输入空间$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kmeans算法及其衍生算法综述">
+<meta property="og:url" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;01&#x2F;12&#x2F;Kmeans%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E8%A1%8D%E7%94%9F%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0&#x2F;index.html">
+<meta property="og:site_name" content="Lixin">
+<meta property="og:description" content="本文主要介绍Kmeans相关算法。 1 Kmeans聚类K-Means的思想十分简单，首先随机指定类中心，根据样本与类中心的远近划分类簇，接着重新计算类中心，迭代直至收敛： 假设输入空间 $\cal X \in \R^n  $ 为$ n $维向量的集合，$ \cal{X}=\{x^{(1)} ,x^{(2)},\cdots,x^{(m)} \}  $，$  \mathcal  C $为输入空间$">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2021-01-12T09:42:56.212Z">
+<meta name="twitter:card" content="summary">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+
+
+  
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Kmeans聚类"><span class="toc-text">1 Kmeans聚类</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-算法流程"><span class="toc-text">1.1 算法流程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-K-Means-聚类算法"><span class="toc-text">2 K-Means++聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-BisectingKMeans-二分Kmeans聚类算法"><span class="toc-text">3. BisectingKMeans-二分Kmeans聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-FuzzyCMeans-模糊均值聚类算法"><span class="toc-text">4. FuzzyCMeans 模糊均值聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-KMedian-聚类算法"><span class="toc-text">5. KMedian 聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-KMedoid-聚类算法"><span class="toc-text">6. KMedoid 聚类算法</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Kmeans算法及其衍生算法综述" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Kmeans算法及其衍生算法综述</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.01.12</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Lixin</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>本文主要介绍Kmeans相关算法。</p>
+<h4 id="1-Kmeans聚类"><a href="#1-Kmeans聚类" class="headerlink" title="1 Kmeans聚类"></a>1 Kmeans聚类</h4><p>K-Means的思想十分简单，首先随机指定类中心，根据样本与类中心的远近划分类簇，接着重新计算类中心，迭代直至收敛：</p>
+<p>假设输入空间 $\cal X \in \R^n  $ 为$ n $维向量的集合，$ \cal{X}=\{x^{(1)} ,x^{(2)},\cdots,x^{(m)} \}  $，$  \mathcal  C $为输入空间$ \cal X $的一个划分，不妨令$ \mathcal C=\{ \mathbb C_1,\mathbb C_2,\cdots,\mathbb C_K \}  $，因此可以定义$ k\text{-}means $算法的损失函数为</p>
+<script type="math/tex; mode=display">
+J(\mathcal C)=\sum\limits_{k=1}^K\sum\limits_{x^{(i)}\in \mathbb C_k}\Vert x^{(i)}-\mu^{(k)} \Vert_2^2  \tag{1}</script><p>其中$ \mu^{(k)}=\frac{1}{\vert \mathbb C_k \vert}\sum\limits_{x^{(i)}\in\mathbb C_k}x^{(i)}   $是簇$ \mathbb C_k $的聚类中心。</p>
+<p>事实上，若将样本的类别看做为“隐变量”（latent variable），类中心看作样本的分布参数，这一过程正是通过EM算法的两步走策略而计算出，其根本的目的是为了最小化平方误差函数$J(\mathcal C)$</p>
+<h5 id="1-1-算法流程"><a href="#1-1-算法流程" class="headerlink" title="1.1 算法流程"></a>1.1 算法流程</h5><ol>
+<li><p>首先随机初始化$ K $个聚类中心，$ \mu^{(1)},\mu^{(2)},\cdots,\mu^{(K)}  $；</p>
+</li>
+<li><p>然后根据这$ K $个聚类中心给出输入空间$ \mathcal X  $的一个划分，$ \mathbb C_1,\mathbb C_2,\cdots,\mathbb C_K  $；</p>
+<ul>
+<li>样本离哪个簇的聚类中心最近，则该样本就划归到那个簇<script type="math/tex; mode=display">
+\mathop{\arg\min}_{k}\ \Vert x^{(i)}-\mu^{(k)} \Vert_2^2 \tag{2}</script></li>
+</ul>
+</li>
+<li><p>再根据这个划分来更新这$ K $个聚类中心</p>
+<script type="math/tex; mode=display">
+\mu^{(k)}=\frac{1}{\vert \mathbb C_k \vert}\sum\limits_{x^{(i)}\in\mathbb C_k}x^{(i)} \tag{3}</script></li>
+<li><p>重复2、3步骤直至收敛</p>
+<ul>
+<li>即$ K $个聚类中心不再变化</li>
+</ul>
+</li>
+</ol>
+<p>K-means代码地址如下：</p>
+<p><a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/Kmeans.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/Kmeans.scala</a></p>
+<h4 id="2-K-Means-聚类算法"><a href="#2-K-Means-聚类算法" class="headerlink" title="2 K-Means++聚类算法"></a>2 K-Means++聚类算法</h4><p>K-Means聚类算法原理中可知，K-means聚类算法首先需要初始化k个聚类中心。但是K-means算法存在一个巨大的缺陷-收敛情况严重依赖聚类中心的初始化情况。当不小心把所有的k个聚类中心初始化到一个类中，K-means算法很难收敛，情况变得很糟糕。所以在改进K-means算法初始化聚类中心方法，引入一种K-means++聚类算法，中心思想是：<strong>逐个选取$k$个聚类中心，且离其他聚类中心越远的样本点越有可能被选为下一个聚类中心。</strong></p>
+<p>算法流程：</p>
+<blockquote>
+<ol>
+<li><p>在数据集中，随机选取一点，作为第一个聚类中心;</p>
+</li>
+<li><p>迭代数据中的所有点，计算所有点到最近的聚类中心的距离$D(x)$(具体实现分别计算所有点到每类聚类中心的距离，选择最短的距离作为所有点到最近聚类中心的距离)；</p>
+<script type="math/tex; mode=display">
+P(x) = \frac{D(x)^2}{\sum_{x \in X}D(x) ^ 2} \label{4}</script></li>
+</ol>
+<ol>
+<li><p>选取距离较大的点作为新的聚类中心；</p>
+</li>
+<li><p>重复2和3直到选择出K个聚类中心点;</p>
+</li>
+<li><p>用这k个聚类中心作为初始化质心去运行标准的K-Means算法;</p>
+</li>
+</ol>
+</blockquote>
+<p>详细scala实现代码如下：</p>
+<p><a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/KmeansPlus.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/KmeansPlus.scala</a></p>
+<h4 id="3-BisectingKMeans-二分Kmeans聚类算法"><a href="#3-BisectingKMeans-二分Kmeans聚类算法" class="headerlink" title="3. BisectingKMeans-二分Kmeans聚类算法"></a>3. BisectingKMeans-二分Kmeans聚类算法</h4><p>为了克服k-均值算法收敛于局部最小值的问题，有人提出了另一个称为二分K-均值的算法。</p>
+<p>二分k-均值算法思想：</p>
+<blockquote>
+<ol>
+<li><p>首先将所有点作为一个簇，</p>
+</li>
+<li><p>将该簇一分为二;</p>
+</li>
+<li>之后选择其中一个簇继续进行划分，选择哪个簇继续划分取决于对其划分是否可以最大程度降低SSE的值。上述基于SSE的划分过程不断重复，直到得到用户指定的簇数目为止</li>
+</ol>
+</blockquote>
+<p>详细scala代码如下：</p>
+<p><a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/BisectingKMeans.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/BisectingKMeans.scala</a></p>
+<h4 id="4-FuzzyCMeans-模糊均值聚类算法"><a href="#4-FuzzyCMeans-模糊均值聚类算法" class="headerlink" title="4. FuzzyCMeans 模糊均值聚类算法"></a>4. FuzzyCMeans 模糊均值聚类算法</h4><p> 模糊c均值聚类较于k-means的硬聚类，模糊c提供了更加灵活的聚类结果。因为大部分情况下，数据集中的对象不能划分成为明显分离的簇，指派一个对象到一个特定的簇有些生硬，也可能会出错。所以对每个对象和每个簇赋予一个权值，指明对象属于该簇的程度。当然，基于概率的方法也可以给出这样的权值，但是有时候我们很难确定一个合适的统计模型，因此使用具有自然地、非概率特性的模糊c均值就是一个比较好的选择。</p>
+<p>算法的主要思想是：<strong>给每个样本赋予属于每个簇的隶属度函数。通过隶属度值大小来将样本归类。</strong></p>
+<p><strong>算法的步骤：</strong></p>
+<ol>
+<li><p>初始化隶属度$U=[u_{ij}]$矩阵，其中$u_{ij}$表示样本$x_i$属于$j$类的隶属度，对单个样本$x_i$，它对于每个簇的隶属度之和为1。</p>
+</li>
+<li><p>第$k$步，基于隶属度矩阵$U$计算聚类中心$C^k = [c_j]$</p>
+<script type="math/tex; mode=display">
+c_j = \frac{\sum_{i=1}^{N}u_{ij}^m x_i}{\sum_{i=1}^{N}u_{ij}^m} \label{5}</script></li>
+<li><p>更新$U^k$ 和 $U^{k+1}$</p>
+<script type="math/tex; mode=display">
+u_{ij} = \frac{1}{\sum_{k=1}^C(\frac{||x_i-c_j||}{||x_i-c_k||})^{\frac{2}{m-1}}}</script></li>
+<li><p>如果$||U^{k+1} - U^{k}|| &lt; \epsilon $,Stop，否则返回步骤2.</p>
+<p>注：迭代的终止条件为：$max_{ij}\{|u_{ij}^{k+1} - u_{ij}^{k}|\} &lt; \epsilon$</p>
+</li>
+</ol>
+<p>scala 代码实现如下：</p>
+<p><a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/FuzzyCMeans.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/FuzzyCMeans.scala</a></p>
+<h4 id="5-KMedian-聚类算法"><a href="#5-KMedian-聚类算法" class="headerlink" title="5. KMedian 聚类算法"></a>5. KMedian 聚类算法</h4><p>算法流程：</p>
+<ol>
+<li><p>首先随机初始化$ K $个聚类中心，$ \mu^{(1)},\mu^{(2)},\cdots,\mu^{(K)}  $；</p>
+</li>
+<li><p>然后根据这$ K $个聚类中心给出输入空间$ \mathcal X  $的一个划分，$ \mathbb C_1,\mathbb C_2,\cdots,\mathbb C_K  $；</p>
+<ul>
+<li>样本离哪个簇的聚类中心最近，则该样本就划归到那个簇（<strong>计算样本和中心点之间的距离使用的是曼哈顿距离</strong>，<strong>而K-Means聚类算法使用的欧式距离</strong>。<script type="math/tex; mode=display">
+\mathop{\arg\min}_{k}\ \Vert x^{(i)}-\mu^{(k)} \Vert \tag{2}</script></li>
+</ul>
+</li>
+<li><p>再根据这个划分来更新这$ K $个聚类中心</p>
+<script type="math/tex; mode=display">
+\mu^{(k)}=\frac{1}{\vert \mathbb C_k \vert}\sum\limits_{x^{(i)}\in\mathbb C_k}x^{(i)} \tag{3}</script></li>
+<li><p>重复2、3步骤直至收敛</p>
+<ul>
+<li>即$ K $个聚类中心不再变化</li>
+</ul>
+</li>
+</ol>
+<p>scala 代码地址为：<a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/KMedian.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/KMedian.scala</a></p>
+<h4 id="6-KMedoid-聚类算法"><a href="#6-KMedoid-聚类算法" class="headerlink" title="6. KMedoid 聚类算法"></a>6. KMedoid 聚类算法</h4><p>与K-means算法类似，区别在于中心点的选取，K-means中选取的中心点为当前类中所有点的重心，而K-medoids法选取的中心点为当前cluster中存在的一点，准则函数是当前cluster中所有其他点到该中心点的距离之和最小，这就在一定程度上削弱了异常值的影响，但缺点是计算较为复杂，耗费的计算机时间比K-means多。</p>
+<p>算法流程如下：</p>
+<blockquote>
+<p>1.在总体$n$个样本点中任意选取k个点作为medoids</p>
+<p>2.按照与medoids最近的原则，将剩余的$n-k$个点分配到当前最佳的medoids代表的类中</p>
+<p>3.对于第$i$个类中除对应medoids点外的所有其他点，按顺序计算当其为新的medoids时，准则函数的值，遍历所有可能，选取准则函数最小时对应的点作为新的medoids</p>
+<p>4.重复2-3的过程，直到所有的medoids点不再发生变化或已达到设定的最大迭代次数</p>
+<p>5.产出最终确定的$k$个类;</p>
+</blockquote>
+<p>代码地址：</p>
+<p><a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/KMedoid.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/KMedoid.scala</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/11/25/MySQL%E5%92%8COracle%20%E8%A1%A8%E6%B3%A8%E9%87%8A%E5%92%8C%E5%AD%97%E6%AE%B5%E6%B3%A8%E9%87%8A%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
