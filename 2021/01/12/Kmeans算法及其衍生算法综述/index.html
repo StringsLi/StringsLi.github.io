@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Lixin">
 <meta property="og:description" content="本文主要介绍Kmeans相关算法。 1 Kmeans聚类K-Means的思想十分简单，首先随机指定类中心，根据样本与类中心的远近划分类簇，接着重新计算类中心，迭代直至收敛： 假设输入空间 $\cal X \in \R^n  $ 为$ n $维向量的集合，$ \cal{X}=\{x^{(1)} ,x^{(2)},\cdots,x^{(m)} \}  $，$  \mathcal  C $为输入空间$">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2021-01-12T09:42:56.212Z">
+<meta property="og:updated_time" content="2021-01-14T09:51:35.729Z">
 <meta name="twitter:card" content="summary">
 
   
@@ -193,7 +193,7 @@ ga('send', 'pageview');
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Kmeans聚类"><span class="toc-text">1 Kmeans聚类</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-算法流程"><span class="toc-text">1.1 算法流程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-K-Means-聚类算法"><span class="toc-text">2 K-Means++聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-BisectingKMeans-二分Kmeans聚类算法"><span class="toc-text">3. BisectingKMeans-二分Kmeans聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-FuzzyCMeans-模糊均值聚类算法"><span class="toc-text">4. FuzzyCMeans 模糊均值聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-KMedian-聚类算法"><span class="toc-text">5. KMedian 聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-KMedoid-聚类算法"><span class="toc-text">6. KMedoid 聚类算法</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Kmeans聚类"><span class="toc-text">1 Kmeans聚类</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-算法流程"><span class="toc-text">1.1 算法流程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-K-Means-聚类算法"><span class="toc-text">2 K-Means++聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-BisectingKMeans-二分Kmeans聚类算法"><span class="toc-text">3. BisectingKMeans-二分Kmeans聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-FuzzyCMeans-模糊均值聚类算法"><span class="toc-text">4. FuzzyCMeans 模糊均值聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-KMedian-聚类算法"><span class="toc-text">5. KMedian 聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-KMedoid-聚类算法"><span class="toc-text">6. KMedoid 聚类算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-SpectralClustering-谱聚类算法"><span class="toc-text">7 SpectralClustering 谱聚类算法</span></a></li></ol>
   </div>
 
 
@@ -343,6 +343,20 @@ u_{ij} = \frac{1}{\sum_{k=1}^C(\frac{||x_i-c_j||}{||x_i-c_k||})^{\frac{2}{m-1}}}
 </blockquote>
 <p>代码地址：</p>
 <p><a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/KMedoid.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/KMedoid.scala</a></p>
+<h4 id="7-SpectralClustering-谱聚类算法"><a href="#7-SpectralClustering-谱聚类算法" class="headerlink" title="7 SpectralClustering 谱聚类算法"></a>7 SpectralClustering 谱聚类算法</h4><p>​      谱聚类是从图论中演化出来的算法，主要思想是把所有的数据看做空间中的点，这些点之间可以用边连接起来。距离较远的两个点之间的边权重值较低，而距离较近的两个点之间的边权重值较高，通过对所有数据点组成的图进行切图，让切图后不同的子图间边权重和尽可能的低，而子图内的边权重和尽可能的高，从而达到聚类的目的。</p>
+<p>算法步骤如下：</p>
+<p>最常用的相似矩阵的生成方式是基于高斯核距离的全连接方式</p>
+<blockquote>
+<p>1) 根据输入的相似矩阵的生成方式构建样本的相似矩阵$S$;</p>
+<p>2) 根据相似矩阵S构建邻接矩阵$W$，构建度矩阵$D$;</p>
+<p>3) 计算出标准化的拉普拉斯矩阵$L = I- D^{-1}W$ ;</p>
+<p>4) 计算矩阵$L$的$k$个最小特征值对应的$n$维特征向量$v_1,…,v_k$，通过下式求解特征向量：</p>
+<script type="math/tex; mode=display">
+Lv = \lambda Dv</script><p>5) $k$个$n$维特征向量$v_1,…,v_k$组成$n×k$维的矩阵$M$；</p>
+<p>6）每一行表示一个样本，对该$n$个样本进行$k$均值聚类算法，得到聚类结果$C_1,…,C_k$;</p>
+</blockquote>
+<p>代码地址如下：</p>
+<p><a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/SpectralClustering.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/cluster/SpectralClustering.scala</a></p>
 
     
   </div>
