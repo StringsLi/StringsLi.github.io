@@ -22,13 +22,13 @@
 <meta property="og:site_name" content="Lixin">
 <meta property="og:description" content="神经网络的反向传播公式1. 逻辑回归反向传播公式的推导逻辑回归是最简单的神经网络，先入手逻辑回归，有助于后面的理解。  上图是一个逻辑回归正向传播的示意图。具体细节不再描述。 损失函数为：  L(a,y) = -yloga -(1-y)log(1-a)反向传播的目的为了求$dw和db$，从而采用梯度下降法进行迭代优化，那么反向传播就是从后向前一步步的求微分，从而得到$dw,db$,具体过程如下：">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;ml-md&#x2F;神经网络2&#x2F;逻辑回归反向传播.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;逻辑回归反向传播.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;ml-md&#x2F;神经网络2&#x2F;二层神经网络反向传播.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;ml-md&#x2F;神经网络2&#x2F;深层神经网络反向传播.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;ml-md&#x2F;神经网络2&#x2F;nn-from-scratch-3-layer-network.png">
-<meta property="og:updated_time" content="2020-03-24T09:15:45.857Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;深层神经网络反向传播.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;nn-from-scratch-3-layer-network.png">
+<meta property="og:updated_time" content="2021-03-01T09:02:59.475Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;ml-md&#x2F;神经网络2&#x2F;逻辑回归反向传播.jpg">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;逻辑回归反向传播.jpg">
 
   
 
@@ -240,7 +240,7 @@ ga('send', 'pageview');
   <div class="article-content">
     
       <h4 id="神经网络的反向传播公式"><a href="#神经网络的反向传播公式" class="headerlink" title="神经网络的反向传播公式"></a>神经网络的反向传播公式</h4><h5 id="1-逻辑回归反向传播公式的推导"><a href="#1-逻辑回归反向传播公式的推导" class="headerlink" title="1. 逻辑回归反向传播公式的推导"></a>1. 逻辑回归反向传播公式的推导</h5><p>逻辑回归是最简单的神经网络，先入手逻辑回归，有助于后面的理解。</p>
-<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/ml-md\神经网络2\逻辑回归反向传播.jpg" alt></p>
+<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/逻辑回归反向传播.jpg" alt></p>
 <p>上图是一个逻辑回归正向传播的示意图。具体细节不再描述。</p>
 <p>损失函数为：</p>
 <script type="math/tex; mode=display">
@@ -267,7 +267,7 @@ L(a^{[2]},y) = -yloga^{[2]} -(1-y)log(1-a^{[2]})</script><p>反向传播公式�
 <li>$db^{[1]} = dz^{[1]}$</li>
 </ol>
 <h5 id="3-深层神经网络的前向和反向传播"><a href="#3-深层神经网络的前向和反向传播" class="headerlink" title="3. 深层神经网络的前向和反向传播"></a>3. 深层神经网络的前向和反向传播</h5><p>下面是一个四层的神经网络：</p>
-<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/ml-md\神经网络2\深层神经网络反向传播.jpg" alt></p>
+<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/深层神经网络反向传播.jpg" alt></p>
 <p>前向传播过程：</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
@@ -283,7 +283,7 @@ a^{[l]} &= g^{[l]}(z^{[l]})
 \end{aligned}</script><p><strong>NOTE:上面由于前向传播使用的$WX$,导致使用正常样本时，需要将$X$取转置设置，很是不爽，于是在下面给出$XW$的情形</strong>。</p>
 <p>这里只关注单隐层的情形：</p>
 <p>输入层，隐藏层，输出层。输入层的节点数目由数据集的维度决定（我们的数据集是2：x和y），同样的，输出层的节点数目也取决于数据集中的类别(同样是2：0和1)。值得注意的是：2个类别可以用1个节点来表示，但考虑到网络的扩展性，我们将输出节点的数目定为2。网络的输入是(x,y)坐标，输出是0或者1。用图片表示的话网络结构如下：</p>
-<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/ml-md\神经网络2\nn-from-scratch-3-layer-network.png" alt></p>
+<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/nn-from-scratch-3-layer-network.png" alt></p>
 <p>隐藏层的维度（节点数）是可以设置的，节点越多，能够匹配的函数模型越复杂。但这也会耗费更多的计算资源，也会增加过拟合的可能性。隐藏层大小的设定更像是一门艺术，它需要根据问题的具体情况进行分析。稍后我们将分析隐藏层节点的个数是如何对我们的输出进行影响的。</p>
 <p>除此之外，我们还需要为隐藏层选择一个合适的激活函数。激活函数用来将该层的输入转化为输出。非线性的激活函数能够让我们做一些非线性的假设。常用的非线性激活函数有：$tanh/sigmoid/ReLU$等。本文中使用的激活函数是tanh（我个人建议用ReLU），这个激活函数的有效性也经过了很多方案的验证。一个好的激活函数具有以下性质：保证数据输入与输出也是可微的。比如说$dtanh(x)/dx = 1-（tanh(x)*tanh(x)）$。这样可以保证我们只计算一次tanh(x)的值就可以用在之后的计算导数过程中。</p>
 <p>为了使网络的输出是一个概率，所以输出层的激活函数就只能是softmax（逻辑回归只能输出二分类而softmax可以输出多个分类），这里用softmax的原因是它可以将分数转化为概率。</p>
