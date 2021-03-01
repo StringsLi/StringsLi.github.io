@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Lixin">
 <meta property="og:description" content="1. XGBoost 简介$XGBoost$的全称是$eXtremeGradientBoosting$，它是经过优化的分布式梯度提升库，旨在高效、灵活且可移植。$XGBoost$是大规模并行boosting tree的工具，它是目前最快最好的开源 boosting tree工具包，比常见的工具包快10倍以上。在数据科学方面，有大量的Kaggle选手选用$XGBoost$进行数据挖掘比赛，是各大数据">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2020-06-29T06:31:24.151Z">
+<meta property="og:updated_time" content="2021-02-28T12:47:54.318Z">
 <meta name="twitter:card" content="summary">
 
   
@@ -238,17 +238,19 @@ ga('send', 'pageview');
 <h4 id="2-XGBoost-算法"><a href="#2-XGBoost-算法" class="headerlink" title="2.  $XGBoost  $算法"></a>2.  $XGBoost  $算法</h4><p>​    $XGBoost$是由 $k$个基模型组成的一个加法模型，假设我们第 $t$ 次迭代要训练的树模型是 $f_t(x)$ ，则有：</p>
 <p>​    </p>
 <script type="math/tex; mode=display">
-\hat{y_i}^{(t)} = \sum_{k=1}^{t}f_k(x_i) = \hat{y_i}^{(t-1)} + f_t(x_i)</script><p>其中，$\hat{y_i}^{(t)}$是第$t$次迭代后样本的$i$的预测结果，$\hat{y_i}^{(t-1)}$是前$t-1$棵树的预测结果，$f_t(x_i)$是第$t$棵树的模型。</p>
+\hat{y_i}^{(t)} = \sum_{k=1}^{t}f_k(x_i) = \hat{y_i}^{(t-1)} + f_t(x_i) \label{1}</script><p>其中，$\hat{y_i}^{(t)}$是第$t$次迭代后样本的$i$的预测结果，$\hat{y_i}^{(t-1)}$是前$t-1$棵树的预测结果，$f_t(x_i)$是第$t$棵树的模型。</p>
 <p>​    $XGBoost   $算法是$ GBDT $算法的改进版本，其目标函数为：</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
 Obj^{(k)}&=\sum\limits_{i=1}^ml(y^{(i)},\hat{y}^{(i)}_k)+\sum\limits_{i=1}^T\Omega(f_i)\\
 &=\sum\limits_{i=1}^ml(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)}))+\Omega(f_k)+C
-\end{aligned}</script><p>同理为了求损失函数$ l\left(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})\right) $在$ \hat{y}^{(i)}_{k-1}  $处的二阶展开，不妨先对$ l(y^{(i)},x) $在$ \hat{y}^{(i)}_{k-1}  $处进行二阶展开可得：</p>
+\end{aligned}</script><p>p.s. 上式中第一项是衡量模型的偏差，模型越不准确，第一项就会越大。第二项是衡量模型的偏差，模型越复杂，模型的学习就会越具体，到不同数据集上的表现就会差异巨大，方差就会越大。</p>
+<p>所以求解Obj的最小值，其实在求解方差和偏差的平衡点，以求解模型的泛化误差最小，运行速度最快。</p>
+<p>同理为了求损失函数$ l\left(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})\right) $在$ \hat{y}^{(i)}_{k-1}  $处的二阶展开，不妨先对$ l(y^{(i)},x) $在$ \hat{y}^{(i)}_{k-1}  $处进行二阶展开可得：</p>
 <script type="math/tex; mode=display">
-l(y^{(i)},x)\simeq l(y^{(i)},\hat{y}^{(i)}_{k-1})+\nabla_{\hat{y}^{(i)}_{k-1}}l(y^{(i)},\hat{y}^{(i)}_{k-1})\cdot(x-\hat{y}^{(i)}_{k-1})+\dfrac{1}{2}\nabla^2_{\hat{y}^{(i)}_{k-1}}l(y^{(i)},\hat{y}^{(i)}_{k-1})\cdot(x-\hat{y}^{(i)}_{k-1})^2</script><p>令$ x=\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})  $，且记$ \nabla_{\hat{y}^{(i)}_{k-1}}l\left(y^{(i)},\hat{y}^{(i)}_{k-1}\right)  $为$ g_i $、$ \nabla^2_{\hat{y}^{(i)}_{k-1}}l\left(y^{(i)},\hat{y}^{(i)}_{k-1}\right)  $为$ h_i $则有：</p>
+l(y^{(i)},x)\simeq l(y^{(i)},\hat{y}^{(i)}_{k-1})+\nabla_{\hat{y}^{(i)}_{k-1}}l(y^{(i)},\hat{y}^{(i)}_{k-1})\cdot(x-\hat{y}^{(i)}_{k-1})+\dfrac{1}{2}\nabla^2_{\hat{y}^{(i)}_{k-1}}l(y^{(i)},\hat{y}^{(i)}_{k-1})\cdot(x-\hat{y}^{(i)}_{k-1})^2  \label{2}</script><p>令$ x=\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})  $，且记$ \nabla_{\hat{y}^{(i)}_{k-1}}l\left(y^{(i)},\hat{y}^{(i)}_{k-1}\right)  $为$ g_i $、$ \nabla^2_{\hat{y}^{(i)}_{k-1}}l\left(y^{(i)},\hat{y}^{(i)}_{k-1}\right)  $为$ h_i $则有：</p>
 <script type="math/tex; mode=display">
-l\left(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})\right)\simeq l(y^{(i)},\hat{y}^{(i)}_{k-1})+g_if_k(x^{(i)})+\dfrac{1}{2}h_if^2_k(x^{(i)})</script><p>其中，$g_i$为损失函数的一阶导数，$h_i$为损失函数的二阶导数，注意这里是对$\hat{y}^{(t-1)}_{i}$求导。</p>
+l\left(y^{(i)},\hat{y}^{(i)}_{k-1}+f_k(x^{(i)})\right)\simeq l(y^{(i)},\hat{y}^{(i)}_{k-1})+g_if_k(x^{(i)})+\dfrac{1}{2}h_if^2_k(x^{(i)}) \label{3}</script><p>其中，$g_i$为损失函数的一阶导数，$h_i$为损失函数的二阶导数，注意这里是对$\hat{y}^{(t-1)}_{i}$求导。它们被称为每个样本的梯度统计量。</p>
 <p><strong>以平方损失为例：</strong></p>
 <script type="math/tex; mode=display">
 l(y^{(i)},\hat{y}^{(t-1)}_i) = (y^{(i)},\hat{y}^{(t-1)}_i)^2</script><p>则：</p>
