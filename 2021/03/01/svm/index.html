@@ -15,15 +15,15 @@
     <meta name="keywords" content="机器学习、数据挖掘" />
   
 
-  <meta name="description" content="​      支持向量机，英文全名为Support Vector Machine(SVM)，和感知机算法一样它通常用于二分类样本数据的分类，不同之处在于感知机算法要求样本数据线性可分否则算法不收敛，而支持向量机算法通过引入核函数巧妙的解决了这个问题。支持向量机的基本思想是在样本数据中训练出一个间隔最大化的线性分类器，其学习策略为间隔最大化，最终转化为求解一个凸二次规划问题 1. 支持向量机的目标函">
+  <meta name="description" content="支持向量机，英文全名为**Support Vector Machine**(SVM)，和感知机算法一样它通常用于二分类样本数据的分类，不同之处在于感知机算法要求样本数据线性可分否则算法不收敛，而支持向量机算法通过引入核函数巧妙的解决了这个问题。支持向量机的基本思想是在样本数据中训练出一个间隔最大化的线性分类器，其学习策略为间隔最大化，最终转化为求解一个凸二次规划问题 1. 支持向量机的目标函数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="svm">
 <meta property="og:url" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;03&#x2F;01&#x2F;svm&#x2F;index.html">
 <meta property="og:site_name" content="Lixin">
-<meta property="og:description" content="​      支持向量机，英文全名为Support Vector Machine(SVM)，和感知机算法一样它通常用于二分类样本数据的分类，不同之处在于感知机算法要求样本数据线性可分否则算法不收敛，而支持向量机算法通过引入核函数巧妙的解决了这个问题。支持向量机的基本思想是在样本数据中训练出一个间隔最大化的线性分类器，其学习策略为间隔最大化，最终转化为求解一个凸二次规划问题 1. 支持向量机的目标函">
+<meta property="og:description" content="支持向量机，英文全名为**Support Vector Machine**(SVM)，和感知机算法一样它通常用于二分类样本数据的分类，不同之处在于感知机算法要求样本数据线性可分否则算法不收敛，而支持向量机算法通过引入核函数巧妙的解决了这个问题。支持向量机的基本思想是在样本数据中训练出一个间隔最大化的线性分类器，其学习策略为间隔最大化，最终转化为求解一个凸二次规划问题 1. 支持向量机的目标函数">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;03&#x2F;01&#x2F;svm&#x2F;svm_间隔.png">
-<meta property="og:updated_time" content="2021-03-01T09:03:17.549Z">
+<meta property="og:updated_time" content="2021-03-02T03:02:17.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;03&#x2F;01&#x2F;svm&#x2F;svm_间隔.png">
 
@@ -195,7 +195,7 @@ ga('send', 'pageview');
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-支持向量机的目标函数"><span class="toc-text">1. 支持向量机的目标函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-支持向量机算法的对偶问题"><span class="toc-text">2. 支持向量机算法的对偶问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-SMO算法"><span class="toc-text">3. SMO算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-面试相关问题"><span class="toc-text">4. 面试相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-SVM为什么可以分类非线性问题？"><span class="toc-text">4.1 SVM为什么可以分类非线性问题？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-多分类问题"><span class="toc-text">4.2 多分类问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-当用支持向量机进行分类时，支持向量越多越好还是越少越好"><span class="toc-text">4.3  当用支持向量机进行分类时，支持向量越多越好还是越少越好?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-4-为什么要将求解SVM的原始问题转换为其对偶问题？"><span class="toc-text">4.4 为什么要将求解SVM的原始问题转换为其对偶问题？</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-支持向量机的目标函数"><span class="toc-text">1. 支持向量机的目标函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-支持向量机算法的对偶问题"><span class="toc-text">2. 支持向量机算法的对偶问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-SMO算法"><span class="toc-text">3. SMO算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-面试相关问题"><span class="toc-text">4. 面试相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-SVM为什么可以分类非线性问题？"><span class="toc-text">4.1 SVM为什么可以分类非线性问题？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-多分类问题"><span class="toc-text">4.2 多分类问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-当用支持向量机进行分类时，支持向量越多越好还是越少越好"><span class="toc-text">4.3  当用支持向量机进行分类时，支持向量越多越好还是越少越好?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-4-为什么要将求解SVM的原始问题转换为其对偶问题？"><span class="toc-text">4.4 为什么要将求解SVM的原始问题转换为其对偶问题？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-SVM损失函数"><span class="toc-text">5. SVM损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-Hinge-Loss-Function"><span class="toc-text">5.1 Hinge Loss Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-目标函数"><span class="toc-text">5.2 目标函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-目标函数的导数"><span class="toc-text">5.3 目标函数的导数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text"> </span></a>
   </div>
 
 
@@ -236,8 +236,8 @@ ga('send', 'pageview');
 
   <div class="article-content">
     
-      <p>​      支持向量机，英文全名为<strong>Support Vector Machine</strong>(SVM)，和感知机算法一样它通常用于二分类样本数据的分类，不同之处在于感知机算法要求样本数据线性可分否则算法不收敛，而支持向量机算法通过引入核函数巧妙的解决了这个问题。支持向量机的基本思想是在样本数据中训练出一个间隔最大化的线性分类器，其学习策略为间隔最大化，最终转化为求解一个凸二次规划问题</p>
-<h4 id="1-支持向量机的目标函数"><a href="#1-支持向量机的目标函数" class="headerlink" title="1. 支持向量机的目标函数"></a>1. 支持向量机的目标函数</h4><p>在样本空间中，划分超平面可以通过如下线性方程描述：</p>
+      <pre><code>  支持向量机，英文全名为**Support Vector Machine**(SVM)，和感知机算法一样它通常用于二分类样本数据的分类，不同之处在于感知机算法要求样本数据线性可分否则算法不收敛，而支持向量机算法通过引入核函数巧妙的解决了这个问题。支持向量机的基本思想是在样本数据中训练出一个间隔最大化的线性分类器，其学习策略为间隔最大化，最终转化为求解一个凸二次规划问题
+</code></pre><h4 id="1-支持向量机的目标函数"><a href="#1-支持向量机的目标函数" class="headerlink" title="1. 支持向量机的目标函数"></a>1. 支持向量机的目标函数</h4><p>在样本空间中，划分超平面可以通过如下线性方程描述：</p>
 <script type="math/tex; mode=display">
 w^Tx + b = 0 \label{1}</script><p>其中，$w = (w_1;w_2;…;w_d)$为法向量，决定了超平面的方向；b为位移项，决定了超平面与原点之间的距离。显然，划分超平面可以被法向量$w$和$b$确定，下面我们将其记为$(w,b)$. 样本空间中任意点$x$到超平面$(w,b)$的距离可写为：</p>
 <script type="math/tex; mode=display">
@@ -377,7 +377,29 @@ L,& \alpha_2^{new,unr}<L
 <li>对偶问题往往更易求解（当我们寻找约束存在时的最优点的时候，约束的存在虽然减小了需要搜寻的范围，但是却使问题变得更加复杂。为了使问题变得易于处理，我们的方法是把目标函数和约束全部融入一个新的函数，即拉格朗日函数，再通过这个函数来寻找最优点。）</li>
 <li>自然引入核函数，进而推广到非线性分类问题….</li>
 </ol>
-
+<h3 id="5-SVM损失函数"><a href="#5-SVM损失函数" class="headerlink" title="5. SVM损失函数"></a>5. SVM损失函数</h3><h4 id="5-1-Hinge-Loss-Function"><a href="#5-1-Hinge-Loss-Function" class="headerlink" title="5.1 Hinge Loss Function"></a>5.1 Hinge Loss Function</h4><script type="math/tex; mode=display">
+c(x, y, f(x)) = (1 - y * f(x))_+</script><p>其中$c$ 是损失函数, $x$ 是样本, $y$ 是实际目标列, $f(x)$ 是预测目标列。</p>
+<p>上式也可以写成:</p>
+<script type="math/tex; mode=display">
+c(x, y, f(x))= 
+\begin{cases}
+    0,& \text{if } y*f(x)\geq 1\\
+    1-y*f(x),              & \text{else}
+\end{cases}</script><h4 id="5-2-目标函数"><a href="#5-2-目标函数" class="headerlink" title="5.2 目标函数"></a>5.2 目标函数</h4><p>Svm的目标函数如下:</p>
+<script type="math/tex; mode=display">
+\underset{w}{min}\ \lambda\parallel w\parallel^2 + \ \sum_{i=1}^n\big(1-y_i \langle x_i,w \rangle\big)_+</script><p>其中第一项是正则化项, 第二项是损失。</p>
+<h4 id="5-3-目标函数的导数"><a href="#5-3-目标函数的导数" class="headerlink" title="5.3 目标函数的导数"></a>5.3 目标函数的导数</h4><p>最小化目标函数，我们需要对目标函数求导：</p>
+<p>我们分别对目标函数的两项求导如下：</p>
+<script type="math/tex; mode=display">
+\frac{\delta}{\delta w_k} \lambda\parallel w\parallel^2 \ = 2 \lambda w_k</script><script type="math/tex; mode=display">
+\frac{\delta}{\delta w_k} \big(1-y_i \langle x_i,w \rangle\big)_+ \ = \begin{cases}
+    0,& \text{if } y_i \langle x_i,w \rangle\geq 1\\
+    -y_ix_{ik},              & \text{else}
+\end{cases}</script><p>if $y_i⟨x_i,w⟩ &lt; 1$:</p>
+<script type="math/tex; mode=display">
+w = w + \eta (y_ix_i - 2\lambda w)</script><p>else:</p>
+<script type="math/tex; mode=display">
+w = w + \eta (-2\lambda w)</script><h3 id><a href="#" class="headerlink" title=" "></a> </h3>
     
   </div>
 
