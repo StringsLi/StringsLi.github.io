@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>FM | Lixin</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="机器学习、数据挖掘" />
+  
+
+  <meta name="description" content="1  $ FM $算法介绍在传统的线性模型中，各个特征之间都是独立考虑的，并没有涉及到特征与特征之间的交互关系，但实际上大量的特征之间是相互关联的。如何寻找相互关联的特征，基于上述思想$ FM $算法应运而生。传统的线性模型为  y=w_0+\sum\limits_{i=1}^nw_ix_i在传统的线性模型的基础上中引入特征交叉项可得  y=w_0+\sum\limits_{i=1}^nw_ix_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FM">
+<meta property="og:url" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;03&#x2F;03&#x2F;FM&#x2F;index.html">
+<meta property="og:site_name" content="Lixin">
+<meta property="og:description" content="1  $ FM $算法介绍在传统的线性模型中，各个特征之间都是独立考虑的，并没有涉及到特征与特征之间的交互关系，但实际上大量的特征之间是相互关联的。如何寻找相互关联的特征，基于上述思想$ FM $算法应运而生。传统的线性模型为  y=w_0+\sum\limits_{i=1}^nw_ix_i在传统的线性模型的基础上中引入特征交叉项可得  y=w_0+\sum\limits_{i=1}^nw_ix_">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2021-03-03T03:09:48.156Z">
+<meta name="twitter:card" content="summary">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+
+
+  
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-FM-算法介绍"><span class="toc-text">1  $ FM $算法介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-算法优缺点"><span class="toc-text">2 算法优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-代码实现："><span class="toc-text">3 代码实现：</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-FM" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">FM</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.03.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Lixin</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h4 id="1-FM-算法介绍"><a href="#1-FM-算法介绍" class="headerlink" title="1  $ FM $算法介绍"></a>1  $ FM $算法介绍</h4><p>在传统的线性模型中，各个特征之间都是独立考虑的，并没有涉及到特征与特征之间的交互关系，但实际上大量的特征之间是相互关联的。如何寻找相互关联的特征，基于上述思想$ FM $算法应运而生。传统的线性模型为</p>
+<script type="math/tex; mode=display">
+y=w_0+\sum\limits_{i=1}^nw_ix_i</script><p>在传统的线性模型的基础上中引入特征交叉项可得</p>
+<script type="math/tex; mode=display">
+y=w_0+\sum\limits_{i=1}^nw_ix_i+\sum\limits_{i=1}^{n}\sum\limits_{j=i+1}^nw_{ij}x_ix_j</script><p>在数据非常稀疏的情况下很难满足$ x_i、x_j $都不为$ 0 $，这样将会导致$ w_{ij} $不能够通过训练得到，因此无法进行相应的参数估计。可以发现参数矩阵$ w  $是一个实对称矩阵，$ w_{ij} $可以使用矩阵分解的方法求解，通过引入辅助向量$  V $</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+V=
+\begin{bmatrix}
+v_{11} & v_{12} & v_{13} & \cdots & v_{1k} \\
+v_{21} & v_{22} & v_{23} & \cdots & v_{2k} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+v_{n1} & v_{n2} & v_{n3} & \cdots & v_{nk}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{v}_1\\
+\mathbf{v}_2\\
+\vdots\\
+\mathbf{v}_n
+\end{bmatrix}
+\end{aligned}</script><p>然后用$ w_{ij}=\mathbf{v}_i\mathbf{v}_j^T  $对$ w  $进行分解</p>
+<script type="math/tex; mode=display">
+w=VV^T=
+\begin{bmatrix}
+\mathbf{v}_1\\
+\mathbf{v}_2\\
+\vdots\\
+\mathbf{v}_n
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{v}_1^T &
+\mathbf{v}_2^T & 
+\cdots & 
+\mathbf{v}_n^T
+\end{bmatrix}</script><p>综上可以发现原始模型的二项式参数为$ \frac{n(n-1)}{2} $个，现在减少为$ kn(k\ll n) $个。引入辅助向量$ V $最为重要的一点是使得$ x_tx_i $和$ x_ix_j $的参数不再相互独立，这样就能够在样本数据稀疏的情况下合理的估计模型交叉项的参数</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\langle\mathbf{v}_t,\mathbf{v}_i\rangle&=\sum\limits_{f=1}^k\mathbf{v}_{tf}\cdot\mathbf{v}_{if}\\
+\langle\mathbf{v}_i,\mathbf{v}_j\rangle&=\sum\limits_{f=1}^k\mathbf{v}_{if}\cdot\mathbf{v}_{jf}
+\end{aligned}</script><p>$ x_tx_i $和$ x_ix_j  $的参数分别为$ \langle\mathbf{v}_{t},\mathbf{v}_i \rangle  $和$ \langle\mathbf{v}_{i},\mathbf{v}_j \rangle  $，它们之间拥有共同项$ \mathbf{v}_i $，即所有包含$ \mathbf{v}_i $的非零组合特征的样本都可以用来学习隐向量$  \mathbf{v}_i $，而原始模型中$ w_{ti} $和$ w_{ij} $却是相互独立的，这在很大程度上避免了数据稀疏造成的参数估计不准确的影响。因此原始模型可以改写为最终的$ FM $算法</p>
+<script type="math/tex; mode=display">
+y=w_0+\sum\limits_{i=1}^nw_ix_i+\sum\limits_{i=1}^{n}\sum\limits_{j=i+1}^n \langle\mathbf{v}_i,\mathbf{v}_j \rangle x_ix_j</script><p>由于求解上述式子的时间复杂度为$ \mathcal{O}(n^2) $，可以看出主要是最后一项计算比较复杂，因此从数学上对该式最后一项进行一些改写可以把时间复杂度降为$ \mathcal{O}(kn) $</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned} & \sum_{i=1}^{n} \sum_{j=i+1}^{n}\left\langle\mathbf{v}_{i}, \mathbf{v}_{j}\right\rangle x_{i} x_{j} \\=& \frac{1}{2} \sum_{i=1}^{n} \sum_{j=1}^{n}\left\langle\mathbf{v}_{i}, \mathbf{v}_{j}\right\rangle x_{i} x_{j}-\frac{1}{2} \sum_{i=1}^{n}\left\langle\mathbf{v}_{i}, \mathbf{v}_{i}\right\rangle x_{i} x_{i} \\=& \frac{1}{2}\left(\sum_{i=1}^{n} \sum_{j=1}^{n} \sum_{f=1}^{k} \mathbf{v}_{if} \mathbf{v}_{jf} x_{i} x_{j}-\sum_{i=1}^{n} \sum_{f=1}^{k} \mathbf{v}_{if} \mathbf{v}_{if} x_{i} x_{i}\right) \\=& \frac{1}{2} \sum_{f=1}^{k}\left(\left(\sum_{i=1}^{n} \mathbf{v}_{if} x_{i}\right)\left(\sum_{j=1}^{n} \mathbf{v}_{jf} x_{j}\right)-\sum_{i=1}^{n} \mathbf{v}_{if}^{2} x_{i}^{2}\right) \\=& \frac{1}{2} \sum_{f=1}^{k}\left(\left(\sum_{i=1}^{n} \mathbf{v}_{if} x_{i}\right)^{2}-\sum_{i=1}^{n} \mathbf{v}_{if}^{2} x_{i}^{2}\right) \end{aligned}
+\end{equation}</script><p>第一步：首先我们知道$V$是一个对角阵，假设$A=\sum_{i=1}^{n} \sum_{j=i+1}^{n}\left\langle\mathbf{v}_{i}, \mathbf{v}_{j}\right\rangle x_{i} x_{j}$代表上三角元素之和（这里$A$不包括对角线元素），$B=\frac{1}{2} \sum_{i=1}^{n}\left\langle\mathbf{v}_{i}, \mathbf{v}_{i}\right\rangle x_{i} x_{i}$表示对角线元素之和，同时整个矩阵之和可表示为$C=\sum_{i=1}^{n} \sum_{j=1}^{n}\left\langle\mathbf{v}_{i}, \mathbf{v}_{j}\right\rangle x_{i} x_{j}$. 根据对角线的性质可以得到$C= 2（A+B)$，那么 $A= C/2 - B/2$。</p>
+<p>在训练 FM 时，也可以和 LR 算法一样可以利用 SGD（随机梯度下降）来求解参数，各个参数的梯度如下：</p>
+<script type="math/tex; mode=display">
+\dfrac{d}{d\theta} \hat{y}(x) =
+\begin{cases}
+1  &  \theta :w_0 \\
+x_i & \theta :w_i \\
+x_i\sum_{j=1}^{n}v_{j,f}x_j-v_{i,f}x_i^2 & \theta :v_{i,f}
+\end{cases}</script><p>模型中，$\sum_{j=1}^{n}v_{j,f}x_j$只和$f$有关，在每次迭代中，只需要计算一次就可以得到所有的梯度。原本FM的复杂度为$O(kn^2)$,通过上面等式的变换将其二次项简化为$v_{i,f}$有关等式，模型复杂度降为$O(kn).$</p>
+<h4 id="2-算法优缺点"><a href="#2-算法优缺点" class="headerlink" title="2 算法优缺点"></a>2 算法优缺点</h4><ul>
+<li>$ FM $算法降低了因数据稀疏，导致特征交叉项参数学习不充分的影响；</li>
+<li>$ FM $算法提升了参数学习效率和模型预估的能力。</li>
+</ul>
+<h4 id="3-代码实现："><a href="#3-代码实现：" class="headerlink" title="3 代码实现："></a>3 代码实现：</h4><p>scala代码实现：</p>
+<p><a href="https://github.com/StringsLi/ml_scratch_scala/tree/master/src/main/scala/com/strings/model/ctr/fm" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/tree/master/src/main/scala/com/strings/model/ctr/fm</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2021/03/01/svm/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
