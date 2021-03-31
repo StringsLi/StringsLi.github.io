@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>pg数据库插入效率对比 | Lixin</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="机器学习、数据挖掘" />
+  
+
+  <meta name="description" content="1. 简介本文主要介绍6种postgresql数据的插入方式的效率； 数据采用python faker包生成的假数据，样式如下： 一条数据如下：谭磊    湖南省兴安盟县孝南关岭路q座 578703    南京市    MMTE96835803777282    维旺明科技有限公司    341102209612219    VISA 13 digit    2005-09-28    13168">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pg数据库插入效率对比">
+<meta property="og:url" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;03&#x2F;31&#x2F;pg%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8F%92%E5%85%A5%E6%95%88%E7%8E%87%E5%AF%B9%E6%AF%94&#x2F;index.html">
+<meta property="og:site_name" content="Lixin">
+<meta property="og:description" content="1. 简介本文主要介绍6种postgresql数据的插入方式的效率； 数据采用python faker包生成的假数据，样式如下： 一条数据如下：谭磊    湖南省兴安盟县孝南关岭路q座 578703    南京市    MMTE96835803777282    维旺明科技有限公司    341102209612219    VISA 13 digit    2005-09-28    13168">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2021-03-31T02:19:06.439Z">
+<meta name="twitter:card" content="summary">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+
+
+  
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-简介"><span class="toc-text">1. 简介</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-pg数据库插入效率对比" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">pg数据库插入效率对比</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.03.31</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Lixin</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h4 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h4><p>本文主要介绍6种postgresql数据的插入方式的效率；</p>
+<p>数据采用python faker包生成的假数据，样式如下：</p>
+<p>一条数据如下：谭磊    湖南省兴安盟县孝南关岭路q座 578703    南京市    MMTE96835803777282    维旺明科技有限公司    341102209612219    VISA 13 digit    2005-09-28    13168174481</p>
+<p>生成代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> faker <span class="keyword">import</span> Faker</span><br><span class="line">fake = Faker(locale=<span class="string">'zh_CN'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fake_row</span><span class="params">(i)</span>:</span></span><br><span class="line">    row = [fake.name(), fake.address(), fake.city(), fake.bban(),</span><br><span class="line">           fake.company(), fake.credit_card_number(card_type=<span class="literal">None</span>), fake.credit_card_provider(card_type=<span class="literal">None</span>),</span><br><span class="line">           fake.date(pattern=<span class="string">"%Y-%m-%d"</span>, end_datetime=<span class="literal">None</span>), fake.phone_number()]</span><br><span class="line">    <span class="keyword">return</span> row</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start = time.time()</span><br><span class="line">fake_data = [fake_row(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000</span>)]</span><br><span class="line">data = pd.DataFrame(fake_data)</span><br><span class="line">data.columns = [<span class="string">"col&#123;&#125;"</span>.format(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">10</span>)]</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">from</span> psycopg2 <span class="keyword">import</span> extras <span class="keyword">as</span> ex</span><br><span class="line"><span class="keyword">from</span> faker <span class="keyword">import</span> Faker</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">coast_time</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        t = time.perf_counter()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        print(<span class="string">f'func <span class="subst">&#123;func.__name__&#125;</span> need time:<span class="subst">&#123;time.perf_counter() - t:<span class="number">.2</span>f&#125;</span> s'</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fun</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">psql_insert_copy</span><span class="params">(table, conn, keys, data_iter)</span>:</span></span><br><span class="line">    dbapi_conn = conn.connection</span><br><span class="line">    <span class="keyword">with</span> dbapi_conn.cursor() <span class="keyword">as</span> cur:</span><br><span class="line">        s_buf = io.StringIO()</span><br><span class="line">        writer = csv.writer(s_buf)</span><br><span class="line">        writer.writerows(data_iter)</span><br><span class="line">        s_buf.seek(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        columns = <span class="string">', '</span>.join(<span class="string">'"&#123;&#125;"'</span>.format(k) <span class="keyword">for</span> k <span class="keyword">in</span> keys)</span><br><span class="line">        <span class="keyword">if</span> table.schema:</span><br><span class="line">            table_name = <span class="string">'&#123;&#125;.&#123;&#125;'</span>.format(table.schema, table.name)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            table_name = table.name</span><br><span class="line"></span><br><span class="line">        sql = <span class="string">'COPY &#123;&#125; (&#123;&#125;) FROM STDIN WITH CSV'</span>.format(</span><br><span class="line">            table_name, columns)</span><br><span class="line">        cur.copy_expert(sql=sql, file=s_buf)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@coast_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copy_insert</span><span class="params">(engine, data, table_name)</span>:</span></span><br><span class="line">    conn = engine.raw_connection()</span><br><span class="line">    cur = conn.cursor()</span><br><span class="line">    output = io.StringIO()</span><br><span class="line">    data.to_csv(output, sep=<span class="string">'\t'</span>, header=<span class="literal">False</span>, index=<span class="literal">False</span>)</span><br><span class="line">    output.seek(<span class="number">0</span>)</span><br><span class="line">    cur.copy_from(output, table_name, null=<span class="string">""</span>)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@coast_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copy_insert_sql</span><span class="params">(engine, data, table_name)</span>:</span></span><br><span class="line">    conn = engine.raw_connection()</span><br><span class="line">    cur = conn.cursor()</span><br><span class="line">    columns = data.columns</span><br><span class="line">    str_cols = <span class="string">","</span>.join(columns)</span><br><span class="line">    f = io.BytesIO()</span><br><span class="line"></span><br><span class="line">    StreamWriter = codecs.getwriter(<span class="string">"utf-8"</span>)</span><br><span class="line">    csv_writer = csv.writer(StreamWriter(f))</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> data.values:</span><br><span class="line">        csv_writer.writerow([_ <span class="keyword">for</span> _ <span class="keyword">in</span> row])</span><br><span class="line">    f.seek(<span class="number">0</span>)</span><br><span class="line">    cur.copy_expert(sql=<span class="string">"copy &#123;&#125;(&#123;&#125;) from stdin WITH (FORMAT CSV)"</span>.format(table_name, str_cols), file=f)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@coast_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert_many</span><span class="params">(engine, data, table_name)</span>:</span></span><br><span class="line">    columns = data.columns</span><br><span class="line">    str_cols = <span class="string">","</span>.join(columns)</span><br><span class="line">    str_sss = <span class="string">','</span>.join(len(columns) * [<span class="string">'%s'</span>])</span><br><span class="line">    sql_query = <span class="string">"""INSERT INTO &#123;&#125;(&#123;&#125;) VALUES (&#123;&#125;);"""</span>.format(table_name, str_cols, str_sss)</span><br><span class="line">    data_list = [tuple(x) <span class="keyword">for</span> x <span class="keyword">in</span> data.values]</span><br><span class="line">    conn = engine.raw_connection()</span><br><span class="line">    cur = conn.cursor()</span><br><span class="line">    cur.executemany(sql_query, data_list)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@coast_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert_values</span><span class="params">(engine, data, table_name)</span>:</span></span><br><span class="line">    columns = data.columns</span><br><span class="line">    str_cols = <span class="string">","</span>.join(columns)</span><br><span class="line">    sql_query = <span class="string">"""INSERT INTO &#123;&#125;(&#123;&#125;) VALUES %s;"""</span>.format(table_name, str_cols)</span><br><span class="line">    data_list = [tuple(x) <span class="keyword">for</span> x <span class="keyword">in</span> data.values]</span><br><span class="line">    conn = engine.raw_connection()</span><br><span class="line">    cur = conn.cursor()</span><br><span class="line">    ex.execute_values(cur, sql_query, data_list, page_size=<span class="number">10000</span>)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@coast_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_sql_insert_normal</span><span class="params">(engine, data, table_name)</span>:</span></span><br><span class="line">    data.to_sql(table_name, engine, index=<span class="literal">False</span>, if_exists=<span class="string">'replace'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@coast_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_sql_insert_copy</span><span class="params">(engine, data, table_name)</span>:</span></span><br><span class="line">    data.to_sql(table_name, engine, method=psql_insert_copy, index=<span class="literal">False</span>, if_exists=<span class="string">'replace'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">user = <span class="string">'postgres'</span></span><br><span class="line">password = <span class="string">'121457'</span></span><br><span class="line">host = <span class="string">'127.0.0.1'</span></span><br><span class="line">port = <span class="string">'5432'</span></span><br><span class="line">database_name = <span class="string">'test_data_base'</span></span><br><span class="line"></span><br><span class="line">database_url = <span class="string">'postgresql+psycopg2://&#123;user&#125;:&#123;password&#125;@&#123;host&#125;:&#123;port&#125;/&#123;database_name&#125;?client_encoding=utf8'</span>.format(</span><br><span class="line">    user=user,</span><br><span class="line">    host=host,</span><br><span class="line">    port=port,</span><br><span class="line">    password=password,</span><br><span class="line">    database_name=database_name,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">engine = create_engine(database_url)</span><br><span class="line">fake = Faker(locale=<span class="string">'zh_CN'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fake_row</span><span class="params">(i)</span>:</span></span><br><span class="line">    row = [fake.name(), fake.address(), fake.city(), fake.bban(),</span><br><span class="line">           fake.company(), fake.credit_card_number(card_type=<span class="literal">None</span>), fake.credit_card_provider(card_type=<span class="literal">None</span>),</span><br><span class="line">           fake.date(pattern=<span class="string">"%Y-%m-%d"</span>, end_datetime=<span class="literal">None</span>), fake.phone_number()]</span><br><span class="line">    <span class="keyword">return</span> row</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start = time.time()</span><br><span class="line">fake_data = [fake_row(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000</span>)]</span><br><span class="line">data = pd.DataFrame(fake_data)</span><br><span class="line">data.columns = [<span class="string">"col&#123;&#125;"</span>.format(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">10</span>)]</span><br><span class="line">print(<span class="string">"func generate data need:&#123;:.2f&#125;秒"</span>.format(time.time() - start))</span><br><span class="line"></span><br><span class="line">insert_many(engine, data, <span class="string">"tb_faker1"</span>)</span><br><span class="line">insert_values(engine, data, <span class="string">"tb_faker2"</span>)</span><br><span class="line">copy_insert(engine, data, <span class="string">"tb_faker3"</span>)</span><br><span class="line">copy_insert_sql(engine, data, <span class="string">"tb_faker4"</span>)</span><br><span class="line">to_sql_insert_normal(engine, data, <span class="string">"tb_faker5"</span>)</span><br><span class="line">to_sql_insert_copy(engine, data, <span class="string">"tb_faker6"</span>)</span><br></pre></td></tr></table></figure>
+<p>50万数据的结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func insert_many need time:95.0008 s</span><br><span class="line">func insert_values need time:19.6026 s</span><br><span class="line">func copy_insert need time:7.7923 s</span><br><span class="line">func copy_insert_sql need time:9.4167 s</span><br><span class="line">func to_sql_insert_normal need time:117.4498 s</span><br><span class="line">func to_sql_insert_copy need time:9.9843 s</span><br></pre></td></tr></table></figure>
+<p>100万数据的结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func generate data need:340.35秒</span><br><span class="line">func insert_many need time:103.80 s</span><br><span class="line">func insert_values need time:19.59 s</span><br><span class="line">func copy_insert need time:7.57 s</span><br><span class="line">func copy_insert_sql need time:9.39 s</span><br><span class="line">func to_sql_insert_normal need time:124.07 s</span><br><span class="line">func to_sql_insert_copy need time:8.87 s</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2021/03/16/%E9%9D%A2%E8%AF%95/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
