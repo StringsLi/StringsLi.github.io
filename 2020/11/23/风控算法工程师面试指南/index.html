@@ -26,7 +26,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;www.zhihu.com&#x2F;equation?tex=%5Cfrac%7BFP%7D%7BFP%2BTN%7D">
 <meta property="og:image" content="https:&#x2F;&#x2F;pic3.zhimg.com&#x2F;v2-51c5764548effcfc1348c1390fb47a52_b.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;pic3.zhimg.com&#x2F;80&#x2F;v2-51c5764548effcfc1348c1390fb47a52_hd.jpg">
-<meta property="og:updated_time" content="2020-12-28T09:21:53.755Z">
+<meta property="og:updated_time" content="2021-04-01T03:43:58.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;www.zhihu.com&#x2F;equation?tex=%5Cfrac%7BTP%7D%7BTP%2BFN%7D">
 
@@ -433,7 +433,7 @@ ga('send', 'pageview');
 </ul>
 <p><strong>3.9：简单说一下GBDT的原理。</strong></p>
 <ul>
-<li>GBDT是boosting的一种方法，主要思想是每一次建立单个分类器时，是在之前建立的模型的损失函数的梯度下降方向。损失函数越大，说明模型越容易出错，如果我们的模型能让损失函数持续的下降，则说明我们的模型在持续不断的改进，而最好的方式就是让损失函数在其梯度的方向上下降。</li>
+<li><strong>GBDT是boosting的一种方法，主要思想是每一次建立单个分类器时，是在之前建立的模型的损失函数的梯度下降方向。损失函数越大，说明模型越容易出错，如果我们的模型能让损失函数持续的下降，则说明我们的模型在持续不断的改进，而最好的方式就是让损失函数在其梯度的方向上下降。</strong></li>
 <li>GBDT的核心在于每一棵树学的是之前所有树结论和的残差，残差就是真实值与预测值的差值，所以为了得到残差，GBDT中的树全部是回归树，之所以不用分类树，是因为分类的结果相减是没有意义的。</li>
 <li>Shrinkage（缩减）是 GBDT 的一个重要演进分支，Shrinkage的思想在于每次走一小步来逼近真实的结果，要比直接迈一大步的方式更好，这样做可以有效减少过拟合的风险。它认为每棵树只学到了一小部分，累加的时候只累加这一小部分，通过多学习几棵树来弥补不足。这累加的一小部分（步长*残差）来逐步逼近目标，所以各个树的残差是渐变的而不是陡变的。</li>
 <li>GBDT可以用于回归问题（线性和非线性），也可用于分类问题。</li>
