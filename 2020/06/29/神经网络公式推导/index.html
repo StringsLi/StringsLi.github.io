@@ -23,10 +23,10 @@
 <meta property="og:description" content="神经网络的反向传播公式1. 逻辑回归反向传播公式的推导逻辑回归是最简单的神经网络，先入手逻辑回归，有助于后面的理解。  上图是一个逻辑回归正向传播的示意图。具体细节不再描述。 损失函数为：  L(a,y) = -yloga -(1-y)log(1-a)反向传播的目的为了求$dw和db$，从而采用梯度下降法进行迭代优化，那么反向传播就是从后向前一步步的求微分，从而得到$dw,db$,具体过程如下：">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;逻辑回归反向传播.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;ml-md&#x2F;神经网络2&#x2F;二层神经网络反向传播.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;二层神经网络反向传播.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;深层神经网络反向传播.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;nn-from-scratch-3-layer-network.png">
-<meta property="og:updated_time" content="2021-03-01T09:02:59.475Z">
+<meta property="og:updated_time" content="2021-04-06T08:33:33.361Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC&#x2F;逻辑回归反向传播.jpg">
 
@@ -253,7 +253,7 @@ L(a,y) = -yloga -(1-y)log(1-a)</script><p>反向传播的目的为了求$dw和db
 </ol>
 <p>这样就完成了逻辑回归的反向传播</p>
 <h5 id="2-单隐层神经网络的反向传播公式推导"><a href="#2-单隐层神经网络的反向传播公式推导" class="headerlink" title="2. 单隐层神经网络的反向传播公式推导"></a>2. 单隐层神经网络的反向传播公式推导</h5><p>神经网络计算中，与逻辑回归十分相似，但中间会有多层计算。下图是一个双层神经网络，有一个输入层，一个隐藏层和一个输出层。 </p>
-<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/ml-md\神经网络2\二层神经网络反向传播.jpg" alt></p>
+<p><img src="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/二层神经网络反向传播.jpg" alt></p>
 <p>前向传播如图所示。其中$L(a^{[2]},y)$为交叉熵损失函数，假设有两个输出则：</p>
 <script type="math/tex; mode=display">
 L(a^{[2]},y) = -yloga^{[2]} -(1-y)log(1-a^{[2]})</script><p>反向传播公式如下：</p>
@@ -308,7 +308,7 @@ L(y,\hat{y}) = -\frac{1}{N}\sum_{n \in N}\sum_{i \in C}y_{n,i}log\hat{y}_{n,i}</
 L(a_2,y) = -yloga_2 -(1-y)log(1-a_2)</script><p>反向传播公式如下：</p>
 <p>$da_2 = \frac{dL(a_2,y)}{da} = -\frac{y}{a_2} + \frac{1-y}{1-a_2}$</p>
 <ol>
-<li><p>$dz_2 = \frac{dL}{da_2}\frac{da_2}{dz_2} = a_2 - y$， 这里对应$z$ 对应$\delta $,由于softmax的导数$a-(1-a_2)$</p>
+<li><p>$dz_2 = \frac{dL}{da_2}\frac{da_2}{dz_2} = a_2 - y$， 这里对应$z$ 对应$\delta $,由于$softmax$的导数$a-(1-a_2)$</p>
 </li>
 <li><p>$dW_2=  \frac{\partial L}{\partial W_2}= a_1^Tdz_2$</p>
 </li>
