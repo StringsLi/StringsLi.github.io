@@ -31,7 +31,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;LLE空间保持.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;lle_算法步骤.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93&#x2F;diffmap_算法步骤.png">
-<meta property="og:updated_time" content="2020-05-06T11:45:04.914Z">
+<meta property="og:updated_time" content="2021-04-12T08:47:20.949Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20150522194801297">
 
@@ -273,7 +273,7 @@ dist_{.j}^2=\sum_{i=1}^{m}dist_{ij}^2</script><script type="math/tex; mode=displ
 dist_{..}^2=\frac{1}{m^2}\sum_{i=1}^{m}\sum_{i=1}^{m}dist_{ij}^2</script><p>由上面三个等式可知：</p>
 <script type="math/tex; mode=display">
 b_{ij} = -0.5(dist_{ij}^2 - dist_{i.}^2 -dist_{.j}^2 + dist_{..}^2)</script><p>通过降维前后保持不变的距离矩阵$D$求取內积矩阵$B$.</p>
-<p>对$B$做特征值分解(<strong>eigenvalue decompostion</strong>), $B = VUV^T$,其中$U=diag(\lambda _1,\lambda _2,…,\lambda _d)$为特征值构成的对角矩阵，$\lambda _1 \geq \lambda _2 \geq … \geq \lambda _d$,$V$为特征向量矩阵。假定其中有$d^<em>$个非零特征值，他们构成的对角矩阵 $U_</em> = diag(\lambda _1,\lambda _2,…,\lambda _{d^{<em>}})$ ,其中$V_</em>$表示对应的特征向量矩阵，则$Z$可以表示为：</p>
+<p>对$B$做特征值分解(<strong>eigenvalue decompostion</strong>), $B = VUV^T$,其中$U=diag(\lambda _1,\lambda _2,…,\lambda _d)$为特征值构成的对角矩阵，$\lambda _1 \geq \lambda _2 \geq … \geq \lambda _d$,$V$为特征向量矩阵。假定其中有$d^{\*}$个非零特征值，他们构成的对角矩阵 $U_{\*} = diag(\lambda _1,\lambda _2,…,\lambda _{d^{\*}})$ ,其中$V_*$表示对应的特征向量矩阵，则$Z$可以表示为：</p>
 <script type="math/tex; mode=display">
 Z = U_*^{\frac{1}{2}}V_*^T \in R^{d^*\times m}</script><p>MDS 的算法描述如下：</p>
 <p><img src="/2020/05/06/%E9%99%8D%E7%BB%B4%E6%96%B9%E6%B3%95-%E6%80%BB%E7%BB%93/降维方法-总结\mds_算法步骤.png" alt></p>

@@ -23,7 +23,8 @@
 <meta property="og:description" content="提升树是分类树或回归树为基本分类器的提升方法。提升树被认为是统计学习中性能最好的方法之一。 1.1 提升树模型提升树的思想可以用一个通俗的例子解释，假如有个人30岁，我们首先用20岁去拟合，发现损失有10岁，这时我们用6岁去拟合剩下的损失，发现差距还有4岁，第三轮我们用3岁拟合剩下的差距，差距就只有一岁了。如果我们的迭代轮数还没有完，可以继续迭代下面，每一轮迭代，拟合的岁数误差都会减小。 提升方法">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;03&#x2F;18&#x2F;%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E6%A0%91&#x2F;梯度提升树&#x2F;损失函数.png">
-<meta property="og:updated_time" content="2020-06-29T06:37:22.587Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;wx3.sinaimg.cn&#x2F;mw690&#x2F;00630Defgy1g4tdwhqzsdj30rp0afdho.jpg">
+<meta property="og:updated_time" content="2021-04-15T09:21:41.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;03&#x2F;18&#x2F;%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E6%A0%91&#x2F;梯度提升树&#x2F;损失函数.png">
 
@@ -195,7 +196,7 @@ ga('send', 'pageview');
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-提升树模型"><span class="toc-text">1.1 提升树模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-提升树算法"><span class="toc-text">1.2 提升树算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-梯度提升"><span class="toc-text">1.3 梯度提升</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-4-提升树主要损失函数"><span class="toc-text">1.4 提升树主要损失函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-5-总结及优缺点"><span class="toc-text">1.5 总结及优缺点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-6-代码实现"><span class="toc-text">1.6 代码实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-7-参考文献"><span class="toc-text">1.7 参考文献</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-提升树模型"><span class="toc-text">1.1 提升树模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-提升树算法"><span class="toc-text">1.2 提升树算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-梯度提升"><span class="toc-text">1.3 梯度提升</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-4-提升树主要损失函数"><span class="toc-text">1.4 提升树主要损失函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-5-总结及优缺点"><span class="toc-text">1.5 总结及优缺点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-6-梯度提升和梯度下降的区别和联系是什么？"><span class="toc-text">1.6. 梯度提升和梯度下降的区别和联系是什么？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-7-代码实现"><span class="toc-text">1.7 代码实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-8-参考文献"><span class="toc-text">1.8 参考文献</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#偏差和方差"><span class="toc-text">偏差和方差</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GBDT-和LR"><span class="toc-text">GBDT 和LR</span></a>
   </div>
 
 
@@ -284,6 +285,7 @@ r_{mi} = y_i - f_{m-1}(x_i), i = 1,2,...,N</script><p>​     (b) 拟合残差$r
 f_M(x) = \sum_{m=1}^{M}T(x;\Theta_m)</script><h5 id="1-3-梯度提升"><a href="#1-3-梯度提升" class="headerlink" title="1.3 梯度提升"></a>1.3 梯度提升</h5><p>梯度提升(Gradient Boosting）是Boosting中的一大类算法，其基本思想是根据当前模型损失函数的负梯度信息来训练新加入的弱分类器，然后将训练好的弱分类器以累加的形式结合到现有模型中。提升树利用加法模型与前向分步算法实现学习的优化过程。当损失函数是平方损失和指数损失时，每一步优化是很简单的。对于一般的损失函数而言，往往每一步优化并不是那么容易。针对这一问题，Freidman提出了梯度提升(gradient boosting)算法。这是利用最速下降法的近似方法，<strong>其关键是利用损失函数的负梯度在当前模型的值</strong>：</p>
 <script type="math/tex; mode=display">
 -[\frac{\partial{L(y,f(x_i))}}{\partial{f(x_i)}}]_{f(x) = f_{m-1}(x)}</script><p><strong>作为回归问题提升树算法中残差的近似值</strong>，拟合一个回归树。</p>
+<p>当损失函数选用均方损失函数是时，每一次拟合的值就是（真实值 - 当前模型预测的值），即残差。此时的变量是$y_i$，即“当前预测模型的值”，也就是对它求负梯度。</p>
 <p><strong>算法2 梯度提升树算法</strong></p>
 <p>输入：训练数据$T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)},x_{i} \in \chi \subseteq\mathbb{R}^n$,$\chi$为输入空间，$y_i \in \nu \subseteq \mathbb{R}  $ ,$\nu$为输出空间</p>
 <p>输出: 回归树$\hat{f}(x)$</p>
@@ -363,8 +365,28 @@ r(y_i,f(x_i)) =
 <p>3）使用一些健壮的损失函数，对异常值的鲁棒性非常强。比如 Huber损失函数和Quantile损失函数。</p>
 <p>梯度提升树的主要缺点有：</p>
 <p>1）由于弱学习器之间存在依赖关系，难以并行训练数据。不过可以通过自采样的SGBT来达到部分并行。</p>
-<h5 id="1-6-代码实现"><a href="#1-6-代码实现" class="headerlink" title="1.6 代码实现"></a>1.6 代码实现</h5><p>scala代码地址:<a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/ensemble/GBDT.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/ensemble/GBDT.scala</a></p>
-<h5 id="1-7-参考文献"><a href="#1-7-参考文献" class="headerlink" title="1.7 参考文献"></a>1.7 参考文献</h5><p>李航 《统计学习》</p>
+<h5 id="1-6-梯度提升和梯度下降的区别和联系是什么？"><a href="#1-6-梯度提升和梯度下降的区别和联系是什么？" class="headerlink" title="1.6. 梯度提升和梯度下降的区别和联系是什么？"></a>1.6. 梯度提升和梯度下降的区别和联系是什么？</h5><p>下表是梯度提升算法和梯度下降算法的对比情况。可以发现，两者都是在每 一轮迭代中，利用损失函数相对于模型的负梯度方向的信息来对当前模型进行更 新，只不过在梯度下降中，模型是以参数化形式表示，从而模型的更新等价于参 数的更新。而在梯度提升中，模型并不需要进行参数化表示，而是直接定义在函 数空间中，从而大大扩展了可以使用的模型种类。</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/00630Defgy1g4tdwhqzsdj30rp0afdho.jpg" alt></p>
+<h5 id="1-7-代码实现"><a href="#1-7-代码实现" class="headerlink" title="1.7 代码实现"></a>1.7 代码实现</h5><p>scala代码地址:<a href="https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/ensemble/GBDT.scala" target="_blank" rel="noopener">https://github.com/StringsLi/ml_scratch_scala/blob/master/src/main/scala/com/strings/model/ensemble/GBDT.scala</a></p>
+<h5 id="1-8-参考文献"><a href="#1-8-参考文献" class="headerlink" title="1.8 参考文献"></a>1.8 参考文献</h5><p>李航 《统计学习》</p>
+<h4 id="偏差和方差"><a href="#偏差和方差" class="headerlink" title="偏差和方差"></a>偏差和方差</h4><ul>
+<li>偏差指的是由所有采样得到的大小为m的训练数据集训练出的所有模型的输出的平均值和真实模型输出之间的偏差。偏差通常是由于我们对学习算法做了错误的假设所导致的，比如真实模型是某个二次函数，但我们假设模型是一次函数。由偏差带来的误差通常在训练误差上就能体现出来。</li>
+<li>方差指的是由所有采样得到的大小为m的训练数据集训练出的所有模型的输出的方差。方差通常是由于模型的复杂度相对于训练样本数m过高导致的，比如一共有100个训练样本，而我们假设模型是阶数不大于200的多项式函数。由方差带来的误差通常体现在测试误差相对于训练误差的增量上。</li>
+</ul>
+<h4 id="GBDT-和LR"><a href="#GBDT-和LR" class="headerlink" title="GBDT 和LR"></a>GBDT 和LR</h4><p>图中共有两棵树，x为一条输入样本，遍历两棵树后，x样本分别落到两颗树的叶子节点上，每个叶子节点对应LR一维特征，那么通过遍历树，就得到了该样本对应的所有LR特征。构造的新特征向量是取值0/1的。举例来说：上图有两棵树，左树有三个叶子节点，右树有两个叶子节点，最终的特征即为五维的向量。对于输入x，假设他落在左树第一个节点，编码[1,0,0]，落在右树第二个节点则编码[0,1]，所以整体的编码为[1,0,0,0,1]，这类编码作为特征，输入到LR中进行分类。</p>
+<ul>
+<li><p>为什么建树采用ensemble决策树？</p>
+<p>一棵树的表达能力很弱，不足以表达多个有区分性的特征组合，多棵树的表达能力更强一些。GBDT每棵树都在学习前面棵树尚存的不足，迭代多少次就会生成多少颗树。按paper以及Kaggle竞赛中的GBDT+LR融合方式，多棵树正好满足LR每条训练样本可以通过GBDT映射成多个特征的需求。</p>
+</li>
+<li><p>为什么建树采用GBDT而非RF？</p>
+<p>RF也是多棵树，但从效果上有实践证明不如GBDT。且GBDT前面的树，特征分裂主要体现对多数样本有区分度的特征；后面的树，主要体现的是经过前N颗树，残差仍然较大的少数样本。优先选用在整体上有区分度的特征，再选用针对少数样本有区分度的特征，思路更加合理，这应该也是用GBDT的原因。</p>
+</li>
+</ul>
+<ul>
+<li><p>如何使用GBDT 映射得到的特征？</p>
+<p>通过GBDT生成的特征，可直接作为LR的特征使用，省去人工处理分析特征的环节，LR的输入特征完全依赖于通过GBDT得到的特征。此思路已尝试，通过实验发现GBDT+LR在曝光充分的广告上确实有效果，但整体效果需要权衡优化各类树的使用。 </p>
+</li>
+</ul>
 
     
   </div>

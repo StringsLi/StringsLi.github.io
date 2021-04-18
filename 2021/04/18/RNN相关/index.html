@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>RNN相关 | Lixin</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="机器学习、数据挖掘" />
+  
+
+  <meta name="description" content="Recurrent Neural Networks (RNN) A recurrent neural network (RNN) is a type of neural network that has been succesful in modelling sequential data, e.g. language, speech, protein sequences, etc. A RNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNN相关">
+<meta property="og:url" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;04&#x2F;18&#x2F;RNN%E7%9B%B8%E5%85%B3&#x2F;index.html">
+<meta property="og:site_name" content="Lixin">
+<meta property="og:description" content="Recurrent Neural Networks (RNN) A recurrent neural network (RNN) is a type of neural network that has been succesful in modelling sequential data, e.g. language, speech, protein sequences, etc. A RNN">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;04&#x2F;18&#x2F;RNN%E7%9B%B8%E5%85%B3&#x2F;rnn-unfold.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;blog.varunajayasiri.com&#x2F;ml&#x2F;lstm.svg">
+<meta property="og:updated_time" content="2021-04-18T12:33:56.615Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2021&#x2F;04&#x2F;18&#x2F;RNN%E7%9B%B8%E5%85%B3&#x2F;rnn-unfold.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+
+
+  
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Recurrent-Neural-Networks-RNN"><span class="toc-text">Recurrent Neural Networks (RNN)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Long-Short-term-Memory"><span class="toc-text">Long Short-term Memory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forward-pass"><span class="toc-text">Forward pass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Concatenation-of-h-t-1-and-x-t"><span class="toc-text">Concatenation of $h_{t-1}$ and $x_t$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LSTM-functions"><span class="toc-text">LSTM functions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logits"><span class="toc-text">Logits</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Softmax"><span class="toc-text">Softmax</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backward-pass"><span class="toc-text">Backward pass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss"><span class="toc-text">Loss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradients"><span class="toc-text">Gradients</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-parameter-gradients"><span class="toc-text">Model parameter gradients</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gated-Recurrent-Unit"><span class="toc-text">Gated Recurrent Unit</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-RNN相关" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">RNN相关</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.04.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Lixin</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Recurrent-Neural-Networks-RNN"><a href="#Recurrent-Neural-Networks-RNN" class="headerlink" title="Recurrent Neural Networks (RNN)"></a>Recurrent Neural Networks (RNN)</h1><hr>
+<p>A recurrent neural network (RNN) is a type of neural network that has been succesful in modelling sequential data, e.g. language, speech, protein sequences, etc.</p>
+<p>A RNN performs its computations in a cyclic manner, where the same computation is applied to every sample of a given sequence.<br>The idea is that the network should be able to use the previous computations as some form of memory and apply this to future computations.<br>An image may best explain how this is to be understood,</p>
+<p><img src="/2021/04/18/RNN%E7%9B%B8%E5%85%B3/rnn-unfold.png" alt="rnn-unroll image"></p>
+<p>where it the network contains the following elements:</p>
+<ul>
+<li>$x$ is the input sequence of samples, </li>
+<li>$U$ is a weight matrix applied to the given input sample,</li>
+<li>$V$ is a weight matrix used for the recurrent computation in order to pass memory along the sequence,</li>
+<li>$W$ is a weight matrix used to compute the output of the every timestep (given that every timestep requires an output),</li>
+<li>$h$ is the hidden state (the network’s memory) for a given time step, and</li>
+<li>$o$ is the resulting output.</li>
+</ul>
+<p>When the network is unrolled as shown, it is easier to refer to a timestep, $t$.<br>We have the following computations through the network:</p>
+<ul>
+<li>$h_t = f(U\,{x_t} + V\,{h_{t-1}})$, where $f$ is a non-linear activation function, e.g. $\mathrm{tanh}$.</li>
+<li>$o_t = W\,{h_t}$</li>
+</ul>
+<p>When we are doing language modelling using a cross-entropy loss, we additionally apply the softmax function to the output $o_{t}$:</p>
+<ul>
+<li>$\hat{y}_t = \mathrm{softmax}(o_{t})$</li>
+</ul>
+<h2 id="Long-Short-term-Memory"><a href="#Long-Short-term-Memory" class="headerlink" title="Long Short-term Memory"></a>Long Short-term Memory</h2><script type="math/tex; mode=display">
+\begin{array}{ll}
+i_{t} = \sigma(W_{ii} x_{t} + b_{ii} + W_{hi} h_{t-1} + b_{hi}) \\
+f_{t} = \sigma(W_{if} x_{t} + b_{if} + W_{hf} h_{t-1} + b_{hf}) \\
+o_{t} = \sigma(W_{io} x_{t} + b_{io} + W_{ho} h_{t-1} + b_{ho}) \\
+\tilde c_{t} = \tanh(W_{ic} x_{t} + b_{ic} + W_{hc} h_{t-1} + b_{hc}) \\
+c_{t} = f_{t} \odot c_{t-1} + i_{t} \odot \tilde c_{t}  \\
+h_{t} = o_{t} \odot \tanh(c_{t}) \\
+\end{array}</script><p>The LSTM cell contains three gates, input, forget, output gates and a memory cell.<br>The output of the LSTM unit is computed with the following functions, where $\sigma = \mathrm{softmax}$.<br>We have input gate $i$, forget gate $f$, and output gate $o$ defines as</p>
+<ul>
+<li><p>$i = \sigma ( W^i [h_{t-1}, x_t])$</p>
+</li>
+<li><p>$f = \sigma ( W^f [h_{t-1},x_t])$</p>
+</li>
+<li><p>$o = \sigma ( W^o [h_{t-1},x_t])$</p>
+</li>
+</ul>
+<p>where $W^i, W^f, W^o$ are weight matrices applied to a concatenated $h_{t-1}$ (hidden state vector) and $x_t$ (input vector)  for each respective gate.</p>
+<p>$h_{t-1}$, from the previous time step along with the current input $x_t$ are used to compute the a candidate $g$</p>
+<ul>
+<li>$\tilde c_{t} = \mathrm{tanh}( W^g [h_{t-1}, x_t])$</li>
+</ul>
+<p>The value of the cell’s memory, $c_t$, is updated as</p>
+<ul>
+<li>$c_t = f \circ c_{t-1} + i \circ\tilde c_{t}  $</li>
+</ul>
+<p>where $c_{t-1}$ is the previous memory, and $\circ$ refers to element-wise multiplication.</p>
+<p>The output, $h_t$, is computed as</p>
+<ul>
+<li>$h_t = \mathrm{tanh}(c_t) \circ o$</li>
+</ul>
+<p>and it is used for both the timestep’s output and the next timestep, whereas $c_t$ is exclusively sent to the next timestep.<br>This makes $c_t$ a memory feature, and is not used directly to compute the output of the timestep.</p>
+<h2 id="Forward-pass"><a href="#Forward-pass" class="headerlink" title="Forward pass"></a>Forward pass</h2><p><img src="http://blog.varunajayasiri.com/ml/lstm.svg" alt="LSTM"></p>
+<p><em>Operation $z$ is the concatenation of $x$ and $h_{t-1}$</em></p>
+<h3 id="Concatenation-of-h-t-1-and-x-t"><a href="#Concatenation-of-h-t-1-and-x-t" class="headerlink" title="Concatenation of $h_{t-1}$ and $x_t$"></a>Concatenation of $h_{t-1}$ and $x_t$</h3><script type="math/tex; mode=display">
+\begin{align}
+z & = [h_{t-1}, x_t] \\
+\end{align}</script><h3 id="LSTM-functions"><a href="#LSTM-functions" class="headerlink" title="LSTM functions"></a>LSTM functions</h3><script type="math/tex; mode=display">
+\begin{align}
+f_t & = \sigma(W_f \cdot z + b_f) \\
+i_t & = \sigma(W_i \cdot z + b_i) \\
+\bar{C}_t & = tanh(W_C \cdot z + b_C) \\
+C_t & = f_t * C_{t-1} + i_t * \bar{C}_t \\
+o_t & = \sigma(W_o \cdot z + b_t) \\
+h_t &= o_t * tanh(C_t) \\
+\end{align}</script><h3 id="Logits"><a href="#Logits" class="headerlink" title="Logits"></a>Logits</h3><script type="math/tex; mode=display">
+\begin{align}
+v_t &= W_v \cdot h_t + b_v \\
+\end{align}</script><h3 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h3><script type="math/tex; mode=display">
+\begin{align}
+\hat{y_t} &= \text{softmax}(v_t)
+\end{align}</script><p>$\hat{y_t}$ is <code>y</code> in code and $y_t$ is <code>targets</code>.</p>
+<h2 id="Backward-pass"><a href="#Backward-pass" class="headerlink" title="Backward pass"></a>Backward pass</h2><h3 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h3><script type="math/tex; mode=display">
+\begin{align}
+L_k &= -\sum_{t=k}^T\sum_j y_{t,j} log \hat{y_{t,j}} \\
+L &= L_1 \\
+\end{align}</script><h3 id="Gradients"><a href="#Gradients" class="headerlink" title="Gradients"></a>Gradients</h3><script type="math/tex; mode=display">
+\begin{align}
+dv_t &= \hat{y_t} - y_t \\
+dh_t &= dh'_t + W_y^T \cdot dv_t \\
+do_t &= dh_t * \text{tanh}(C_t) \\
+dC_t &= dC'_t + dh_t * o_t * (1 - \text{tanh}^2(C_t))\\
+d\bar{C}_t &= dC_t * i_t \\
+di_t &= dC_t * \bar{C}_t \\
+df_t &= dC_t * C_{t-1} \\
+\\
+df'_t &= f_t * (1 - f_t) * df_t \\
+di'_t &= i_t * (1 - i_t) * di_t \\
+d\bar{C}'_{t-1} &= (1 - \bar{C}_t^2) * d\bar{C}_t \\
+do'_t &= o_t * (1 - o_t) * do_t \\
+dz_t &= W_f^T \cdot df'_t \\
+     &+ W_i^T \cdot di_t \\
+     &+ W_C^T \cdot d\bar{C}_t \\
+     &+ W_o^T \cdot do_t \\
+\\
+[dh'_{t-1}, dx_t] &= dz_t \\
+dC'_t &= f_t * dC_t
+\end{align}</script><ul>
+<li>$dC’_t = \frac{\partial L_{t+1}}{\partial C_t}$ and $dh’_t = \frac{\partial L_{t+1}}{\partial h_t}$</li>
+<li>$dC_t = \frac{\partial L}{\partial C_t} = \frac{\partial L_t}{\partial C_t}$ and $dh_t = \frac{\partial L}{\partial h_t} = \frac{\partial L_{t}}{\partial h_t}$</li>
+<li>All other derivatives are of $L$</li>
+<li><code>target</code> is target character index $y_t$</li>
+<li><code>dh_next</code> is $dh’_{t}$ (size H x 1)</li>
+<li><code>dC_next</code> is $dC’_{t}$ (size H x 1)</li>
+<li><code>C_prev</code> is $C_{t-1}$ (size H x 1)</li>
+<li>$df’_t$, $di’_t$, $d\bar{C}’_t$, and $do’_t$ are <em>also</em> assigned to <code>df</code>, <code>di</code>, <code>dC_bar</code>, and <code>do</code> in the <strong>code</strong>.</li>
+<li><em>Returns</em> $dh_t$ and $dC_t$</li>
+</ul>
+<h3 id="Model-parameter-gradients"><a href="#Model-parameter-gradients" class="headerlink" title="Model parameter gradients"></a>Model parameter gradients</h3><script type="math/tex; mode=display">
+\begin{align}
+dW_v &= dv_t \cdot h_t^T \\
+db_v &= dv_t \\
+\\
+dW_f &= df'_t \cdot z^T \\
+db_f &= df'_t \\
+\\
+dW_i &= di'_t \cdot z^T \\
+db_i &= di'_t \\
+\\
+dW_C &= d\bar{C}'_t \cdot z^T \\
+db_C &= d\bar{C}'_t \\
+\\
+dW_o &= do'_t \cdot z^T \\
+db_o &= do'_t \\
+\\
+\end{align}</script><h2 id="Gated-Recurrent-Unit"><a href="#Gated-Recurrent-Unit" class="headerlink" title="Gated Recurrent Unit"></a>Gated Recurrent Unit</h2><script type="math/tex; mode=display">
+\begin{array}{ll}
+r_{t} = \sigma(W_{ir} x_{t} + b_{ir} + W_{hr} h_{t-1} + b_{hr}) \\
+z_{t} = \sigma(W_{iz} x_{t} + b_{iz} + W_{hz} h_{t-1} + b_{hz}) \\
+\tilde{h}_{t} = \tanh(W_{ih} x_{t} + b_{ih} + W(r_{t} \odot h_{t-1})) \\
+h_{t} = (1 - z_{t}) \odot h_{t-1} + z_{t} \odot \tilde{h}_{t}
+\end{array}</script><p>参考：</p>
+<p><a href="http://ccolah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">http://ccolah.github.io/posts/2015-08-Understanding-LSTMs/</a></p>
+<p><a href="http://www.wildml.com/2015/10/recurrent-neural-networks-tutorial-part-3-backpropagation-through-time-and-vanishing-gradients/" target="_blank" rel="noopener">http://www.wildml.com/2015/10/recurrent-neural-networks-tutorial-part-3-backpropagation-through-time-and-vanishing-gradients/</a></p>
+<p><a href="http://github.com/crypto-code/Math-of-Neural-Networks" target="_blank" rel="noopener">http://github.com/crypto-code/Math-of-Neural-Networks</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2021/04/06/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E9%9D%A2%E8%AF%95/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
