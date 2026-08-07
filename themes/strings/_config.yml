@@ -18,11 +18,11 @@ github: https://github.com/StringsLi
 email: lixin4009@gmail.com
 
 giscus:
-  enabled: false
-  repo: ''
-  repo_id: ''
+  enabled: true
+  repo: 'StringsLi/StringsLi.github.io'
+  repo_id: 'MDEwOlJlcG9zaXRvcnkyMjQzMjM3MDk='
   category: 'General'
-  category_id: ''
+  category_id: 'DIC_kwDODV7ofc4DC2DG'
   mapping: pathname
   strict: '0'
   reactions_enabled: '1'
