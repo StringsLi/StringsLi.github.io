@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="<%= config.language || 'zh-CN' %>">
+  <head><%- partial('_partial/head') %></head>
+  <body class="page-<%= page.layout || 'default' %>">
+    <a class="skip-link" href="#main-content">跳到正文</a>
+    <%- partial('_partial/header') %>
+    <main id="main-content" class="site-main"><%- body %></main>
+    <%- partial('_partial/footer') %>
+    <script src="<%- url_for(theme.js || 'js/main.js') %>" defer></script>
+  </body>
+</html>

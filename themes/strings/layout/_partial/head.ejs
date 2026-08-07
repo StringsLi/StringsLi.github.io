@@ -1,0 +1,10 @@
+<% const displayTitle = page.title || (page.source ? page.slug || page.source.replace(/^_posts\//, '').replace(/\.md$/, '') : ''); %>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="<%= page.description || config.description %>">
+<meta name="theme-color" content="#f7f5ef">
+<title><%= displayTitle ? displayTitle + ' · ' + config.title : config.title %></title>
+<link rel="icon" href="<%- url_for('favicon.ico') %>">
+<link rel="stylesheet" href="<%- url_for(theme.css || 'css/style.css') %>">
+<% if (is_post()) { %><script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]}};</script><script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><% } %>
+<% if (is_post()) { %><meta property="og:type" content="article"><meta property="og:title" content="<%= displayTitle %>"><meta property="og:url" content="<%= url_for(page.path, { absolute: true }) %>"><% } else { %><meta property="og:type" content="website"><% } %>

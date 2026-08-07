@@ -1,0 +1,32 @@
+menu:
+  - name: 首页
+    url: /
+  - name: 归档
+    url: /archives/
+  - name: 分类
+    url: /categories/
+  - name: 标签
+    url: /tags/
+  - name: 关于
+    url: /about/
+  - name: 搜索
+    url: /search/
+
+intro: hello，各位好，这里记录机器学习、风控算法与阅读思考。
+avatar: /img/lixin.jpg
+github: https://github.com/StringsLi
+email: lixin4009@gmail.com
+
+giscus:
+  enabled: false
+  repo: ''
+  repo_id: ''
+  category: 'General'
+  category_id: ''
+  mapping: pathname
+  strict: '0'
+  reactions_enabled: '1'
+  emit_metadata: '0'
+  input_position: bottom
+  lang: zh-CN
+  theme: preferred_color_scheme

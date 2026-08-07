@@ -146,8 +146,8 @@ changyan:
 gitalk:
   enable: false # 如果使用 gitalk，请设置改之为true
   clientID: 277317290454635afa73
-  clientSecret: 
-  repo: blog-comment
+  clientSecret:
+  
   owner: forsigner
   admin: forsigner
 

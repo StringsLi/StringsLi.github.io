@@ -1,0 +1,10 @@
+<section class="hero wrap reveal">
+  <p class="eyebrow">STRINGS / NOTES</p>
+  <h1><%= config.title %></h1>
+  <p class="hero-copy"><%= theme.intro %></p>
+  <div class="hero-links"><a href="<%= theme.github %>" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:<%= theme.email %>">联系我 <span aria-hidden="true">→</span></a></div>
+</section>
+<section class="wrap home-grid">
+  <div class="post-feed"><div class="section-heading"><p class="eyebrow">LATEST WRITING</p><h2>最新文章</h2></div><% page.posts.each(function(post) { %><%- partial('_partial/post-card', { post: post }) %><% }) %><%- paginator({ prev_text: '较新的文章', next_text: '更早的文章' }) %></div>
+  <aside class="home-aside"><%- partial('_partial/site-aside') %></aside>
+</section>
