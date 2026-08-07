@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>leetcode算法总结系列1-堆 | Lixin</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="机器学习、数据挖掘" />
+  
+
+  <meta name="description" content="Leetcode算法总结系列1-堆[TOC] 1.0 堆的介绍堆（Heap）是一个可以被看成近似完全二叉树的数组。树上的每一个结点对应数组的一个元素。除了最底层外，该树是完全充满的，而且是从左到右填充。—— 来自：《算法导论》 堆包括最大堆和最小堆：最大堆的每一个节点（除了根结点）的值不大于其父节点；最小堆的每一个节点（除了根结点）的值不小于其父节点。 堆常见的操作： HEAPIFY 建堆：把一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode算法总结系列1-堆">
+<meta property="og:url" content="https:&#x2F;&#x2F;stringsli.github.io&#x2F;2020&#x2F;06&#x2F;29&#x2F;leetcode%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%971-%E5%A0%86&#x2F;index.html">
+<meta property="og:site_name" content="Lixin">
+<meta property="og:description" content="Leetcode算法总结系列1-堆[TOC] 1.0 堆的介绍堆（Heap）是一个可以被看成近似完全二叉树的数组。树上的每一个结点对应数组的一个元素。除了最底层外，该树是完全充满的，而且是从左到右填充。—— 来自：《算法导论》 堆包括最大堆和最小堆：最大堆的每一个节点（除了根结点）的值不大于其父节点；最小堆的每一个节点（除了根结点）的值不小于其父节点。 堆常见的操作： HEAPIFY 建堆：把一个">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2020-06-29T03:19:40.451Z">
+<meta name="twitter:card" content="summary">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+
+
+  
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Leetcode算法总结系列1-堆"><span class="toc-text">Leetcode算法总结系列1-堆</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-0-堆的介绍"><span class="toc-text">1.0 堆的介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-前K个高频单词"><span class="toc-text">1.1 前K个高频单词</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-前-K-个高频元素"><span class="toc-text">1.2 前 K 个高频元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-数组中的第K个最大元素"><span class="toc-text">1.3  数组中的第K个最大元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-4-面试题40-最小的k个数"><span class="toc-text">1.4  面试题40. 最小的k个数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-5-最接近原点的-K-个点"><span class="toc-text">1.5 最接近原点的 K 个点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-6-查找和最小的K对数字"><span class="toc-text">1.6 查找和最小的K对数字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-7-数据流中的中位数"><span class="toc-text">1.7  数据流中的中位数</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#数据流的中位数"><span class="toc-text">数据流的中位数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#连续中值"><span class="toc-text">连续中值</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-8-距离相等的条形码"><span class="toc-text">1.8 距离相等的条形码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-9-重构字符串"><span class="toc-text">1.9  重构字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-10-有序矩阵中第K小的元素"><span class="toc-text">1.10 有序矩阵中第K小的元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-11-根据字符出现频率排序"><span class="toc-text">1.11 根据字符出现频率排序</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-leetcode算法总结系列1-堆" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">leetcode算法总结系列1-堆</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2020.06.29</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Lixin</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="Leetcode算法总结系列1-堆"><a href="#Leetcode算法总结系列1-堆" class="headerlink" title="Leetcode算法总结系列1-堆"></a>Leetcode算法总结系列1-堆</h3><p>[TOC]</p>
+<h5 id="1-0-堆的介绍"><a href="#1-0-堆的介绍" class="headerlink" title="1.0 堆的介绍"></a>1.0 堆的介绍</h5><p>堆（Heap）是一个可以被看成近似完全二叉树的数组。树上的每一个结点对应数组的一个元素。除了最底层外，该树是完全充满的，而且是从左到右填充。—— 来自：《算法导论》</p>
+<p>堆包括最大堆和最小堆：最大堆的每一个节点（除了根结点）的值不大于其父节点；最小堆的每一个节点（除了根结点）的值不小于其父节点。</p>
+<p>堆常见的操作：</p>
+<p>HEAPIFY 建堆：把一个乱序的数组变成堆结构的数组，时间复杂度为 $O(n)$。<br>HEAPPUSH：把一个数值放进已经是堆结构的数组中，并保持堆结构，时间复杂度为 $O(log n)$。<br>HEAPPOP：从最大堆中取出最大值或从最小堆中取出最小值，并将剩余的数组保持堆结构，时间复杂度为 $O(log n)$。<br>HEAPSORT：借由 HEAPFY 建堆和 HEAPPOP 堆数组进行排序，时间复杂度为 $O(n log n)$，空间复杂度为 $O(1)$。<br>堆结构的一个常见应用是建立优先队列（Priority Queue）。</p>
+<h5 id="1-1-前K个高频单词"><a href="#1-1-前K个高频单词" class="headerlink" title="1.1 前K个高频单词"></a>1.1 前K个高频单词</h5><p>id：692</p>
+<p>url：<a href="https://leetcode-cn.com/problems/top-k-frequent-words/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/top-k-frequent-words/</a></p>
+<p>描述：</p>
+<p>给一非空的单词列表，返回前 k 个出现次数最多的单词。</p>
+<p>返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率，按字母顺序排序。</p>
+<p>示例 1：</p>
+<p>输入: [“i”, “love”, “leetcode”, “i”, “love”, “coding”], k = 2<br>输出: [“i”, “love”]<br>解析: “i” 和 “love” 为出现次数最多的两个单词，均为2次。<br>    注意，按字母顺序 “i” 在 “love” 之前。</p>
+<p>算法：</p>
+<ol>
+<li>计算每个单词的频率，然后将其添加到存储到大小为 k 的小根堆中。它将频率最小的候选项放在堆的顶部。最后，我们从堆中弹出最多 k 次，并反转结果，就可以得到前 k 个高频单词。</li>
+<li>在 Python 中，我们使用 heapq\heapify，它可以在线性时间内将列表转换为堆，从而简化了我们的工作。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.strings.leetcode.heap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Problem_692_topKFrequent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">topKFrequent</span><span class="params">(String[] words, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        Map&lt;String,Integer&gt; countMap = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(String word:words)&#123;</span><br><span class="line">            countMap.put(word,countMap.getOrDefault(word,<span class="number">0</span>)+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        PriorityQueue&lt;String&gt; queue = <span class="keyword">new</span> PriorityQueue&lt;String&gt;(</span><br><span class="line">                (o1, o2) -&gt; countMap.get(o1) == countMap.get(o2)?</span><br><span class="line">                        o2.compareTo(o1):countMap.get(o1) - countMap.get(o2)</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(String word:countMap.keySet())&#123;</span><br><span class="line">            queue.offer(word);</span><br><span class="line">            <span class="keyword">if</span>(queue.size() &gt; k)&#123;</span><br><span class="line">                queue.poll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; ans = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty())&#123;</span><br><span class="line">            ans.add(queue.poll());</span><br><span class="line">        &#125;</span><br><span class="line">        Collections.reverse(ans);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String[] words = &#123;<span class="string">"i"</span>, <span class="string">"love"</span>, <span class="string">"leetcode"</span>, <span class="string">"i"</span>, <span class="string">"love"</span>, <span class="string">"coding"</span>&#125;;</span><br><span class="line">        topKFrequent(words,<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>复杂度分析</p>
+<p>时间复杂度： $O(N \log{k})$。其中 $N$ 是 words 的长度。我们用 $O(N)$的时间计算每个单词的频率，然后将 $N$ 个单词添加到堆中，添加每个单词的时间为 $O(\log {k})$ 。最后，我们从堆中弹出最多 $k$ 次。因为 $k \leq N$ 的值，总共是 $O(N \log{k})$<br>空间复杂度：$O(N)$,用于存储我们计数的空间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">topKFrequent</span><span class="params">(self, words: List[str], k: int)</span> -&gt; List[str]:</span></span><br><span class="line">        count = Counter(words)</span><br><span class="line">        <span class="keyword">return</span> heapq.nsmallest(k,count,<span class="keyword">lambda</span> i: (-count[i], i))</span><br></pre></td></tr></table></figure>
+<h5 id="1-2-前-K-个高频元素"><a href="#1-2-前-K-个高频元素" class="headerlink" title="1.2 前 K 个高频元素"></a>1.2 <a href="https://leetcode-cn.com/problems/top-k-frequent-elements/" target="_blank" rel="noopener">前 K 个高频元素</a></h5><p>id:347</p>
+<p>给定一个非空的整数数组，返回其中出现频率前 <strong>k</strong> 高的元素。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: nums = [1,1,1,2,2,3], k = 2</span><br><span class="line">输出: [1,2]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>你可以假设给定的 <em>k</em> 总是合理的，且 1 ≤ k ≤ 数组中不相同的元素的个数。</li>
+<li>你的算法的时间复杂度<strong>必须</strong>优于 O(<em>n</em> log <em>n</em>) , <em>n</em> 是数组的大小。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">topKFrequent</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        Map&lt;Integer,Integer&gt; count = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> n:nums)&#123;</span><br><span class="line">            count.put(n,count.getOrDefault(n,<span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        PriorityQueue&lt;Integer&gt; queue = <span class="keyword">new</span> PriorityQueue&lt;&gt;((o1,o2) -&gt; count.get(o1) - count.get(o2));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(Integer i: count.keySet())&#123;</span><br><span class="line">            queue.add(i);</span><br><span class="line">            <span class="keyword">while</span> (queue.size() &gt; k)&#123;</span><br><span class="line">                queue.poll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty())&#123;</span><br><span class="line">            res.add(queue.poll());</span><br><span class="line">        &#125;</span><br><span class="line">        Collections.reverse(res);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">topKFrequent</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; List[int]:</span></span><br><span class="line">        count = Counter(nums)</span><br><span class="line">        <span class="keyword">return</span> heapq.nlargest(k, count.keys(), count.get)</span><br></pre></td></tr></table></figure>
+<h5 id="1-3-数组中的第K个最大元素"><a href="#1-3-数组中的第K个最大元素" class="headerlink" title="1.3  数组中的第K个最大元素"></a>1.3 <a href="https://leetcode-cn.com/problems/kth-largest-element-in-an-array/" target="_blank" rel="noopener"> 数组中的第K个最大元素</a></h5><p>id:215</p>
+<p>在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。</p>
+<p>示例 1:</p>
+<p>输入: [3,2,1,5,6,4] 和 k = 2<br>输出: 5</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findKthLargest</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; queue = <span class="keyword">new</span> PriorityQueue&lt;&gt;(Comparator.comparingInt(n -&gt; n));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> n:nums)&#123;</span><br><span class="line">            queue.add(n);</span><br><span class="line">            <span class="keyword">if</span>(queue.size() &gt; k)&#123;</span><br><span class="line">                queue.poll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> queue.poll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findKthLargest</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">return</span> heapq.nlargest(k,nums)[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<h5 id="1-4-面试题40-最小的k个数"><a href="#1-4-面试题40-最小的k个数" class="headerlink" title="1.4  面试题40. 最小的k个数"></a>1.4  <a href="https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/" target="_blank" rel="noopener">面试题40. 最小的k个数</a></h5><p>输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。</p>
+<p>示例 1：</p>
+<p>输入：arr = [3,2,1], k = 2<br>输出：[1,2] 或者 [2,1]</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.strings.leetcode.heap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Problem_40_mian_getLeastNumbers</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[]  getLeastNumbers(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        PriorityQueue&lt;Integer&gt; priorityQueue = <span class="keyword">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; (b -a));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i: arr)&#123;</span><br><span class="line">            <span class="keyword">if</span>(priorityQueue.size() &lt; k)&#123;</span><br><span class="line">                priorityQueue.add(i);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(priorityQueue.peek() &gt; i)&#123;</span><br><span class="line">                    priorityQueue.remove();</span><br><span class="line">                    priorityQueue.add(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[k];</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (priorityQueue.size() &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            res[count++] = priorityQueue.remove();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] getLeastNumbers2(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">0</span> || arr.length == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;&gt;((o1, o2) -&gt; o2 - o1);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i:arr)&#123;</span><br><span class="line">            heap.offer(i);</span><br><span class="line">            <span class="keyword">if</span>(heap.size() &gt; k)&#123;</span><br><span class="line">                heap.poll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[k];</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!heap.isEmpty())&#123;</span><br><span class="line">            res[count++] = heap.poll();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>&#125;;</span><br><span class="line">        System.out.println(Arrays.toString(getLeastNumbers2(arr,<span class="number">2</span>)));</span><br><span class="line">        System.out.println(Arrays.toString(getLeastNumbers(arr,<span class="number">2</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getLeastNumbers</span></span>(arr: <span class="type">Array</span>[<span class="type">Int</span>], k: <span class="type">Int</span>): <span class="type">Array</span>[<span class="type">Int</span>] = &#123;</span><br><span class="line">    <span class="keyword">val</span> heap = scala.collection.mutable.<span class="type">PriorityQueue</span>.empty[<span class="type">Int</span>].reverse</span><br><span class="line">    arr.foreach(x =&gt; heap.enqueue(x))</span><br><span class="line">    (<span class="number">0</span> until k).map(_ =&gt; heap.dequeue()).toArray</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-5-最接近原点的-K-个点"><a href="#1-5-最接近原点的-K-个点" class="headerlink" title="1.5 最接近原点的 K 个点"></a>1.5 <a href="https://leetcode-cn.com/problems/k-closest-points-to-origin/" target="_blank" rel="noopener">最接近原点的 K 个点</a></h5><p>id：973</p>
+<p>我们有一个由平面上的点组成的列表 <code>points</code>。需要从中找出 <code>K</code> 个距离原点 <code>(0, 0)</code> 最近的点。</p>
+<p>（这里，平面上两点之间的距离是欧几里德距离。）</p>
+<p>你可以按任何顺序返回答案。除了点坐标的顺序之外，答案确保是唯一的。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入：points = [[1,3],[-2,2]], K = 1</span><br><span class="line">输出：[[-2,2]]</span><br><span class="line">解释： </span><br><span class="line">(1, 3) 和原点之间的距离为 sqrt(10)，</span><br><span class="line">(-2, 2) 和原点之间的距离为 sqrt(8)，</span><br><span class="line">由于 sqrt(8) &lt; sqrt(10)，(-2, 2) 离原点更近。</span><br><span class="line">我们只需要距离原点最近的 K = 1 个点，所以答案就是 [[-2,2]]。</span><br></pre></td></tr></table></figure>
+<p>二、大根堆(前 K 小) / 小根堆（前 K 大),Java中有现成的 PriorityQueue，实现起来最简单：$O(NlogK)$<br>本题是求前 K 小，因此用一个容量为 K 的大根堆，每次 poll 出最大的数，那堆中保留的就是前 K 小啦（注意不是小根堆！小根堆的话需要把全部的元素都入堆，那是 O(NlogN)O(NlogN)😂，就不是 O(NlogK)O(NlogK)啦～～）<br>这个方法比快排慢，但是因为 Java 中提供了现成的 PriorityQueue（默认小根堆），所以实现起来最简单，没几行代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.strings.leetcode.heap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scala.actors.threadpool.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.PriorityQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Problem_973j_kClosest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] kClosest(<span class="keyword">int</span>[][] points, <span class="keyword">int</span> K) &#123;</span><br><span class="line">        <span class="keyword">if</span>(K == <span class="number">0</span> || points.length == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        PriorityQueue&lt;<span class="keyword">int</span>[]&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;&gt;((o1, o2) -&gt;</span><br><span class="line">                o2[<span class="number">0</span>]*o2[<span class="number">0</span>] + o2[<span class="number">1</span>]*o2[<span class="number">1</span>] - o1[<span class="number">0</span>]*o1[<span class="number">0</span>] - o1[<span class="number">1</span>]*o1[<span class="number">1</span>]</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] p:points)&#123;</span><br><span class="line">            heap.offer(p);</span><br><span class="line">            <span class="keyword">if</span>(heap.size() &gt; K)&#123;</span><br><span class="line">                heap.poll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[][] res = <span class="keyword">new</span> <span class="keyword">int</span>[K][<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] i:heap)&#123;</span><br><span class="line">            res[count++] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[][] points = &#123;&#123;<span class="number">1</span>,<span class="number">3</span>&#125;,&#123;-<span class="number">2</span>,<span class="number">2</span>&#125;&#125;;</span><br><span class="line">        <span class="keyword">int</span> K = <span class="number">1</span>;</span><br><span class="line">        System.out.println(Arrays.deepToString(kClosest(points,<span class="number">1</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kClosest</span><span class="params">(self, points: List[List[int]], K: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="keyword">return</span> heapq.nsmallest(K, points, key = <span class="keyword">lambda</span> point: point[<span class="number">0</span>] ** <span class="number">2</span> + point[<span class="number">1</span>] ** <span class="number">2</span> )</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">diff</span></span>(arr: <span class="type">Array</span>[<span class="type">Int</span>]) = -arr(<span class="number">0</span>)*arr(<span class="number">0</span>) - arr(<span class="number">1</span>)*arr(<span class="number">1</span>)</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">kClosest</span></span>(points: <span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]], <span class="type">K</span>: <span class="type">Int</span>): <span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]] = &#123;</span><br><span class="line">    <span class="keyword">val</span> heap = scala.collection.mutable.<span class="type">PriorityQueue</span>[<span class="type">Array</span>[<span class="type">Int</span>]]()(<span class="type">Ordering</span>.by(diff))</span><br><span class="line">    points.foreach(x =&gt; heap.enqueue(x))</span><br><span class="line">    (<span class="number">0</span> until <span class="type">K</span>).map(_ =&gt; heap.dequeue()).toArray</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-6-查找和最小的K对数字"><a href="#1-6-查找和最小的K对数字" class="headerlink" title="1.6 查找和最小的K对数字"></a>1.6 <a href="https://leetcode-cn.com/problems/find-k-pairs-with-smallest-sums/" target="_blank" rel="noopener">查找和最小的K对数字</a></h5><p>id：373.</p>
+<p>给定两个以升序排列的整形数组 <strong>nums1</strong> 和 <strong>nums2</strong>, 以及一个整数 <strong>k</strong>。</p>
+<p>定义一对值 <strong>(u,v)</strong>，其中第一个元素来自 <strong>nums1</strong>，第二个元素来自 <strong>nums2</strong>。</p>
+<p>找到和最小的 k 对数字 <strong>(u1,v1), (u2,v2) … (uk,vk)</strong>。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入: nums1 = [1,7,11], nums2 = [2,4,6], k = 3</span><br><span class="line">输出: [1,2],[1,4],[1,6]</span><br><span class="line">解释: 返回序列中的前 3 对数：</span><br><span class="line">     [1,2],[1,4],[1,6],[7,2],[7,4],[11,2],[7,6],[11,4],[11,6]</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    public <span class="type">List</span>&lt;<span class="type">List</span>&lt;<span class="type">Integer</span>&gt;&gt; kSmallestPairs(int[] nums1, int[] nums2, int k) &#123;</span><br><span class="line">      <span class="type">List</span>&lt;<span class="type">List</span>&lt;<span class="type">Integer</span>&gt;&gt; pair = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; nums1.length ; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nums2.length; j++) &#123;</span><br><span class="line">                <span class="type">List</span>&lt;<span class="type">Integer</span>&gt; res = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;();</span><br><span class="line">                res.add(nums1[i]);</span><br><span class="line">                res.add(nums2[j]);</span><br><span class="line">                pair.add(res);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">PriorityQueue</span>&lt;<span class="type">List</span>&lt;<span class="type">Integer</span>&gt;&gt; heap = <span class="keyword">new</span> <span class="type">PriorityQueue</span>&lt;&gt;((o1, o2) -&gt;</span><br><span class="line">                o2.get(<span class="number">0</span>) + o2.get(<span class="number">1</span>) - o1.get(<span class="number">0</span>) - o1.get(<span class="number">1</span>)</span><br><span class="line">                );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">List</span>&lt;<span class="type">Integer</span>&gt; lst:pair)&#123;</span><br><span class="line">            heap.offer(lst);</span><br><span class="line">            <span class="keyword">if</span>(heap.size() &gt; k)&#123;</span><br><span class="line">                heap.poll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">List</span>&lt;<span class="type">List</span>&lt;<span class="type">Integer</span>&gt;&gt; ans = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span> || nums1.length==<span class="number">0</span> || nums2.length == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> ans;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">List</span>&lt;<span class="type">Integer</span>&gt; lst:heap)&#123;</span><br><span class="line">            ans.add(lst);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.collection.mutable.<span class="type">ArrayBuffer</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">diff</span></span>(num: <span class="type">List</span>[<span class="type">Int</span>]) = &#123;-num(<span class="number">0</span>) - num(<span class="number">1</span>)&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kSmallestPairs</span></span>(nums1: <span class="type">Array</span>[<span class="type">Int</span>], nums2: <span class="type">Array</span>[<span class="type">Int</span>], k: <span class="type">Int</span>): <span class="type">List</span>[<span class="type">List</span>[<span class="type">Int</span>]] = &#123;</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span>||nums1.length== <span class="number">0</span>)&#123; <span class="type">List</span>()&#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">val</span> pair:<span class="type">ArrayBuffer</span>[<span class="type">List</span>[<span class="type">Int</span>]] = <span class="keyword">new</span> <span class="type">ArrayBuffer</span>[<span class="type">List</span>[<span class="type">Int</span>]]()</span><br><span class="line">        <span class="keyword">for</span>(i &lt;- <span class="number">0</span> until nums1.length)&#123;</span><br><span class="line">            <span class="keyword">for</span>(j &lt;- <span class="number">0</span> until nums2.length)&#123;</span><br><span class="line">                pair.append(<span class="type">List</span>(nums1(i),nums2(j)))</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">val</span> heap = scala.collection.mutable.<span class="type">PriorityQueue</span>[<span class="type">List</span>[<span class="type">Int</span>]]()(<span class="type">Ordering</span>.by(diff))</span><br><span class="line">        pair.toArray.foreach(x =&gt; heap.enqueue(x))</span><br><span class="line">        <span class="keyword">var</span> tmpk= k</span><br><span class="line">        <span class="keyword">if</span>(heap.size &lt; k)&#123;</span><br><span class="line">            tmpk = heap.size</span><br><span class="line">        &#125;</span><br><span class="line">        (<span class="number">0</span> until tmpk).map(_ =&gt; heap.dequeue()).toList</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-7-数据流中的中位数"><a href="#1-7-数据流中的中位数" class="headerlink" title="1.7  数据流中的中位数"></a>1.7  <a href="https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/" target="_blank" rel="noopener">数据流中的中位数</a></h5><h6 id="数据流的中位数"><a href="#数据流的中位数" class="headerlink" title="数据流的中位数"></a><a href="https://leetcode-cn.com/problems/find-median-from-data-stream/" target="_blank" rel="noopener">数据流的中位数</a></h6><h6 id="连续中值"><a href="#连续中值" class="headerlink" title="连续中值"></a><a href="https://leetcode-cn.com/problems/continuous-median-lcci/" target="_blank" rel="noopener">连续中值</a></h6><p>这三个题都是一样的。</p>
+<p>将输入的数分成两部分：较小的一部分和较大的一部分</p>
+<ol>
+<li>lowPart ：定义为较小的一部分，用最大堆<br>允许lowPart的大小比highPart多1</li>
+<li>highPart ： 定义为较大的一部分，用最小堆<br>如果size是奇数，那么中位数就是lowPart的最大值，也就是堆顶</li>
+</ol>
+<p>否则，最大值是lowPart和highPart的堆顶平均值</p>
+<p>维护</p>
+<p>每进入一个数，先加入lowPart，然后将lowPart的最大值（堆顶）移出到highPart</p>
+<p>如果这时size是奇数，此时highPart将最小值移出到lowPart</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MedianFinder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> PriorityQueue&lt;Integer&gt; lowPart;</span><br><span class="line">    <span class="keyword">private</span> PriorityQueue&lt;Integer&gt; highPart;</span><br><span class="line">    <span class="keyword">int</span> size;</span><br><span class="line">    <span class="comment">/** initialize your data structure here. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MedianFinder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        lowPart = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;((x, y) -&gt; y - x);  <span class="comment">//最大堆</span></span><br><span class="line">        highPart = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;();</span><br><span class="line">        size = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addNum</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        size++;</span><br><span class="line">        lowPart.offer(num);</span><br><span class="line">        highPart.offer(lowPart.poll());</span><br><span class="line">        <span class="keyword">if</span>((size &amp; <span class="number">1</span>) == <span class="number">1</span>)&#123;</span><br><span class="line">            lowPart.offer(highPart.poll());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedian</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>((size &amp; <span class="number">1</span>) == <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">double</span>) lowPart.peek();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">double</span>) (lowPart.peek() + highPart.peek()) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MedianFinder object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MedianFinder obj = new MedianFinder();</span></span><br><span class="line"><span class="comment"> * obj.addNum(num);</span></span><br><span class="line"><span class="comment"> * double param_2 = obj.findMedian();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MedianFinder</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 当前大顶堆和小顶堆的元素个数之和</span></span><br><span class="line">        self.count = <span class="number">0</span></span><br><span class="line">        self.max_heap = []</span><br><span class="line">        self.min_heap = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addNum</span><span class="params">(self, num: int)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.count += <span class="number">1</span></span><br><span class="line">        <span class="comment"># 因为 Python 中的堆默认是小顶堆，所以要传入一个 tuple，用于比较的元素需是相反数，</span></span><br><span class="line">        <span class="comment"># 才能模拟出大顶堆的效果</span></span><br><span class="line">        heapq.heappush(self.max_heap, (-num, num))</span><br><span class="line">        _, max_heap_top = heapq.heappop(self.max_heap)</span><br><span class="line">        heapq.heappush(self.min_heap, max_heap_top)</span><br><span class="line">        <span class="keyword">if</span> self.count &amp; <span class="number">1</span>:</span><br><span class="line">            min_heap_top = heapq.heappop(self.min_heap)</span><br><span class="line">            heapq.heappush(self.max_heap, (-min_heap_top, min_heap_top))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMedian</span><span class="params">(self)</span> -&gt; float:</span></span><br><span class="line">        <span class="keyword">if</span> self.count &amp; <span class="number">1</span>:</span><br><span class="line">            <span class="comment"># 如果两个堆合起来的元素个数是奇数，数据流的中位数大顶堆的堆顶元素</span></span><br><span class="line">            <span class="keyword">return</span> self.max_heap[<span class="number">0</span>][<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 如果两个堆合起来的元素个数是偶数，数据流的中位数就是各自堆顶元素的平均值</span></span><br><span class="line">            <span class="keyword">return</span> (self.min_heap[<span class="number">0</span>] + self.max_heap[<span class="number">0</span>][<span class="number">1</span>]) / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Your MedianFinder object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"># obj = MedianFinder()</span></span><br><span class="line"><span class="comment"># obj.addNum(num)</span></span><br><span class="line"><span class="comment"># param_2 = obj.findMedian()</span></span><br></pre></td></tr></table></figure>
+<h5 id="1-8-距离相等的条形码"><a href="#1-8-距离相等的条形码" class="headerlink" title="1.8 距离相等的条形码"></a>1.8 <a href="https://leetcode-cn.com/problems/distant-barcodes/" target="_blank" rel="noopener">距离相等的条形码</a></h5><p>id：1054</p>
+<p>在一个仓库里，有一排条形码，其中第 <code>i</code> 个条形码为 <code>barcodes[i]</code>。</p>
+<p>请你重新排列这些条形码，使其中两个相邻的条形码 <strong>不能</strong> 相等。 你可以返回任何满足该要求的答案，此题保证存在答案。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[1,1,1,2,2,2]</span><br><span class="line">输出：[2,1,2,1,2,1]</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[1,1,1,1,2,2,3,3]</span><br><span class="line">输出：[1,3,1,3,2,1,2,1]</span><br></pre></td></tr></table></figure>
+<p>贪心堆</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.strings.leetcode.heap;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.PriorityQueue;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Problem_1054j_rearrangeBarcodes</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] rearrangeBarcodes2(<span class="keyword">int</span>[] barcodes) &#123;</span><br><span class="line">        <span class="keyword">if</span>(barcodes == <span class="keyword">null</span> || barcodes.length &lt; <span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> barcodes;</span><br><span class="line">        &#125;</span><br><span class="line">        Map&lt;Integer,Integer&gt; countMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> b:barcodes)&#123;</span><br><span class="line">            countMap.put(b,countMap.getOrDefault(b,<span class="number">0</span>)+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; countMap.get(b) - countMap.get(a));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i:countMap.keySet())&#123;</span><br><span class="line">            maxHeap.add(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[barcodes.length];</span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(maxHeap.size() &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> a = maxHeap.poll();</span><br><span class="line">            <span class="keyword">int</span> b = maxHeap.poll();</span><br><span class="line">            res[idx++] = a;</span><br><span class="line">            res[idx++] = b;</span><br><span class="line">            <span class="keyword">int</span> freqA = countMap.get(a);</span><br><span class="line">            <span class="keyword">int</span> freqB = countMap.get(b);</span><br><span class="line">            <span class="keyword">if</span>(freqA &gt; <span class="number">1</span>)&#123;</span><br><span class="line">                countMap.put(a,freqA-<span class="number">1</span>);</span><br><span class="line">                maxHeap.offer(a);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(freqB &gt; <span class="number">1</span>)&#123;</span><br><span class="line">                countMap.put(b,freqB-<span class="number">1</span>);</span><br><span class="line">                maxHeap.add(b);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(maxHeap.size() &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            res[idx] = maxHeap.poll();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] rearrangeBarcodes(<span class="keyword">int</span>[] barcodes) &#123;</span><br><span class="line">        <span class="keyword">if</span>(barcodes == <span class="keyword">null</span> || barcodes.length &lt; <span class="number">2</span>) <span class="keyword">return</span> barcodes;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i : barcodes) &#123;</span><br><span class="line">            map.put(i, map.getOrDefault(i, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//大顶堆</span></span><br><span class="line">        PriorityQueue&lt;Integer&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; map.get(b) - map.get(a));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i : map.keySet()) &#123;</span><br><span class="line">            maxHeap.offer(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[barcodes.length];</span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(maxHeap.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> a = maxHeap.poll();</span><br><span class="line">            <span class="keyword">int</span> b = maxHeap.poll();</span><br><span class="line">            res[idx++] = a;</span><br><span class="line">            res[idx++] = b;</span><br><span class="line">            <span class="keyword">int</span> freqA = map.get(a);</span><br><span class="line">            <span class="keyword">int</span> freqB = map.get(b);</span><br><span class="line">            <span class="keyword">if</span>(freqA &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                map.put(a, freqA - <span class="number">1</span>);</span><br><span class="line">                maxHeap.add(a);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(freqB &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                map.put(b, freqB - <span class="number">1</span>);</span><br><span class="line">                maxHeap.add(b);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//收尾</span></span><br><span class="line">        <span class="keyword">if</span>(maxHeap.size() &gt; <span class="number">0</span>) res[idx] = maxHeap.poll();</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] bor = &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>&#125;;</span><br><span class="line">        System.out.println(Arrays.toString(rearrangeBarcodes(bor)));</span><br><span class="line">        System.out.println(Arrays.toString(rearrangeBarcodes2(bor)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-9-重构字符串"><a href="#1-9-重构字符串" class="headerlink" title="1.9  重构字符串"></a>1.9 <a href="https://leetcode-cn.com/problems/reorganize-string/" target="_blank" rel="noopener"> 重构字符串</a></h5><p>给定一个字符串S，检查是否能重新排布其中的字母，使得两相邻的字符不同。</p>
+<p>若可行，输出任意可行的结果。若不可行，返回空字符串。</p>
+<p>示例 1:</p>
+<p>输入: S = “aab”<br>输出: “aba”<br>示例 2:</p>
+<p>输入: S = “aaab”<br>输出: “”</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.strings.leetcode.heap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.PriorityQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Problem_767_reorganizeString</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reorganizeString</span><span class="params">(String S)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(S == <span class="keyword">null</span> || S.length() &lt; <span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> S;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span>[] barcodes = S.toCharArray();</span><br><span class="line">            Map&lt;Character,Integer&gt; countMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">char</span> b:barcodes)&#123;</span><br><span class="line">                countMap.put(b,countMap.getOrDefault(b,<span class="number">0</span>)+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(Collections.max(countMap.values()) &gt; (S.length()+<span class="number">1</span>)/<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            PriorityQueue&lt;Character&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; countMap.get(b) - countMap.get(a));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">char</span> i:countMap.keySet())&#123;</span><br><span class="line">                maxHeap.add(i);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">char</span>[] res = <span class="keyword">new</span> <span class="keyword">char</span>[barcodes.length];</span><br><span class="line">            <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span>(maxHeap.size() &gt; <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">char</span> a = maxHeap.poll();</span><br><span class="line">                <span class="keyword">char</span> b = maxHeap.poll();</span><br><span class="line">                res[idx++] = a;</span><br><span class="line">                res[idx++] = b;</span><br><span class="line">                <span class="keyword">int</span> freqA = countMap.get(a);</span><br><span class="line">                <span class="keyword">int</span> freqB = countMap.get(b);</span><br><span class="line">                <span class="keyword">if</span>(freqA &gt; <span class="number">1</span>)&#123;</span><br><span class="line">                    countMap.put(a,freqA-<span class="number">1</span>);</span><br><span class="line">                    maxHeap.offer(a);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(freqB &gt; <span class="number">1</span>)&#123;</span><br><span class="line">                    countMap.put(b,freqB-<span class="number">1</span>);</span><br><span class="line">                    maxHeap.add(b);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(maxHeap.size() &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                res[idx] = maxHeap.poll();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> String.valueOf(res);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String S1 = <span class="string">"aab"</span>;</span><br><span class="line">        String S2 = <span class="string">"aaab"</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(reorganizeString(S1));</span><br><span class="line">        System.out.println(reorganizeString(S2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-10-有序矩阵中第K小的元素"><a href="#1-10-有序矩阵中第K小的元素" class="headerlink" title="1.10 有序矩阵中第K小的元素"></a>1.10 <a href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/" target="_blank" rel="noopener">有序矩阵中第K小的元素</a></h5><p>id:378</p>
+<p>给定一个 n x n 矩阵，其中每行和每列元素均按升序排序，找到矩阵中第k小的元素。<br>请注意，它是排序后的第 k 小元素，而不是第 k 个不同的元素。</p>
+<p>示例:</p>
+<p>matrix = [<br>   [ 1,  5,  9],<br>   [10, 11, 13],<br>   [12, 13, 15]<br>],<br>k = 8,</p>
+<p>返回 13。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.strings.leetcode.heap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Comparator;</span><br><span class="line"><span class="keyword">import</span> java.util.PriorityQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Problem_378_kthSmallest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;&gt;(Comparator.reverseOrder());</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] arr:matrix)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i: arr)&#123;</span><br><span class="line">                heap.offer(i);</span><br><span class="line">                <span class="keyword">if</span>(heap.size() &gt; k)&#123;</span><br><span class="line">                    heap.poll();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> heap.peek();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[][] matrix = &#123;&#123;<span class="number">1</span>,  <span class="number">5</span>,  <span class="number">9</span>&#125;,&#123;<span class="number">10</span>, <span class="number">11</span>, <span class="number">13</span>&#125;,&#123;<span class="number">12</span>, <span class="number">13</span>, <span class="number">15</span>&#125;&#125;;</span><br><span class="line">        System.out.println(kthSmallest(matrix,<span class="number">8</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-11-根据字符出现频率排序"><a href="#1-11-根据字符出现频率排序" class="headerlink" title="1.11 根据字符出现频率排序"></a>1.11 <a href="https://leetcode-cn.com/problems/sort-characters-by-frequency/" target="_blank" rel="noopener">根据字符出现频率排序</a></h5><p>id:451</p>
+<p>给定一个字符串，请将字符串里的字符按照出现的频率降序排列。</p>
+<p>示例 1:</p>
+<p>输入:<br>“tree”</p>
+<p>输出:<br>“eert”</p>
+<p>解释:<br>‘e’出现两次，’r’和’t’都只出现一次。<br>因此’e’必须出现在’r’和’t’之前。此外，”eetr”也是一个有效的答案。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.strings.leetcode.heap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Problem_451j_frequencySort</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">frequencySort</span><span class="params">(String s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s == <span class="keyword">null</span> || s.length() &lt; <span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span>[] barcodes = s.toCharArray();</span><br><span class="line">        Map&lt;Character,Integer&gt; countMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> b:barcodes)&#123;</span><br><span class="line">            countMap.put(b,countMap.getOrDefault(b,<span class="number">0</span>)+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        PriorityQueue&lt;Character&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; countMap.get(b) - countMap.get(a));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> i:countMap.keySet())&#123;</span><br><span class="line">            maxHeap.add(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">while</span> (!maxHeap.isEmpty())&#123;  <span class="comment">// 注意不能使用for(char c:maxHeap)</span></span><br><span class="line">            <span class="keyword">char</span> a = maxHeap.poll();</span><br><span class="line">            <span class="keyword">int</span> freq = countMap.get(a);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; freq; i++) &#123;</span><br><span class="line">                sb.append(a);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String s  = <span class="string">"Aabb"</span>;</span><br><span class="line">        System.out.println(frequencySort(s));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/05/19/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2020/06/29/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
