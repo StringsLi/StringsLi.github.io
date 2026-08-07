@@ -1,0 +1,9 @@
+<% const displayTitle = page.title || page.slug || page.source.replace(/^_posts\//, '').replace(/\.md$/, ''); %>
+<article class="article wrap-narrow reveal">
+  <header class="article-header"><p class="eyebrow"><% if (page.categories.length) { %><%- list_categories(page.categories, { show_count: false, class: 'inline-taxonomy' }) %><% } else { %>ARTICLE<% } %></p><h1><%= displayTitle %></h1><div class="article-meta"><time datetime="<%= date_xml(page.date) %>"><%= date(page.date, config.date_format) %></time><span>·</span><span><%= page.content ? Math.max(1, Math.ceil(strip_html(page.content).length / 500)) : 1 %> 分钟阅读</span></div></header>
+  <% if (toc(page.content)) { %><details class="toc-panel"><summary>文章目录</summary><%- toc(page.content, { class: 'toc' }) %></details><% } %>
+  <div class="post-content"><%- page.content %></div>
+  <% if (page.tags && page.tags.length) { %><footer class="article-tags"><span>标签</span><%- list_tags(page.tags, { show_count: false, style: 'list', class: 'tag-list' }) %></footer><% } %>
+  <nav class="post-nav" aria-label="文章导航"><% if (page.prev) { %><a href="<%- url_for(page.prev.path) %>"><small>← 上一篇</small><strong><%= page.prev.title || page.prev.slug || page.prev.source.replace(/^_posts\//, '').replace(/\.md$/, '') %></strong></a><% } %><% if (page.next) { %><a class="next" href="<%- url_for(page.next.path) %>"><small>下一篇 →</small><strong><%= page.next.title || page.next.slug || page.next.source.replace(/^_posts\//, '').replace(/\.md$/, '') %></strong></a><% } %></nav>
+</article>
+<%- partial('_partial/comments') %>

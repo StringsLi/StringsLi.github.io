@@ -1,0 +1,1 @@
+<section class="page wrap-narrow reveal"><header class="page-header"><p class="eyebrow">TAG</p><h1>#<%= page.tag %></h1></header><div class="post-feed"><% page.posts.each(function(post) { %><%- partial('_partial/post-card', { post: post }) %><% }) %></div><%- paginator() %></section>
